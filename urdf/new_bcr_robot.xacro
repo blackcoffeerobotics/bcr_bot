@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="new_bcr_robot">
+
+
+
+<!--................................ XACRO CONSTANTS .............................. -->
+
+<xacro:property name="wheel_mass"                           value="1"/>
+<xacro:property name="wheel_radius"                         value="0.06"/>
+<xacro:property name="wheel_width"                          value="0.025"/>
+<xacro:property name="wheel_middle_base"                    value="0.44"/>
+<xacro:property name="wheel_base"                  					value="0.54"/>
+<xacro:property name="wheel_torque"                         value="10"/>
+
+
+<!-- ............................... LOAD MACROS ................................. -->
+
+<xacro:include filename="$(find new_bcr_robot)/urdf/materials.xacro"/>
+<xacro:include filename="$(find new_bcr_robot)/urdf/macros.xacro"/>
+<xacro:include filename="$(find new_bcr_robot)/urdf/gazebo.xacro"/>
+
+<!--.............................................................................. -->
+
+
+
+<!-- ................................ BASE LINK .................................. -->
+
+<link name="base_link">
+
+	<visual>
+		<origin xyz="0 0 0.16" rpy="0 0 0" />
+  		<geometry>
+    		<mesh filename="package://new_bcr_robot/meshes/bcr_chassis.dae" scale="0.1 0.1 0.1"/>
+				<scale>0.01 0.01 0.01</scale>
+  		</geometry>
+	</visual>
+
+	<inertial>
+		<mass value="1"/>
+		<inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+	</inertial>
+
+</link>
+
+<!-- ................................ WHEELS ..................................... -->
+
+<xacro:wheel cardinality="front" dexterity="left"  origin_x="0.37" origin_y="${wheel_base/2}" origin_z="${wheel_radius}"/>
+<xacro:wheel cardinality="front" dexterity="right" origin_x="0.37" origin_y="-${wheel_base/2}" origin_z="${wheel_radius}"/>
+
+<xacro:wheel cardinality="back" dexterity="left"  origin_x="-0.37" origin_y="${wheel_base/2}" origin_z="${wheel_radius}"/>
+<xacro:wheel cardinality="back" dexterity="right" origin_x="-0.37" origin_y="-${wheel_base/2}" origin_z="${wheel_radius}"/>
+
+<xacro:wheel cardinality="middle" dexterity="left"  origin_x="0" origin_y="${wheel_middle_base/2}" origin_z="${wheel_radius}"/>
+<xacro:wheel cardinality="middle" dexterity="right" origin_x="0" origin_y="-${wheel_middle_base/2}" origin_z="${wheel_radius}"/>
+
+</robot>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+
+<!--............................ CONFIGURABLE PARAMETERS ..............................-->
+
+<arg name="rviz_config"   	  					default="entire_setup.rviz"/>
+
+
+<!-- ........................... CONDITIONAL XACRO CALL .............................. -->
+
+
+
+<param name="robot_description" command="$(find xacro)/xacro $(find new_bcr_robot)/urdf/new_bcr_robot.xacro
+		" />
+
+<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+
+<!-- ............................... RVIZ LAUNCH ..................................... -->
+
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(find new_bcr_robot)/rviz/$(arg rviz_config)"/>
+
+<!-- ................................................................................. -->
+
+</launch>
