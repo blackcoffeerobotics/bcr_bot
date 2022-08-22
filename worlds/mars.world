@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <world name="default">
+
+    <!-- A global light source -->
+    <include>
+      <uri>model://sun</uri>
+	    <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    <!-- A ground plane -->
+    <include>
+      <uri>model://mars</uri>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    <scene>
+      <sky>
+        <clouds>
+          <speed>50</speed>
+        </clouds>
+      </sky>
+        <ambient>0 0 0 1.0</ambient>
+        <shadows>0</shadows>
+    </scene>
+
+  </world>
+</sdf>

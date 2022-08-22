@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+<!--............................ CONFIGURABLE PARAMETERS .............................-->
+
+<arg name="gazebo_gui_enabled" default="true"/>
+<arg name="world_name" default="mars.world"/>
+
+
+<!-- ............................... LAUNCH WORLD ................................... -->
+
+<include file="$(find gazebo_ros)/launch/empty_world.launch">
+  <arg name="world_name"    value="$(find new_bcr_robot)/worlds/$(arg world_name)"/>
+  <arg name="paused"        value="false"/>
+  <arg name="use_sim_time"  value="true"/>
+  <arg name="gui"           value="$(arg gazebo_gui_enabled)"/>
+  <arg name="headless"      value="true"/>
+  <arg name="debug"         value="false"/>
+</include>
+
+
+<!-- ................................ XACRO CALL .................................... -->
+
+<param name="robot_description" command="$(find xacro)/xacro $(find new_bcr_robot)/urdf/new_bcr_robot.xacro
+		" />
+
+
+<!-- ................................ SPAWN MODEL .................................... -->
+
+
+<node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
+	args="-param robot_description
+				-urdf
+				-model new_bcr_robot"
+	output="screen" />
+
+<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+<!-- ................................................................................. -->
+
+
+</launch>
