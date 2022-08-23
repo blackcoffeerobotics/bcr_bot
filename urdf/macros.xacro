@@ -46,8 +46,18 @@
 
     <inertial>
       <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
-      <mass value="${wheel_mass}"/>
-      <xacro:cylinder_inertia m="${wheel_mass}" r="${wheel_radius}" h="${wheel_width}"/>
+
+    <xacro:if value="${cardinality == 'middle'}">
+        <mass value="${traction_wheel_mass}"/>
+				<xacro:cylinder_inertia m="${traction_wheel_mass}" r="${wheel_radius}" h="${wheel_width}"/>
+    </xacro:if>
+
+    <xacro:unless value="${cardinality == 'middle'}">
+        <mass value="${trolley_wheel_mass}"/>
+				<xacro:cylinder_inertia m="${trolley_wheel_mass}" r="${wheel_radius}" h="${wheel_width}"/>
+    </xacro:unless>
+
+
     </inertial>
    </link>
 

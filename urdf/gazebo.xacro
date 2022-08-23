@@ -6,25 +6,39 @@
 </gazebo>
 
 
-<!-- .....................MULTI WHEEL DIFF DRIVE ................................... -->
-
-<gazebo>
-	<plugin name="diffdrive_plugin_multiwheel" filename="libdiffdrive_plugin_multi_wheel.so">
-		<robotNamespace></robotNamespace>
-		<updateRate>100.0</updateRate>
-		<leftJoints>back_left_wheel_joint front_left_wheel_joint</leftJoints>
-		<rightJoints>back_right_wheel_joint front_right_wheel_joint</rightJoints>
-		<wheelSeparation>${wheel_base}</wheelSeparation>
-		<wheelDiameter>${2*wheel_radius}</wheelDiameter>
-		<robotBaseFrame>base_link</robotBaseFrame>
-		<torque>${wheel_torque}</torque>
-		<commandTopic>/cmd_vel</commandTopic>
-		<odometryTopic>odom</odometryTopic>
-		<odometryFrame>odom</odometryFrame>
-		<publishOdometryTf>true</publishOdometryTf>
-		<publishOdometryMsg>true</publishOdometryMsg>
-	</plugin>
+<gazebo reference="back_left_wheel_joint">
+  <mu1 value="${trolley_wheel_friction}"/>
+  <mu2 value="${trolley_wheel_friction}"/>
+  <kp  value="10000000.0" />
+  <kd  value="1.0" />
+  <fdir1 value="1 0 0"/>
 </gazebo>
+
+<gazebo reference="back_right_wheel_joint">
+  <mu1 value="${trolley_wheel_friction}"/>
+  <mu2 value="${trolley_wheel_friction}"/>
+  <kp  value="10000000.0" />
+  <kd  value="1.0" />
+  <fdir1 value="1 0 0"/>
+</gazebo>
+
+<gazebo reference="front_left_wheel_joint">
+  <mu1 value="${trolley_wheel_friction}"/>
+  <mu2 value="${trolley_wheel_friction}"/>
+  <kp  value="10000000.0" />
+  <kd  value="1.0" />
+  <fdir1 value="1 0 0"/>
+</gazebo>
+
+<gazebo reference="front_right_wheel_joint">
+  <mu1 value="${trolley_wheel_friction}"/>
+  <mu2 value="${trolley_wheel_friction}"/>
+  <kp  value="10000000.0" />
+  <kd  value="1.0" />
+  <fdir1 value="1 0 0"/>
+</gazebo>
+
+<!-- .....................MULTI WHEEL DIFF DRIVE ................................... -->
 
 <gazebo>
 	<plugin name="diffdrive_plugin_multiwheel_middle" filename="libdiffdrive_plugin_multi_wheel.so">
@@ -32,10 +46,10 @@
 		<updateRate>100.0</updateRate>
 		<leftJoints>middle_left_wheel_joint</leftJoints>
 		<rightJoints>middle_right_wheel_joint</rightJoints>
-		<wheelSeparation>${wheel_middle_base}</wheelSeparation>
+		<wheelSeparation>${traction_wheel_base}</wheelSeparation>
 		<wheelDiameter>${2*wheel_radius}</wheelDiameter>
 		<robotBaseFrame>base_link</robotBaseFrame>
-		<torque>${wheel_torque}</torque>
+		<torque>${traction_wheel_torque}</torque>
 		<commandTopic>/cmd_vel</commandTopic>
 		<odometryTopic>odom</odometryTopic>
 		<odometryFrame>odom</odometryFrame>
@@ -43,6 +57,8 @@
 		<publishOdometryMsg>true</publishOdometryMsg>
 	</plugin>
 </gazebo>
+
+<!--................................................................................. -->
 
 
 </robot>

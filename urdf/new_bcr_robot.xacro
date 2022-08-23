@@ -5,13 +5,18 @@
 
 <!--................................ XACRO CONSTANTS .............................. -->
 
-<xacro:property name="wheel_mass"                           value="1"/>
+<xacro:property name="chassis_mass"                    				value="0.1"/>
+
+<xacro:property name="traction_wheel_mass"                    value="1"/>
+<xacro:property name="traction_wheel_base"                    value="0.44"/>
+<xacro:property name="traction_wheel_torque"                  value="50"/>
+
+<xacro:property name="trolley_wheel_mass"                    	value="0.1"/>
+<xacro:property name="trolley_wheel_base"                  		value="0.54"/>
+<xacro:property name="trolley_wheel_friction"               	value="1.0"/>
+
 <xacro:property name="wheel_radius"                         value="0.06"/>
 <xacro:property name="wheel_width"                          value="0.025"/>
-<xacro:property name="wheel_middle_base"                    value="0.44"/>
-<xacro:property name="wheel_base"                  					value="0.54"/>
-<xacro:property name="wheel_torque"                         value="10"/>
-
 
 <!-- ............................... LOAD MACROS ................................. -->
 
@@ -36,7 +41,7 @@
 	</visual>
 
 	<inertial>
-		<mass value="1"/>
+		<mass value="${chassis_mass}" />
 		<inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
 	</inertial>
 
@@ -44,13 +49,13 @@
 
 <!-- ................................ WHEELS ..................................... -->
 
-<xacro:wheel cardinality="front" dexterity="left"  origin_x="0.37" origin_y="${wheel_base/2}" origin_z="${wheel_radius}"/>
-<xacro:wheel cardinality="front" dexterity="right" origin_x="0.37" origin_y="-${wheel_base/2}" origin_z="${wheel_radius}"/>
+<xacro:wheel cardinality="front" dexterity="left"  origin_x="0.37" origin_y="${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
+<xacro:wheel cardinality="front" dexterity="right" origin_x="0.37" origin_y="-${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
 
-<xacro:wheel cardinality="back" dexterity="left"  origin_x="-0.37" origin_y="${wheel_base/2}" origin_z="${wheel_radius}"/>
-<xacro:wheel cardinality="back" dexterity="right" origin_x="-0.37" origin_y="-${wheel_base/2}" origin_z="${wheel_radius}"/>
+<xacro:wheel cardinality="back" dexterity="left"  origin_x="-0.37" origin_y="${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
+<xacro:wheel cardinality="back" dexterity="right" origin_x="-0.37" origin_y="-${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
 
-<xacro:wheel cardinality="middle" dexterity="left"  origin_x="0" origin_y="${wheel_middle_base/2}" origin_z="${wheel_radius}"/>
-<xacro:wheel cardinality="middle" dexterity="right" origin_x="0" origin_y="-${wheel_middle_base/2}" origin_z="${wheel_radius}"/>
+<xacro:wheel cardinality="middle" dexterity="left"  origin_x="0" origin_y="${traction_wheel_base/2}" origin_z="${wheel_radius}"/>
+<xacro:wheel cardinality="middle" dexterity="right" origin_x="0" origin_y="-${traction_wheel_base/2}" origin_z="${wheel_radius}"/>
 
 </robot>
