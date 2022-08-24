@@ -18,6 +18,14 @@
 <xacro:property name="wheel_radius"                         value="0.06"/>
 <xacro:property name="wheel_width"                          value="0.025"/>
 
+<xacro:arg      name="two_d_lidar_enabled"                  default="true" />
+<xacro:property name="two_d_lidar_update_rate"              value="50"/>
+<xacro:property name="two_d_lidar_sample_size"              value="361"/>
+<xacro:property name="two_d_lidar_min_angle"                value="0"/>
+<xacro:property name="two_d_lidar_max_angle"                value="360"/>
+<xacro:property name="two_d_lidar_min_range"                value="0.1"/>
+<xacro:property name="two_d_lidar_max_range"                value="16"/>
+
 <!-- ............................... LOAD MACROS ................................. -->
 
 <xacro:include filename="$(find new_bcr_robot)/urdf/materials.xacro"/>
@@ -57,5 +65,45 @@
 
 <xacro:wheel cardinality="middle" dexterity="left"  origin_x="0" origin_y="${traction_wheel_base/2}" origin_z="${wheel_radius}"/>
 <xacro:wheel cardinality="middle" dexterity="right" origin_x="0" origin_y="-${traction_wheel_base/2}" origin_z="${wheel_radius}"/>
+
+<!-- ............................. 2D LIDAR ........................................ -->
+
+<xacro:if value="$(arg two_d_lidar_enabled)">
+
+    <link name="two_d_lidar">
+        <collision>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+           <cylinder length="0.06" radius="0.075"/>
+          </geometry>
+        </collision>
+
+        <visual>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+           <cylinder length="0.06" radius="0.075"/>
+          </geometry>
+          <material name="orange"/>
+        </visual>
+
+        <inertial>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <mass value="0.1"/>
+          <xacro:cylinder_inertia m="0.1" r="0.075" h="0.06"/>
+        </inertial>
+   </link>
+
+   <joint name="two_d_lidar_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="two_d_lidar"/>
+      <origin xyz="0.3 0 0.45" rpy="0 0 ${-pi/2}" />
+    </joint>
+
+   <gazebo reference="two_d_lidar">
+       <material>Gazebo/Orange</material>
+   </gazebo>
+
+</xacro:if>
+
 
 </robot>

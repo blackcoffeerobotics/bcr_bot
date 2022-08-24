@@ -58,6 +58,73 @@
 	</plugin>
 </gazebo>
 
+<!--............................... IMU PLUGIN ..................................... -->
+
+<gazebo>
+	<plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+			<updateRate>50.0</updateRate>
+			<bodyName>base_link</bodyName>
+			<topicName>/imu</topicName>
+			<serviceName>/imu/calibrate</serviceName>
+			<accelOffset>0.0 0.0 0.0</accelOffset>
+			<accelDrift>0.0 0.0 0.0</accelDrift>
+			<accelDriftFrequency>0.0 0.0 0.0</accelDriftFrequency>
+			<accelGaussianNoise>0.0 0.0 0.0</accelGaussianNoise>
+			<rateOffset>0.0 0.0 0.0</rateOffset>
+			<rateDrift>0.0 0.0 0.0</rateDrift>
+			<rateDriftFrequency>0.0 0.0 0.0</rateDriftFrequency>
+			<rateGaussianNoise>0.0 0.0 0.0</rateGaussianNoise>
+			<headingOffset>0.0</headingOffset>
+			<headingDrift>0.0</headingDrift>
+			<headingDriftFrequency>0.0</headingDriftFrequency>
+			<headingGaussianNoise>0.0</headingGaussianNoise>
+			<rpyOffset>0.0 0.0 0.0</rpyOffset>
+			<xyzOffset>0.0 0.0 0.0</xyzOffset>
+			<gaussianNoise>0.0</gaussianNoise>
+			<frameName>imu_frame</frameName>
+	</plugin>
+</gazebo>
+
+<!-- ........................... 2D LIDAR PLUGIN ................................... -->
+
+<xacro:if value="$(arg two_d_lidar_enabled)">
+
+   <gazebo reference="two_d_lidar">
+      <gravity>true</gravity>
+      <sensor type="ray" name="two_d_lidar">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>false</visualize>
+        <update_rate>${two_d_lidar_update_rate}</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>${two_d_lidar_sample_size}</samples>
+              <resolution>1</resolution>
+              <min_angle>${radians(two_d_lidar_min_angle)}</min_angle>
+              <max_angle>${radians(two_d_lidar_max_angle)}</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>${two_d_lidar_min_range}</min>
+            <max>${two_d_lidar_max_range}</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.001</stddev>
+          </noise>
+        </ray>
+        <plugin name="gazebo_ros_laser" filename="libgazebo_ros_laser.so">
+          <topicName>scan</topicName>
+          <frameName>two_d_lidar</frameName>
+          <robotNamespace>/</robotNamespace>
+        </plugin>
+      </sensor>
+   </gazebo>
+
+</xacro:if>
+
 <!--................................................................................. -->
 
 

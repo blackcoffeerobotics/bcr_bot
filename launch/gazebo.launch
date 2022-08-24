@@ -4,8 +4,10 @@
 
 <!--............................ CONFIGURABLE PARAMETERS .............................-->
 
-<arg name="gazebo_gui_enabled" default="true"/>
-<arg name="world_name" default="mars.world"/>
+<arg name="gazebo_gui_enabled" 		default="false"/>
+<arg name="world_name" 						default="mars.world"/>
+<arg name="two_d_lidar_enabled"		default="false"/>
+
 
 
 <!-- ............................... LAUNCH WORLD ................................... -->
@@ -23,6 +25,7 @@
 <!-- ................................ XACRO CALL .................................... -->
 
 <param name="robot_description" command="$(find xacro)/xacro $(find new_bcr_robot)/urdf/new_bcr_robot.xacro
+	    two_d_lidar_enabled:=$(arg two_d_lidar_enabled)
 		" />
 
 

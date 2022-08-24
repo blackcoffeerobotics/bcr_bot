@@ -96,6 +96,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        two_d_lidar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
@@ -130,7 +135,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.7768744230270386
+      Distance: 2.2289111614227295
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -138,17 +143,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -0.14211058616638184
-        Y: 0.2848600447177887
-        Z: 0.11703619360923767
+        X: -0.25897806882858276
+        Y: 0.23940856754779816
+        Z: 0.27094876766204834
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.23039811849594116
+      Pitch: 0.16479673981666565
       Target Frame: <Fixed Frame>
-      Yaw: 5.375344753265381
+      Yaw: 5.82534646987915
     Saved: ~
 Window Geometry:
   Displays:
