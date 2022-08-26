@@ -38,6 +38,23 @@
   <fdir1 value="1 0 0"/>
 </gazebo>
 
+<gazebo reference="middle_left_wheel_joint">
+  <mu1 value="${traction_wheel_friction}"/>
+  <mu2 value="${traction_wheel_friction}"/>
+  <kp  value="10000000.0" />
+  <kd  value="1.0" />
+  <fdir1 value="1 0 0"/>
+</gazebo>
+
+<gazebo reference="middle_right_wheel_joint">
+  <mu1 value="${traction_wheel_friction}"/>
+  <mu2 value="${traction_wheel_friction}"/>
+  <kp  value="10000000.0" />
+  <kd  value="1.0" />
+  <fdir1 value="1 0 0"/>
+</gazebo>
+
+
 <!-- .....................MULTI WHEEL DIFF DRIVE ................................... -->
 
 <gazebo>
