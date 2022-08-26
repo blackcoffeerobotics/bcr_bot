@@ -5,18 +5,24 @@
 
 <!--................................ XACRO CONSTANTS .............................. -->
 
-<xacro:property name="chassis_mass"                    				value="0.1"/>
+<xacro:property name="chassis_mass"                    			value="0.1"/>
+<xacro:property name="chassis_length"                    		value="0.95"/>
+<xacro:property name="chassis_width"                    		value="0.64"/>
+<xacro:property name="chassis_height"                    		value="0.25"/>
+<xacro:property name="chassis_ground_clearance"             value="0.16"/>
 
-<xacro:property name="traction_wheel_mass"                    value="1"/>
-<xacro:property name="traction_wheel_base"                    value="0.44"/>
-<xacro:property name="traction_wheel_torque"                  value="50"/>
+<xacro:property name="traction_wheel_mass"                  value="1"/>
+<xacro:property name="traction_wheel_base"                  value="0.44"/>
+<xacro:property name="traction_wheel_torque"                value="50"/>
+<xacro:property name="traction_wheel_friction"              value="5.0"/>
 
-<xacro:property name="trolley_wheel_mass"                    	value="0.1"/>
-<xacro:property name="trolley_wheel_base"                  		value="0.54"/>
-<xacro:property name="trolley_wheel_friction"               	value="1.0"/>
+<xacro:property name="trolley_wheel_mass"                   value="0.1"/>
+<xacro:property name="trolley_wheel_base"                  	value="0.54"/>
+<xacro:property name="trolley_wheel_friction"               value="0.0"/>
 
 <xacro:property name="wheel_radius"                         value="0.06"/>
 <xacro:property name="wheel_width"                          value="0.025"/>
+<xacro:property name="wheel_pos"                          	value="0.37"/>
 
 <xacro:arg      name="two_d_lidar_enabled"                  default="true" />
 <xacro:property name="two_d_lidar_update_rate"              value="50"/>
@@ -32,36 +38,39 @@
 <xacro:include filename="$(find new_bcr_robot)/urdf/macros.xacro"/>
 <xacro:include filename="$(find new_bcr_robot)/urdf/gazebo.xacro"/>
 
-<!--.............................................................................. -->
-
-
 
 <!-- ................................ BASE LINK .................................. -->
 
 <link name="base_link">
 
+	<collision>
+		<origin xyz="0 0 ${chassis_ground_clearance + chassis_height/2}" rpy="0 0 0" />
+  		<geometry>
+				<box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+  		</geometry>
+	</collision>
+
 	<visual>
-		<origin xyz="0 0 0.16" rpy="0 0 0" />
+		<origin xyz="0 0 ${chassis_ground_clearance}" rpy="0 0 0" />
   		<geometry>
     		<mesh filename="package://new_bcr_robot/meshes/bcr_chassis.dae" scale="0.1 0.1 0.1"/>
-				<scale>0.01 0.01 0.01</scale>
   		</geometry>
 	</visual>
 
 	<inertial>
 		<mass value="${chassis_mass}" />
-		<inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+		<xacro:box_inertia m="${chassis_mass}" x="${chassis_length}" y="${chassis_width}" z = "${chassis_height}"/>
 	</inertial>
 
 </link>
 
 <!-- ................................ WHEELS ..................................... -->
 
-<xacro:wheel cardinality="front" dexterity="left"  origin_x="0.37" origin_y="${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
-<xacro:wheel cardinality="front" dexterity="right" origin_x="0.37" origin_y="-${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
+<xacro:wheel cardinality="front" dexterity="left"  origin_x="${wheel_pos}" origin_y="${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
+<xacro:wheel cardinality="front" dexterity="right" origin_x="${wheel_pos}" origin_y="-${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
 
-<xacro:wheel cardinality="back" dexterity="left"  origin_x="-0.37" origin_y="${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
-<xacro:wheel cardinality="back" dexterity="right" origin_x="-0.37" origin_y="-${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
+<xacro:wheel cardinality="back" dexterity="left"  origin_x="-${wheel_pos}" origin_y="${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
+<xacro:wheel cardinality="back" dexterity="right" origin_x="-${wheel_pos}" origin_y="-${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
 
 <xacro:wheel cardinality="middle" dexterity="left"  origin_x="0" origin_y="${traction_wheel_base/2}" origin_z="${wheel_radius}"/>
 <xacro:wheel cardinality="middle" dexterity="right" origin_x="0" origin_y="-${traction_wheel_base/2}" origin_z="${wheel_radius}"/>

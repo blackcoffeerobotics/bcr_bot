@@ -4,7 +4,7 @@
 
 <!--............................ CONFIGURABLE PARAMETERS .............................-->
 
-<arg name="gazebo_gui_enabled" 		default="false"/>
+<arg name="gazebo_gui_enabled" 		default="true"/>
 <arg name="world_name" 						default="mars.world"/>
 <arg name="two_d_lidar_enabled"		default="false"/>
 
