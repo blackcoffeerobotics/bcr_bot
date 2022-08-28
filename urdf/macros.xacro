@@ -24,41 +24,75 @@
     />
   </xacro:macro>
 
-<!-- ............................... WHEEL DEFINITION .............................. -->
+<!-- ............................... TROLLEY WHEEL DEFINITION .............................. -->
 
- <xacro:macro name="wheel" params="cardinality dexterity origin_x origin_y origin_z">
+ <xacro:macro name="trolley_wheel" params="cardinality dexterity origin_x origin_y origin_z">
 
    <link name="${cardinality}_${dexterity}_wheel">
     <collision>
       <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
       <geometry>
-       <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+       <sphere radius="${trolley_wheel_radius}"/>
       </geometry>
     </collision>
 
     <visual>
       <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
       <geometry>
-       <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+       <sphere radius="${trolley_wheel_radius}"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="${trolley_wheel_mass}"/>
+				<xacro:sphere_inertia m="${trolley_wheel_mass}" r="${trolley_wheel_radius}"/>
+    </inertial>
+
+    <mu>0.0</mu>
+
+   </link>
+
+   <joint name="${cardinality}_${dexterity}_wheel_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="${cardinality}_${dexterity}_wheel"/>
+      <origin xyz="${origin_x} ${origin_y} ${origin_z}" rpy="0 0 0" />
+      <axis xyz="0 1 0" rpy="0 0 0" />
+    </joint>
+
+   <gazebo reference="${cardinality}_${dexterity}_wheel">
+      <material>Gazebo/Black</material>
+   </gazebo>
+
+  </xacro:macro>
+
+
+ <xacro:macro name="traction_wheel" params="cardinality dexterity origin_x origin_y origin_z">
+
+   <link name="${cardinality}_${dexterity}_wheel">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
+      <geometry>
+       <cylinder length="${traction_wheel_width}" radius="${traction_wheel_radius}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
+      <geometry>
+       <cylinder length="${traction_wheel_width}" radius="${traction_wheel_radius}"/>
       </geometry>
       <material name="black"/>
     </visual>
 
     <inertial>
       <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
-
-    <xacro:if value="${cardinality == 'middle'}">
-        <mass value="${traction_wheel_mass}"/>
-				<xacro:cylinder_inertia m="${traction_wheel_mass}" r="${wheel_radius}" h="${wheel_width}"/>
-    </xacro:if>
-
-    <xacro:unless value="${cardinality == 'middle'}">
-        <mass value="${trolley_wheel_mass}"/>
-				<xacro:cylinder_inertia m="${trolley_wheel_mass}" r="${wheel_radius}" h="${wheel_width}"/>
-    </xacro:unless>
-
-
+      <mass value="${traction_wheel_mass}"/>
+      <xacro:cylinder_inertia m="${traction_wheel_mass}" r="${traction_wheel_radius}" h="${traction_wheel_width}"/>
     </inertial>
+
+    <mu>5.0</mu>
    </link>
 
    <joint name="${cardinality}_${dexterity}_wheel_joint" type="continuous">
