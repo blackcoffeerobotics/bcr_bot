@@ -1,32 +1,33 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="new_bcr_robot">
 
-
-
 <!--................................ XACRO CONSTANTS .............................. -->
 
-<xacro:property name="chassis_mass"                    			value="0.1"/>
-<xacro:property name="chassis_length"                    		value="0.95"/>
-<xacro:property name="chassis_width"                    		value="0.64"/>
-<xacro:property name="chassis_height"                    		value="0.25"/>
-<xacro:property name="chassis_ground_clearance"             value="0.16"/>
+<xacro:property name="chassis_mass"                    		value="70"/>
+<xacro:property name="chassis_length"                    	value="0.95"/>
+<xacro:property name="chassis_width"                    	value="0.64"/>
+<xacro:property name="chassis_height"                    	value="0.25"/>
+<xacro:property name="chassis_ground_clearance"             value="0.5"/>
 
 <xacro:property name="traction_wheel_mass"                  value="1"/>
-<xacro:property name="traction_wheel_base"                  value="0.44"/>
-<xacro:property name="traction_wheel_torque"                value="50"/>
+<xacro:property name="traction_wheel_base"                  value="0.88"/>
+<xacro:property name="traction_wheel_torque"                value="20000"/>
 <xacro:property name="traction_wheel_friction"              value="5.0"/>
 
 <xacro:property name="trolley_wheel_mass"                   value="0.1"/>
 <xacro:property name="trolley_wheel_base"                  	value="0.54"/>
 <xacro:property name="trolley_wheel_friction"               value="0.0"/>
+<xacro:property name="trolley_wheel_radius"                value="0.06"/>
+<!-- a small constant -->
+<xacro:property name="eps"                                  value="0.002"/>
 
-<xacro:property name="wheel_radius"                         value="0.06"/>
-<xacro:property name="wheel_width"                          value="0.025"/>
-<xacro:property name="wheel_pos"                          	value="0.37"/>
+<xacro:property name="traction_wheel_radius"                value="0.1"/>
+<xacro:property name="traction_wheel_width"                          value="0.05"/>
+<xacro:property name="traction_wheel_base"                          	value="0.8"/>
 
-<xacro:arg      name="two_d_lidar_enabled"                  default="true" />
-<xacro:property name="two_d_lidar_update_rate"              value="50"/>
-<xacro:property name="two_d_lidar_sample_size"              value="361"/>
+<xacro:arg      name="two_d_lidar_enabled"                  default="false" />
+<xacro:property name="two_d_lidar_update_rate"              value="30"/>
+<xacro:property name="two_d_lidar_sample_size"              value="720"/>
 <xacro:property name="two_d_lidar_min_angle"                value="0"/>
 <xacro:property name="two_d_lidar_max_angle"                value="360"/>
 <xacro:property name="two_d_lidar_min_range"                value="0.1"/>
@@ -41,19 +42,21 @@
 
 <!-- ................................ BASE LINK .................................. -->
 
+<link name="base_ref"/>
+
 <link name="base_link">
 
 	<collision>
-		<origin xyz="0 0 ${chassis_ground_clearance + chassis_height/2}" rpy="0 0 0" />
+		<origin xyz="0 0 0" rpy="0 0 0" />
   		<geometry>
-				<box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+			<box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
   		</geometry>
 	</collision>
 
 	<visual>
-		<origin xyz="0 0 ${chassis_ground_clearance}" rpy="0 0 0" />
+		<origin xyz="0 0 0" rpy="0 0 0" />
   		<geometry>
-    		<mesh filename="package://new_bcr_robot/meshes/bcr_chassis.dae" scale="0.1 0.1 0.1"/>
+    		<box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
   		</geometry>
 	</visual>
 
@@ -64,16 +67,21 @@
 
 </link>
 
+    <joint name="base_joint" type="fixed">
+      <parent link="base_ref"/>
+      <child link="base_link"/>
+      <origin xyz="0.0 0 0.0" rpy="0 0 0.0" />
+    </joint>
 <!-- ................................ WHEELS ..................................... -->
 
-<xacro:wheel cardinality="front" dexterity="left"  origin_x="${wheel_pos}" origin_y="${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
-<xacro:wheel cardinality="front" dexterity="right" origin_x="${wheel_pos}" origin_y="-${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
+<xacro:trolley_wheel cardinality="front" dexterity="left"  origin_x="${chassis_length/2}" origin_y="${trolley_wheel_base/2}" origin_z="-${trolley_wheel_radius+chassis_height/2}"/>
+<xacro:trolley_wheel cardinality="front" dexterity="right" origin_x="${chassis_length/2}" origin_y="-${trolley_wheel_base/2}" origin_z="-${trolley_wheel_radius+chassis_height/2}"/>
 
-<xacro:wheel cardinality="back" dexterity="left"  origin_x="-${wheel_pos}" origin_y="${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
-<xacro:wheel cardinality="back" dexterity="right" origin_x="-${wheel_pos}" origin_y="-${trolley_wheel_base/2}" origin_z="${wheel_radius}"/>
+<xacro:trolley_wheel cardinality="back" dexterity="left"  origin_x="-${chassis_length/2}" origin_y="${trolley_wheel_base/2}" origin_z="-${trolley_wheel_radius+chassis_height/2}"/>
+<xacro:trolley_wheel cardinality="back" dexterity="right" origin_x="-${chassis_length/2}" origin_y="-${trolley_wheel_base/2}" origin_z="-${trolley_wheel_radius+chassis_height/2}"/>
 
-<xacro:wheel cardinality="middle" dexterity="left"  origin_x="0" origin_y="${traction_wheel_base/2}" origin_z="${wheel_radius}"/>
-<xacro:wheel cardinality="middle" dexterity="right" origin_x="0" origin_y="-${traction_wheel_base/2}" origin_z="${wheel_radius}"/>
+<xacro:traction_wheel cardinality="middle" dexterity="left"  origin_x="0" origin_y="${traction_wheel_base/2}" origin_z="-${chassis_height/2+2*trolley_wheel_radius+eps-traction_wheel_radius}"/>
+<xacro:traction_wheel cardinality="middle" dexterity="right" origin_x="0" origin_y="-${traction_wheel_base/2}" origin_z="-${chassis_height/2+2*trolley_wheel_radius+eps-traction_wheel_radius}"/>
 
 <!-- ............................. 2D LIDAR ........................................ -->
 
@@ -107,6 +115,8 @@
       <child link="two_d_lidar"/>
       <origin xyz="0.3 0 0.45" rpy="0 0 ${-pi/2}" />
     </joint>
+
+
 
    <gazebo reference="two_d_lidar">
        <material>Gazebo/Orange</material>

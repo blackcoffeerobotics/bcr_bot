@@ -5,7 +5,7 @@
 <!--............................ CONFIGURABLE PARAMETERS .............................-->
 
 <arg name="gazebo_gui_enabled" 		default="true"/>
-<arg name="world_name" 						default="mars.world"/>
+<arg name="world_name" 						default="empty_world.world"/>
 <arg name="two_d_lidar_enabled"		default="false"/>
 
 
@@ -13,7 +13,7 @@
 <!-- ............................... LAUNCH WORLD ................................... -->
 
 <include file="$(find gazebo_ros)/launch/empty_world.launch">
-  <arg name="world_name"    value="$(find new_bcr_robot)/worlds/$(arg world_name)"/>
+  <!-- <arg name="world_name"    value="$(find new_bcr_robot)/worlds/$(arg world_name)"/> -->
   <arg name="paused"        value="false"/>
   <arg name="use_sim_time"  value="true"/>
   <arg name="gui"           value="$(arg gazebo_gui_enabled)"/>
@@ -35,7 +35,8 @@
 <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
 	args="-param robot_description
 				-urdf
-				-model new_bcr_robot"
+				-model new_bcr_robot
+				-z 0.9"
 	output="screen" />
 
 <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />

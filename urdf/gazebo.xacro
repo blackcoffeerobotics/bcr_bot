@@ -58,20 +58,22 @@
 <!-- .....................MULTI WHEEL DIFF DRIVE ................................... -->
 
 <gazebo>
-	<plugin name="diffdrive_plugin_multiwheel_middle" filename="libdiffdrive_plugin_multi_wheel.so">
+	<plugin name="diffdrive_plugin_multiwheel_middle" filename="libgazebo_ros_diff_drive.so">
 		<robotNamespace></robotNamespace>
+    <legacyMode>false</legacyMode>
 		<updateRate>100.0</updateRate>
-		<leftJoints>middle_left_wheel_joint</leftJoints>
-		<rightJoints>middle_right_wheel_joint</rightJoints>
-		<wheelSeparation>${traction_wheel_base}</wheelSeparation>
-		<wheelDiameter>${2*wheel_radius}</wheelDiameter>
+		<leftJoint>middle_left_wheel_joint</leftJoint>
+		<rightJoint>middle_right_wheel_joint</rightJoint>
+		<wheelSeparation>${traction_wheel_base+traction_wheel_width}</wheelSeparation>
+		<wheelDiameter>${2*traction_wheel_radius}</wheelDiameter>
 		<robotBaseFrame>base_link</robotBaseFrame>
-		<torque>${traction_wheel_torque}</torque>
+		<wheelTorque>${traction_wheel_torque}</wheelTorque>
 		<commandTopic>/cmd_vel</commandTopic>
-		<odometryTopic>odom</odometryTopic>
+		<odometryTopic>/odom</odometryTopic>
 		<odometryFrame>odom</odometryFrame>
 		<publishOdometryTf>true</publishOdometryTf>
 		<publishOdometryMsg>true</publishOdometryMsg>
+    <wheelAcceleration>5.0</wheelAcceleration>
 	</plugin>
 </gazebo>
 
