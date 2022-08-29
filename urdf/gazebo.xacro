@@ -6,55 +6,6 @@
 </gazebo>
 
 
-<gazebo reference="back_left_wheel_joint">
-  <mu1 value="${trolley_wheel_friction}"/>
-  <mu2 value="${trolley_wheel_friction}"/>
-  <kp  value="10000000.0" />
-  <kd  value="1.0" />
-  <fdir1 value="1 0 0"/>
-</gazebo>
-
-<gazebo reference="back_right_wheel_joint">
-  <mu1 value="${trolley_wheel_friction}"/>
-  <mu2 value="${trolley_wheel_friction}"/>
-  <kp  value="10000000.0" />
-  <kd  value="1.0" />
-  <fdir1 value="1 0 0"/>
-</gazebo>
-
-<gazebo reference="front_left_wheel_joint">
-  <mu1 value="${trolley_wheel_friction}"/>
-  <mu2 value="${trolley_wheel_friction}"/>
-  <kp  value="10000000.0" />
-  <kd  value="1.0" />
-  <fdir1 value="1 0 0"/>
-</gazebo>
-
-<gazebo reference="front_right_wheel_joint">
-  <mu1 value="${trolley_wheel_friction}"/>
-  <mu2 value="${trolley_wheel_friction}"/>
-  <kp  value="10000000.0" />
-  <kd  value="1.0" />
-  <fdir1 value="1 0 0"/>
-</gazebo>
-
-<gazebo reference="middle_left_wheel_joint">
-  <mu1 value="${traction_wheel_friction}"/>
-  <mu2 value="${traction_wheel_friction}"/>
-  <kp  value="10000000.0" />
-  <kd  value="1.0" />
-  <fdir1 value="1 0 0"/>
-</gazebo>
-
-<gazebo reference="middle_right_wheel_joint">
-  <mu1 value="${traction_wheel_friction}"/>
-  <mu2 value="${traction_wheel_friction}"/>
-  <kp  value="10000000.0" />
-  <kd  value="1.0" />
-  <fdir1 value="1 0 0"/>
-</gazebo>
-
-
 <!-- .....................MULTI WHEEL DIFF DRIVE ................................... -->
 
 <gazebo>
@@ -71,8 +22,13 @@
 		<commandTopic>/cmd_vel</commandTopic>
 		<odometryTopic>/odom</odometryTopic>
 		<odometryFrame>odom</odometryFrame>
-		<publishOdometryTf>true</publishOdometryTf>
+		<rosDebugLevel>na</rosDebugLevel>
+		<publishTf>true</publishTf>
+		<publishOdomTF>true</publishOdomTF>
+		<publishWheelTF>false</publishWheelTF>
+		<publishWheelJointState>false</publishWheelJointState>
 		<publishOdometryMsg>true</publishOdometryMsg>
+		<odometrySource>world</odometrySource>
     <wheelAcceleration>5.0</wheelAcceleration>
 	</plugin>
 </gazebo>

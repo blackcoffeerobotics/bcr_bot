@@ -36,14 +36,6 @@
       </geometry>
     </collision>
 
-    <visual>
-      <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
-      <geometry>
-       <sphere radius="${trolley_wheel_radius}"/>
-      </geometry>
-      <material name="black"/>
-    </visual>
-
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <mass value="${trolley_wheel_mass}"/>
@@ -77,14 +69,6 @@
        <cylinder length="${traction_wheel_width}" radius="${traction_wheel_radius}"/>
       </geometry>
     </collision>
-
-    <visual>
-      <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
-      <geometry>
-       <cylinder length="${traction_wheel_width}" radius="${traction_wheel_radius}"/>
-      </geometry>
-      <material name="black"/>
-    </visual>
 
     <inertial>
       <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
