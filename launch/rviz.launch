@@ -5,7 +5,7 @@
 <!--............................ CONFIGURABLE PARAMETERS ..............................-->
 
 <arg name="rviz_config"   	  		default="entire_setup.rviz"/>
-<arg name="two_d_lidar_enabled"		default="false"/>
+<arg name="two_d_lidar_enabled"		default="true"/>
 
 
 <!-- ........................... CONDITIONAL XACRO CALL .............................. -->
