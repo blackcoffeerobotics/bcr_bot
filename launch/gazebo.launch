@@ -6,7 +6,7 @@
 
 <arg name="gazebo_gui_enabled" 		default="true"/>
 <arg name="world_name" 						default="mars.world"/>
-<arg name="two_d_lidar_enabled"		default="false"/>
+<arg name="two_d_lidar_enabled"		default="true"/>
 
 
 
@@ -28,7 +28,6 @@
 	    two_d_lidar_enabled:=$(arg two_d_lidar_enabled)
 		" />
 
-
 <!-- ................................ SPAWN MODEL .................................... -->
 
 
@@ -41,6 +40,7 @@
 
 <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+<node pkg="tf2_ros" type="static_transform_publisher" name="imu_transform" args="0 0 0 0 0 0 base_link imu_frame"/>
 
 <!-- ................................................................................. -->
 
