@@ -38,6 +38,8 @@
 <xacro:property name="camera_height"                  		value="0.10"/>
 <xacro:property name="camera_horizontal_fov"         	 		value="60"/>
 
+<xacro:arg      name="conveyor_enabled"                 	  default="true" />
+
 <!-- ............................... LOAD MACROS ................................. -->
 
 <xacro:include filename="$(find new_bcr_robot)/urdf/materials.xacro"/>
@@ -173,6 +175,39 @@
 
 </xacro:if>
 
-<!-- ......................................................................... -->
+<!-- ............................. CONVEYOR ........................................ -->
+
+<xacro:if value="$(arg conveyor_enabled)">
+
+	<link name="conveyor_belt">
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+			<box size="1 0.6 0.015"/>
+			</geometry>
+		</collision>
+
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+			<box size="1 0.6 0.015"/>
+			</geometry>
+		</visual>
+
+		<inertial>
+			<mass value="1"/>
+			<xacro:box_inertia m="1" x="1" y="0.6" z = "0.015"/>
+		</inertial>
+	
+	</link>
+
+	<joint name="conveyor_joint" type="fixed">
+		<parent link="base_link"/>
+		<child link="conveyor_belt"/>
+		<origin xyz="0 0 0.21" rpy="0 0 0" />
+	</joint>
+
+<!-- ............................................................................... -->
 
 </robot>
