@@ -58,6 +58,7 @@
   <exec_depend>xacro</exec_depend>
 
 	<depend>gazebo_ros</depend>
+	<depend>gazebo_plugins</depend>
 	<depend>hector_gazebo_plugins</depend>
 
   <export>
