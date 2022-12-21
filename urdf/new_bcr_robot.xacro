@@ -45,9 +45,9 @@
 
 <!-- ................................ BASE LINK .................................. -->
 
-<link name="base_ref"/>
+<link name="base_link"/>
 
-<link name="base_link">
+<link name="chassis_link">
 
 	<collision>
 		<origin xyz="0 0 0" rpy="0 0 0" />
@@ -70,9 +70,9 @@
 
 </link>
 
-<joint name="base_joint" type="fixed">
-	<parent link="base_ref"/>
-	<child link="base_link"/>
+<joint name="chassis_joint" type="fixed">
+	<parent link="base_link"/>
+	<child link="chassis_link"/>
 	<origin xyz="0.0 0 0.0" rpy="0 0 0.0" />
 </joint>
 
@@ -162,13 +162,13 @@
 			<child link="kinect_camera"/>
 	</joint>
 
-<!-- 	<link name="kinect_camera_optical"/>
+	<link name="kinect_camera_optical"/>
 
 	<joint name="kinect_camera_optical_joint" type="fixed">
 		<origin xyz="0 0 0" rpy="-${pi/2} 0 -${pi/2}"/>
 		<parent link="kinect_camera"/>
 		<child link="kinect_camera_optical"/>
-	</joint> -->
+	</joint>
 
 </xacro:if>
 

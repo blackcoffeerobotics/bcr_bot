@@ -5,15 +5,13 @@
 <!--............................ CONFIGURABLE PARAMETERS .............................-->
 
 <arg name="gazebo_gui_enabled" 		default="true"/>
-<arg name="world_name" 						default="mars.world"/>
 <arg name="two_d_lidar_enabled"		default="false"/>
-<arg name="camera_enabled"				default="false"/>
+<arg name="camera_enabled"			default="false"/>
 
 
 <!-- ............................... LAUNCH WORLD ................................... -->
 
 <include file="$(find gazebo_ros)/launch/empty_world.launch">
-  <arg name="world_name"    value="$(find new_bcr_robot)/worlds/$(arg world_name)"/>
   <arg name="paused"        value="false"/>
   <arg name="use_sim_time"  value="true"/>
   <arg name="gui"           value="$(arg gazebo_gui_enabled)"/>
@@ -39,11 +37,10 @@
 				-z 0.9"
 	output="screen" />
 
-<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+	<remap from="/joint_states" to="/new_bcr_robot/joint_states"/>
+</node>
 <node pkg="tf2_ros" type="static_transform_publisher" name="imu_transform" args="0 0 0 0 0 0 base_link imu_frame"/>
-
 <!-- ................................................................................. -->
-
 
 </launch>
