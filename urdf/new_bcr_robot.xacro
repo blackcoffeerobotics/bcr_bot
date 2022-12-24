@@ -26,6 +26,7 @@
 
 <xacro:arg      name="two_d_lidar_enabled"                default="false" />
 <xacro:property name="two_d_lidar_update_rate"            value="30"/>
+<xacro:property name="wheel_odom_topic"            		  value="$(arg wheel_odom_topic)"/>
 <xacro:property name="two_d_lidar_sample_size"            value="361"/>
 <xacro:property name="two_d_lidar_min_angle"              value="0"/>
 <xacro:property name="two_d_lidar_max_angle"              value="360"/>

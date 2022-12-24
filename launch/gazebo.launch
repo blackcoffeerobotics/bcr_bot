@@ -7,6 +7,7 @@
 <arg name="gazebo_gui_enabled" 		default="true"/>
 <arg name="two_d_lidar_enabled"		default="false"/>
 <arg name="camera_enabled"			default="false"/>
+<arg name="wheel_odom_topic"		default="odom"/>
 
 
 <!-- ............................... LAUNCH WORLD ................................... -->
@@ -25,6 +26,7 @@
 <param name="robot_description" command="$(find xacro)/xacro $(find new_bcr_robot)/urdf/new_bcr_robot.xacro
 	    two_d_lidar_enabled:=$(arg two_d_lidar_enabled)
 	    camera_enabled:=$(arg camera_enabled)
+		wheel_odom_topic:=$(arg wheel_odom_topic)
 		" />
 
 <!-- ................................ SPAWN MODEL .................................... -->
