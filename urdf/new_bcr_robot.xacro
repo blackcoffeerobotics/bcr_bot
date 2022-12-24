@@ -38,7 +38,8 @@
 <xacro:property name="camera_height"                  		value="0.10"/>
 <xacro:property name="camera_horizontal_fov"         	 		value="60"/>
 
-<xacro:arg      name="conveyor_enabled"                 	  default="true" />
+<!-- TODO: pass in from launch-->
+<xacro:arg      name="conveyor_enabled"                 	  default="false" />
 
 <!-- ............................... LOAD MACROS ................................. -->
 
