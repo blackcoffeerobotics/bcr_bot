@@ -23,8 +23,9 @@
 		<odometryTopic>${wheel_odom_topic}</odometryTopic>
 		<odometryFrame>odom</odometryFrame>
 		<rosDebugLevel>na</rosDebugLevel>
-		<publishTf>true</publishTf>
-		<publishOdomTF>true</publishOdomTF>
+		<xacro:unless value="$(arg publish_wheel_odom_tf)">
+			<publishOdomTF>false</publishOdomTF>
+		</xacro:unless>
 		<publishWheelTF>false</publishWheelTF>
 		<publishWheelJointState>true</publishWheelJointState>
 		<publishOdometryMsg>true</publishOdometryMsg>
