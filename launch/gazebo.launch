@@ -8,7 +8,7 @@
 <arg name="two_d_lidar_enabled"		default="false"/>
 <arg name="camera_enabled"			default="false"/>
 <arg name="wheel_odom_topic"		default="odom"/>
-
+<arg name="publish_wheel_odom_tf"	default="true"/>
 
 <!-- ............................... LAUNCH WORLD ................................... -->
 
@@ -27,6 +27,7 @@
 	    two_d_lidar_enabled:=$(arg two_d_lidar_enabled)
 	    camera_enabled:=$(arg camera_enabled)
 		wheel_odom_topic:=$(arg wheel_odom_topic)
+		publish_wheel_odom_tf:=$(arg publish_wheel_odom_tf)
 		" />
 
 <!-- ................................ SPAWN MODEL .................................... -->
