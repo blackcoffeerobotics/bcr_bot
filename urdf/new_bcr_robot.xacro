@@ -40,8 +40,8 @@
 
 <xacro:arg      name="publish_wheel_odom_tf"              default="true" />
 
-<!-- TODO: pass in from launch-->
-<xacro:arg      name="conveyor_enabled"                 	  default="false" />
+<xacro:arg      name="conveyor_enabled"                 	  default="false"/>
+<xacro:arg      name="ground_truth_frame"                     default="map"/>
 
 <!-- ............................... LOAD MACROS ................................. -->
 
