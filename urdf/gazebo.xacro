@@ -70,8 +70,7 @@
 		<bodyName>base_link</bodyName>
 		<topicName>ground_truth_pose</topicName>
 		<gaussianNoise>0.00</gaussianNoise>
-		<!-- TODO pass in as argument-->
-		<frameName>map</frameName>
+		<frameName>$(arg ground_truth_frame)</frameName>
 	</plugin>
 </gazebo>
 
