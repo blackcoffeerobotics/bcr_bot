@@ -12,14 +12,14 @@
 	<plugin name="diffdrive_plugin_multiwheel_middle" filename="libgazebo_ros_diff_drive.so">
 		<robotNamespace></robotNamespace>
         <legacyMode>false</legacyMode>
-	    <updateRate>100.0</updateRate>
+	    <updateRate>50.0</updateRate>
 		<leftJoint>middle_left_wheel_joint</leftJoint>
 		<rightJoint>middle_right_wheel_joint</rightJoint>
-		<wheelSeparation>${traction_wheel_base+traction_wheel_width}</wheelSeparation>
-		<wheelDiameter>${2*traction_wheel_radius}</wheelDiameter>
+		<wheelSeparation>${traction_wheel_base+traction_wheel_width-0.01}</wheelSeparation>
+		<wheelDiameter>${2*traction_wheel_radius+0.01}</wheelDiameter>
 		<robotBaseFrame>base_link</robotBaseFrame>
 		<wheelTorque>${traction_wheel_torque}</wheelTorque>
-		<commandTopic>/cmd_vel</commandTopic>
+		<commandTopic>cmd_vel</commandTopic>
 		<odometryTopic>${wheel_odom_topic}</odometryTopic>
 		<odometryFrame>odom</odometryFrame>
 		<rosDebugLevel>na</rosDebugLevel>
@@ -29,14 +29,14 @@
 		<publishWheelTF>false</publishWheelTF>
 		<publishWheelJointState>true</publishWheelJointState>
 		<publishOdometryMsg>true</publishOdometryMsg>
-		<odometrySource>world</odometrySource>
+		<odometrySource>encoder</odometrySource>
         <wheelAcceleration>5.0</wheelAcceleration>
 	</plugin>
 </gazebo>
 
 <!--............................... IMU PLUGIN ..................................... -->
 
-<gazebo>
+<!-- <gazebo>
 	<plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
 		<updateRate>50.0</updateRate>
 		<bodyName>base_link</bodyName>
@@ -59,7 +59,7 @@
 		<gaussianNoise>0.0</gaussianNoise>
 		<frameName>imu_frame</frameName>
 	</plugin>
-</gazebo>
+</gazebo> -->
 
 <!--............................... Ground truth PLUGIN .............................-->
 
