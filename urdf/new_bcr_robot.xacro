@@ -10,7 +10,7 @@
 
 <xacro:property name="traction_wheel_mass"                value="1"/>
 <xacro:property name="traction_wheel_base"                value="0.88"/>
-<xacro:property name="traction_wheel_torque"              value="20000"/>
+<xacro:property name="traction_max_wheel_torque"              value="20000"/>
 <xacro:property name="traction_wheel_friction"            value="5.0"/>
 
 <xacro:property name="trolley_wheel_mass"                 value="0.1"/>
@@ -65,7 +65,7 @@
 	<visual>
 		<origin xyz="0 0 -0.08" rpy="0 0 0" />
   		<geometry>
-    		<mesh filename="package://new_bcr_robot/meshes/bcr_chassis.dae" scale="0.1 0.1 0.1"/>
+    		<mesh filename="file://$(find new_bcr_robot)/meshes/bcr_chassis.dae" scale="0.1 0.1 0.1"/>
   		</geometry>
 	</visual>
 
@@ -150,7 +150,7 @@
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0" />
 				<geometry>
-					<mesh filename="package://new_bcr_robot/meshes/kinect/d415.dae"/>
+					<mesh filename="file://$(find new_bcr_robot)/meshes/kinect/d415.dae"/>
 				</geometry>
 				<material name="black"/>
 		</visual>

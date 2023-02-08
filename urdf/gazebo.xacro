@@ -9,28 +9,26 @@
 <!-- .....................MULTI WHEEL DIFF DRIVE ................................... -->
 
 <gazebo>
-	<plugin name="diffdrive_plugin_multiwheel_middle" filename="libgazebo_ros_diff_drive.so">
-		<robotNamespace></robotNamespace>
-        <legacyMode>false</legacyMode>
-	    <updateRate>50.0</updateRate>
-		<leftJoint>middle_left_wheel_joint</leftJoint>
-		<rightJoint>middle_right_wheel_joint</rightJoint>
-		<wheelSeparation>${traction_wheel_base+traction_wheel_width-0.01}</wheelSeparation>
-		<wheelDiameter>${2*traction_wheel_radius+0.01}</wheelDiameter>
-		<robotBaseFrame>base_link</robotBaseFrame>
-		<wheelTorque>${traction_wheel_torque}</wheelTorque>
-		<commandTopic>cmd_vel</commandTopic>
-		<odometryTopic>${wheel_odom_topic}</odometryTopic>
-		<odometryFrame>odom</odometryFrame>
-		<rosDebugLevel>na</rosDebugLevel>
+	<plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
+        <legacy_mode>false</legacy_mode>
+	    <update_rate>50.0</update_rate>
+		<left_joint>middle_left_wheel_joint</left_joint>
+		<right_joint>middle_right_wheel_joint</right_joint>
+		<wheel_separation>${traction_wheel_base+traction_wheel_width-0.01}</wheel_separation>
+		<wheel_diameter>${2*traction_wheel_radius+0.01}</wheel_diameter>
+		<robot_base_frame>base_link</robot_base_frame>
+		<max_wheel_torque>${traction_max_wheel_torque}</max_wheel_torque>
+		<command_topic>cmd_vel</command_topic>
+		<odometry_topic>${wheel_odom_topic}</odometry_topic>
+		<odometry_frame>odom</odometry_frame>
 		<xacro:unless value="$(arg publish_wheel_odom_tf)">
-			<publishOdomTF>false</publishOdomTF>
+			<publish_odom_tf>false</publish_odom_tf>
 		</xacro:unless>
-		<publishWheelTF>false</publishWheelTF>
-		<publishWheelJointState>true</publishWheelJointState>
-		<publishOdometryMsg>true</publishOdometryMsg>
-		<odometrySource>encoder</odometrySource>
-        <wheelAcceleration>5.0</wheelAcceleration>
+		<publish_wheel_tf>false</publish_wheel_tf>
+		<!-- <publish_wheel_joint_state>true</publish_wheel_joint_state> -->
+		<publish_odom>true</publish_odom>
+		<!-- <odometry_source>encoder</odometry_source> -->
+        <max_wheel_acceleration>5.0</max_wheel_acceleration>
 	</plugin>
 </gazebo>
 
@@ -63,16 +61,16 @@
 
 <!--............................... Ground truth PLUGIN .............................-->
 
-<gazebo>
+<!-- <gazebo>
 	<plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
-		<alwaysOn>true</alwaysOn>
-		<updateRate>30.0</updateRate>
-		<bodyName>base_link</bodyName>
-		<topicName>ground_truth_pose</topicName>
-		<gaussianNoise>0.00</gaussianNoise>
-		<frameName>$(arg ground_truth_frame)</frameName>
+		<always_on>true</always_on>
+		<update_rate>30.0</update_rate>
+		<body_name>base_link</body_name>
+		<topic_name>ground_truth_pose</topic_name>
+		<gaussian_noise>0.00</gaussian_noise>
+		<frame_name>$(arg ground_truth_frame)</frame_name>
 	</plugin>
-</gazebo>
+</gazebo> -->
 
 <!-- ........................... 2D LIDAR PLUGIN ................................... -->
 
