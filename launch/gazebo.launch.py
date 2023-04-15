@@ -19,7 +19,7 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     xacro_path = os.path.join(get_package_share_directory('new_bcr_robot'), 'urdf', 'new_bcr_robot.xacro')
-    doc = get_xacro_to_doc(xacro_path, {"wheel_odom_topic": "odom"})
+    doc = get_xacro_to_doc(xacro_path, {"wheel_odom_topic": "odom", "sim_gazebo": "true"})
 
     robot_state_publisher = Node(
         package='robot_state_publisher', 

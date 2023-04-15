@@ -3,51 +3,60 @@
 
 <!--................................ XACRO CONSTANTS .............................. -->
 
-<xacro:property name="chassis_mass"                    		value="70"/>
-<xacro:property name="chassis_length"                    	value="0.9"/>
-<xacro:property name="chassis_width"                    	value="0.64"/>
-<xacro:property name="chassis_height"                    	value="0.25"/>
+<xacro:property name="chassis_mass"                value="70"/>
+<xacro:property name="chassis_length"              value="0.9"/>
+<xacro:property name="chassis_width"               value="0.64"/>
+<xacro:property name="chassis_height"              value="0.25"/>
 
-<xacro:property name="traction_wheel_mass"                value="1"/>
-<xacro:property name="traction_wheel_base"                value="0.88"/>
-<xacro:property name="traction_max_wheel_torque"              value="20000"/>
-<xacro:property name="traction_wheel_friction"            value="5.0"/>
+<xacro:property name="traction_wheel_mass"         value="1"/>
+<xacro:property name="traction_wheel_base"         value="0.88"/>
+<xacro:property name="traction_max_wheel_torque"   value="20000"/>
+<xacro:property name="traction_wheel_friction"     value="5.0"/>
 
-<xacro:property name="trolley_wheel_mass"                 value="0.1"/>
-<xacro:property name="trolley_wheel_base"                 value="0.54"/>
-<xacro:property name="trolley_wheel_friction"             value="0.0"/>
-<xacro:property name="trolley_wheel_radius"               value="0.06"/>
+<xacro:property name="trolley_wheel_mass"          value="0.1"/>
+<xacro:property name="trolley_wheel_base"          value="0.54"/>
+<xacro:property name="trolley_wheel_friction"      value="0.0"/>
+<xacro:property name="trolley_wheel_radius"        value="0.06"/>
 <!-- a small constant -->
-<xacro:property name="eps"                                value="0.002"/>
+<xacro:property name="eps"                         value="0.002"/>
 
-<xacro:property name="traction_wheel_radius"              value="0.1"/>
-<xacro:property name="traction_wheel_width"               value="0.05"/>
-<xacro:property name="traction_wheel_base"                value="0.8"/>
+<xacro:property name="traction_wheel_radius"       value="0.1"/>
+<xacro:property name="traction_wheel_width"        value="0.05"/>
+<xacro:property name="traction_wheel_base"         value="0.8"/>
 
-<xacro:arg      name="two_d_lidar_enabled"                default="false" />
-<xacro:property name="two_d_lidar_update_rate"            value="30"/>
-<xacro:property name="wheel_odom_topic"            		  value="$(arg wheel_odom_topic)"/>
-<xacro:property name="two_d_lidar_sample_size"            value="361"/>
-<xacro:property name="two_d_lidar_min_angle"              value="0"/>
-<xacro:property name="two_d_lidar_max_angle"              value="360"/>
-<xacro:property name="two_d_lidar_min_range"              value="0.1"/>
-<xacro:property name="two_d_lidar_max_range"              value="16"/>
+<xacro:arg      name="two_d_lidar_enabled"         default="false" />
+<xacro:property name="two_d_lidar_update_rate"     value="30"/>
+<xacro:property name="wheel_odom_topic"            value="$(arg wheel_odom_topic)"/>
+<xacro:property name="two_d_lidar_sample_size"     value="361"/>
+<xacro:property name="two_d_lidar_min_angle"       value="0"/>
+<xacro:property name="two_d_lidar_max_angle"       value="360"/>
+<xacro:property name="two_d_lidar_min_range"       value="0.1"/>
+<xacro:property name="two_d_lidar_max_range"       value="16"/>
 
-<xacro:arg      name="camera_enabled"                 		default="false" />
-<xacro:property name="camera_baseline"                		value="0.06"/>
-<xacro:property name="camera_height"                  		value="0.10"/>
-<xacro:property name="camera_horizontal_fov"         	 		value="60"/>
+<xacro:arg      name="camera_enabled"              default="false" />
+<xacro:property name="camera_baseline"             value="0.06"/>
+<xacro:property name="camera_height"               value="0.10"/>
+<xacro:property name="camera_horizontal_fov"       value="60"/>
 
-<xacro:arg      name="publish_wheel_odom_tf"              default="true" />
+<xacro:arg      name="publish_wheel_odom_tf"       default="true" />
 
-<xacro:arg      name="conveyor_enabled"                 	  default="false"/>
-<xacro:arg      name="ground_truth_frame"                     default="map"/>
+<xacro:arg      name="conveyor_enabled"            default="false"/>
+<xacro:arg      name="ground_truth_frame"          default="map"/>
+<xacro:arg      name="sim_gazebo"                  default="false" />
+<xacro:arg      name="sim_gz"                      default="false" />
 
 <!-- ............................... LOAD MACROS ................................. -->
 
 <xacro:include filename="$(find new_bcr_robot)/urdf/materials.xacro"/>
 <xacro:include filename="$(find new_bcr_robot)/urdf/macros.xacro"/>
-<xacro:include filename="$(find new_bcr_robot)/urdf/gazebo.xacro"/>
+
+<xacro:if value="$(arg sim_gazebo)">
+	<xacro:include filename="$(find new_bcr_robot)/urdf/gazebo.xacro"/>
+</xacro:if>
+
+<xacro:if value="$(arg sim_gz)">
+	<xacro:include filename="$(find new_bcr_robot)/urdf/gz.xacro"/>
+</xacro:if>
 
 <!-- ................................ BASE LINK .................................. -->
 
@@ -208,7 +217,7 @@
 	<joint name="conveyor_joint" type="fixed">
 		<parent link="base_link"/>
 		<child link="conveyor_belt"/>
-		<origin xyz="0 0 0.21" rpy="0 0 0" />
+		<origin xyz="0 0 0.25" rpy="0 0 0" />
 	</joint>
 
 </xacro:if>
