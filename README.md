@@ -4,20 +4,20 @@ A 6 wheeled differential drive robot with an IMU and a  2D laser scanner.
 
 ## Build Instructions
 
-* Install the dependencies:
-
-	  rosdep install --from-paths src --ignore-src -r -y
-
 * Build the package:
 
-	  catkin build new_bcr_robot
+		colcon build --symlink-install
 
 ## Run Instructions
 
-* Launch the robot in an gazebo:
+* Launch the robot in gazebo:
 
-	  roslaunch new_bcr_robot gazebo.launch
+		ros2 launch new_bcr_robot gazebo.launch.py
 
 * Launch the robot in RViz:
 
-	  roslaunch new_bcr_robot rviz.launch
+		ros2 launch new_bcr_robot rviz.launch.py
+
+* Launch the robot in Ignition Gazebo Fortress
+
+		ros2 launch new_bcr_robot gz.launch.py
