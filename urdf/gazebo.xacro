@@ -19,7 +19,7 @@
 		<robot_base_frame>base_link</robot_base_frame>
 		<max_wheel_torque>${traction_max_wheel_torque}</max_wheel_torque>
 		<command_topic>cmd_vel</command_topic>
-		<odometry_topic>${wheel_odom_topic}</odometry_topic>
+		<odometry_topic>$(arg wheel_odom_topic)</odometry_topic>
 		<odometry_frame>odom</odometry_frame>
 		<xacro:unless value="$(arg publish_wheel_odom_tf)">
 			<publish_odom_tf>false</publish_odom_tf>
