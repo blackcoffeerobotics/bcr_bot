@@ -22,6 +22,8 @@ A 6 wheeled differential drive robot with camera, 2D lidar and conveyor belt. Th
 
 ## Build Instructions
 
+Note: If required there is an example `Dockerfile` that shows the installation for Humble-Fortress combination
+
 * Build the package:
 
 		colcon build --symlink-install
