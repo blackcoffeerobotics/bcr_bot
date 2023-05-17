@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
-import os
+from os.path import join
 import xacro
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess, DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.substitutions import LaunchConfiguration
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
 
 def get_xacro_to_doc(xacro_file_path, mappings):
     doc = xacro.parse(open(xacro_file_path))
@@ -18,7 +20,7 @@ def get_xacro_to_doc(xacro_file_path, mappings):
 def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-    xacro_path = os.path.join(get_package_share_directory('new_bcr_robot'), 'urdf', 'new_bcr_robot.xacro')
+    xacro_path = join(get_package_share_directory('new_bcr_robot'), 'urdf', 'new_bcr_robot.xacro')
     doc = get_xacro_to_doc(xacro_path, {"wheel_odom_topic": "odom", "sim_gazebo": "true"})
 
     robot_state_publisher = Node(
@@ -33,12 +35,15 @@ def generate_launch_description():
         arguments=['-topic', 'robot_description', '-entity', 'new_bcr_robot'],
         output='screen')
 
-    gazebo = ExecuteProcess(
-        cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so', '-s', 'libgazebo_ros_force_system.so'],
-        output='screen', emulate_tty=True
+    gazebo_share = get_package_share_directory("gazebo_ros")
+    gazebo = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(join(gazebo_share, "launch", "gazebo.launch.py"))
     )
 
     return LaunchDescription([
+        DeclareLaunchArgument(
+            'world', default_value=[FindPackageShare('new_bcr_robot'), '/worlds/gazebo/mars.world'],
+        ),
         DeclareLaunchArgument('gui', default_value='true'),
         DeclareLaunchArgument('verbose', default_value='false'),
         DeclareLaunchArgument('use_sim_time', default_value='false'),
