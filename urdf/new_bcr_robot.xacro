@@ -3,45 +3,46 @@
 
 <!--................................ XACRO CONSTANTS .............................. -->
 
-<xacro:property name="chassis_mass"                    		value="70"/>
-<xacro:property name="chassis_length"                    	value="0.9"/>
-<xacro:property name="chassis_width"                    	value="0.64"/>
-<xacro:property name="chassis_height"                    	value="0.25"/>
+<xacro:property name="chassis_mass"                value="70"/>
+<xacro:property name="chassis_length"              value="0.9"/>
+<xacro:property name="chassis_width"               value="0.64"/>
+<xacro:property name="chassis_height"              value="0.25"/>
 
-<xacro:property name="traction_wheel_mass"                value="1"/>
-<xacro:property name="traction_wheel_base"                value="0.88"/>
-<xacro:property name="traction_wheel_torque"              value="20000"/>
-<xacro:property name="traction_wheel_friction"            value="5.0"/>
+<xacro:property name="traction_wheel_mass"         value="1"/>
+<xacro:property name="traction_wheel_base"         value="0.88"/>
+<xacro:property name="traction_max_wheel_torque"   value="20000"/>
+<xacro:property name="traction_wheel_friction"     value="5.0"/>
 
-<xacro:property name="trolley_wheel_mass"                 value="0.1"/>
-<xacro:property name="trolley_wheel_base"                 value="0.54"/>
-<xacro:property name="trolley_wheel_friction"             value="0.0"/>
-<xacro:property name="trolley_wheel_radius"               value="0.06"/>
+<xacro:property name="trolley_wheel_mass"          value="0.1"/>
+<xacro:property name="trolley_wheel_base"          value="0.54"/>
+<xacro:property name="trolley_wheel_friction"      value="0.0"/>
+<xacro:property name="trolley_wheel_radius"        value="0.06"/>
 <!-- a small constant -->
-<xacro:property name="eps"                                value="0.002"/>
+<xacro:property name="eps"                         value="0.002"/>
 
-<xacro:property name="traction_wheel_radius"              value="0.1"/>
-<xacro:property name="traction_wheel_width"               value="0.05"/>
-<xacro:property name="traction_wheel_base"                value="0.8"/>
+<xacro:property name="traction_wheel_radius"       value="0.1"/>
+<xacro:property name="traction_wheel_width"        value="0.05"/>
+<xacro:property name="traction_wheel_base"         value="0.8"/>
 
-<xacro:arg      name="two_d_lidar_enabled"                default="false" />
-<xacro:property name="two_d_lidar_update_rate"            value="30"/>
-<xacro:property name="wheel_odom_topic"            		  value="$(arg wheel_odom_topic)"/>
-<xacro:property name="two_d_lidar_sample_size"            value="361"/>
-<xacro:property name="two_d_lidar_min_angle"              value="0"/>
-<xacro:property name="two_d_lidar_max_angle"              value="360"/>
-<xacro:property name="two_d_lidar_min_range"              value="0.1"/>
-<xacro:property name="two_d_lidar_max_range"              value="16"/>
+<xacro:property name="two_d_lidar_update_rate"     value="30"/>
+<xacro:property name="two_d_lidar_sample_size"     value="361"/>
+<xacro:property name="two_d_lidar_min_angle"       value="0"/>
+<xacro:property name="two_d_lidar_max_angle"       value="360"/>
+<xacro:property name="two_d_lidar_min_range"       value="0.1"/>
+<xacro:property name="two_d_lidar_max_range"       value="16"/>
 
-<xacro:arg      name="camera_enabled"                 		default="false" />
-<xacro:property name="camera_baseline"                		value="0.06"/>
-<xacro:property name="camera_height"                  		value="0.10"/>
-<xacro:property name="camera_horizontal_fov"         	 		value="60"/>
+<xacro:property name="camera_baseline"             value="0.06"/>
+<xacro:property name="camera_height"               value="0.10"/>
+<xacro:property name="camera_horizontal_fov"       value="60"/>
 
-<xacro:arg      name="publish_wheel_odom_tf"              default="true" />
+<xacro:arg      name="robot_namespace"             default="/"/>
+<xacro:arg      name="wheel_odom_topic"            default="odom"/>
+<xacro:arg      name="camera_enabled"              default="false"/>
+<xacro:arg      name="two_d_lidar_enabled"         default="false"/>
+<xacro:arg      name="publish_wheel_odom_tf"       default="true"/>
+<xacro:arg      name="conveyor_enabled"            default="false"/>
+<xacro:arg      name="ground_truth_frame"          default="map"/>
 
-<xacro:arg      name="conveyor_enabled"                 	  default="false"/>
-<xacro:arg      name="ground_truth_frame"                     default="map"/>
 
 <!-- ............................... LOAD MACROS ................................. -->
 
@@ -54,7 +55,6 @@
 <link name="base_link"/>
 
 <link name="chassis_link">
-
 	<collision>
 		<origin xyz="0 0 0" rpy="0 0 0" />
   		<geometry>
@@ -73,7 +73,6 @@
 		<mass value="${chassis_mass}" />
 		<xacro:box_inertia m="${chassis_mass}" x="${chassis_length}" y="${chassis_width}" z = "${chassis_height}"/>
 	</inertial>
-
 </link>
 
 <joint name="chassis_joint" type="fixed">
@@ -99,36 +98,36 @@
 
     <link name="two_d_lidar">
         <collision>
-          <origin xyz="0 0 0" rpy="0 0 0" />
-          <geometry>
-           <cylinder length="0.06" radius="0.075"/>
-          </geometry>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<cylinder length="0.06" radius="0.075"/>
+			</geometry>
         </collision>
 
         <visual>
-          <origin xyz="0 0 0" rpy="0 0 0" />
-          <geometry>
-           <cylinder length="0.06" radius="0.075"/>
-          </geometry>
-          <material name="orange"/>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<cylinder length="0.06" radius="0.075"/>
+			</geometry>
+			<material name="orange"/>
         </visual>
 
         <inertial>
-          <origin xyz="0 0 0" rpy="0 0 0" />
-          <mass value="0.1"/>
-          <xacro:cylinder_inertia m="0.1" r="0.075" h="0.06"/>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<mass value="0.1"/>
+			<xacro:cylinder_inertia m="0.1" r="0.075" h="0.06"/>
         </inertial>
-   </link>
+	</link>
 
-   <joint name="two_d_lidar_joint" type="fixed">
-      <parent link="base_link"/>
-      <child link="two_d_lidar"/>
-      <origin xyz="0.3 0 0.2" rpy="0 0 ${-pi/2}" />
+    <joint name="two_d_lidar_joint" type="fixed">
+		<parent link="base_link"/>
+		<child link="two_d_lidar"/>
+		<origin xyz="0.3 0 0.2" rpy="0 0 ${-pi/2}" />
     </joint>
 
-   <gazebo reference="two_d_lidar">
-       <material>Gazebo/Orange</material>
-   </gazebo>
+	<gazebo reference="two_d_lidar">
+		<material>Gazebo/Orange</material>
+	</gazebo>
 
 </xacro:if>
 
@@ -139,33 +138,31 @@
 	<!-- KINECT CAMERA -->
 
 	<link name="kinect_camera">
-
 		<collision>
 			<origin xyz="0 0 0" rpy="0 0 0" />
-				<geometry>
-					<box size="0.07 0.3 0.09"/>
-				</geometry>
+			<geometry>
+				<box size="0.07 0.3 0.09"/>
+			</geometry>
 		</collision>
 
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0" />
-				<geometry>
-					<mesh filename="package://new_bcr_robot/meshes/kinect/d415.dae"/>
-				</geometry>
-				<material name="black"/>
+			<geometry>
+				<mesh filename="package://new_bcr_robot/meshes/kinect/d415.dae"/>
+			</geometry>
+			<material name="black"/>
 		</visual>
 
 		<inertial>
-				<mass value="0.01"/>
-				<xacro:box_inertia m="0.01" x="0.07" y="0.3" z = "0.09"/>
+			<mass value="0.01"/>
+			<xacro:box_inertia m="0.01" x="0.07" y="0.3" z = "0.09"/>
 		</inertial>
-
 	</link>
 
 	<joint name="kinect_camera_joint" type="fixed">
-			<origin rpy="0 0 0" xyz="${chassis_length/2} 0 ${chassis_height/4}"/>
-			<parent link="base_link"/>
-			<child link="kinect_camera"/>
+		<origin rpy="0 0 0" xyz="${chassis_length/2} 0 ${chassis_height/4}"/>
+		<parent link="base_link"/>
+		<child link="kinect_camera"/>
 	</joint>
 
 	<link name="kinect_camera_optical"/>
@@ -183,18 +180,17 @@
 <xacro:if value="$(arg conveyor_enabled)">
 
 	<link name="conveyor_belt">
-
 		<collision>
 			<origin xyz="0 0 0" rpy="0 0 0" />
 			<geometry>
-			<box size="1 0.6 0.015"/>
+				<box size="1 0.6 0.015"/>
 			</geometry>
 		</collision>
 
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
-			<box size="1 0.6 0.015"/>
+				<box size="1 0.6 0.015"/>
 			</geometry>
 		</visual>
 
@@ -202,7 +198,6 @@
 			<mass value="1"/>
 			<xacro:box_inertia m="1" x="1" y="0.6" z = "0.015"/>
 		</inertial>
-	
 	</link>
 
 	<joint name="conveyor_joint" type="fixed">
