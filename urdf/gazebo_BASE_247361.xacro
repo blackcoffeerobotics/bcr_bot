@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="new_bcr_robot">
+
+<gazebo>
+  <static>false</static>
+</gazebo>
+
+
+<!-- .....................MULTI WHEEL DIFF DRIVE ................................... -->
+
+<gazebo>
+	<plugin name="diffdrive_plugin_multiwheel_middle" filename="libgazebo_ros_diff_drive.so">
+		<robotNamespace></robotNamespace>
+        <legacyMode>false</legacyMode>
+	    <updateRate>50.0</updateRate>
+		<leftJoint>middle_left_wheel_joint</leftJoint>
+		<rightJoint>middle_right_wheel_joint</rightJoint>
+		<wheelSeparation>${traction_wheel_base+traction_wheel_width-0.01}</wheelSeparation>
+		<wheelDiameter>${2*traction_wheel_radius+0.01}</wheelDiameter>
+		<robotBaseFrame>base_link</robotBaseFrame>
+		<wheelTorque>${traction_wheel_torque}</wheelTorque>
+		<commandTopic>cmd_vel</commandTopic>
+		<odometryTopic>${wheel_odom_topic}</odometryTopic>
+		<odometryFrame>odom</odometryFrame>
+		<rosDebugLevel>na</rosDebugLevel>
+		<xacro:unless value="$(arg publish_wheel_odom_tf)">
+			<publishOdomTF>false</publishOdomTF>
+		</xacro:unless>
+		<publishWheelTF>false</publishWheelTF>
+		<publishWheelJointState>true</publishWheelJointState>
+		<publishOdometryMsg>true</publishOdometryMsg>
+		<odometrySource>encoder</odometrySource>
+        <wheelAcceleration>5.0</wheelAcceleration>
+	</plugin>
+</gazebo>
+
+<!--............................... IMU PLUGIN ..................................... -->
+
+<!-- <gazebo>
+	<plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+		<updateRate>50.0</updateRate>
+		<bodyName>base_link</bodyName>
+		<topicName>/imu</topicName>
+		<serviceName>/imu/calibrate</serviceName>
+		<accelOffset>0.0 0.0 0.0</accelOffset>
+		<accelDrift>0.0 0.0 0.0</accelDrift>
+		<accelDriftFrequency>0.0 0.0 0.0</accelDriftFrequency>
+		<accelGaussianNoise>0.0 0.0 0.0</accelGaussianNoise>
+		<rateOffset>0.0 0.0 0.0</rateOffset>
+		<rateDrift>0.0 0.0 0.0</rateDrift>
+		<rateDriftFrequency>0.0 0.0 0.0</rateDriftFrequency>
+		<rateGaussianNoise>0.0 0.0 0.0</rateGaussianNoise>
+		<headingOffset>0.0</headingOffset>
+		<headingDrift>0.0</headingDrift>
+		<headingDriftFrequency>0.0</headingDriftFrequency>
+		<headingGaussianNoise>0.0</headingGaussianNoise>
+		<rpyOffset>0.0 0.0 0.0</rpyOffset>
+		<xyzOffset>0.0 0.0 0.0</xyzOffset>
+		<gaussianNoise>0.0</gaussianNoise>
+		<frameName>imu_frame</frameName>
+	</plugin>
+</gazebo> -->
+
+<!--............................... Ground truth PLUGIN .............................-->
+
+<gazebo>
+	<plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+		<alwaysOn>true</alwaysOn>
+		<updateRate>30.0</updateRate>
+		<bodyName>base_link</bodyName>
+		<topicName>ground_truth_pose</topicName>
+		<gaussianNoise>0.00</gaussianNoise>
+		<frameName>$(arg ground_truth_frame)</frameName>
+	</plugin>
+</gazebo>
+
+<!-- ........................... 2D LIDAR PLUGIN ................................... -->
+
+<xacro:if value="$(arg two_d_lidar_enabled)">
+
+   <gazebo reference="two_d_lidar">
+      <gravity>true</gravity>
+      <sensor type="ray" name="two_d_lidar">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>false</visualize>
+        <update_rate>${two_d_lidar_update_rate}</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>${two_d_lidar_sample_size}</samples>
+              <resolution>1</resolution>
+              <min_angle>${radians(two_d_lidar_min_angle)}</min_angle>
+              <max_angle>${radians(two_d_lidar_max_angle)}</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>${two_d_lidar_min_range}</min>
+            <max>${two_d_lidar_max_range}</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.001</stddev>
+          </noise>
+        </ray>
+        <plugin name="gazebo_ros_laser" filename="libgazebo_ros_laser.so">
+          <topicName>scan</topicName>
+          <frameName>two_d_lidar</frameName>
+          <robotNamespace>/</robotNamespace>
+        </plugin>
+      </sensor>
+   </gazebo>
+
+</xacro:if>
+
+<!-- ........................... CAMERA PLUGIN ................................... -->
+
+<xacro:if value="$(arg camera_enabled)">
+
+	<gazebo reference="kinect_camera">
+
+		<sensor type="depth" name="kinect_camera">
+			<always_on>true</always_on>
+			<update_rate>30.0</update_rate>
+			<camera>
+				<horizontal_fov>${radians(camera_horizontal_fov)}</horizontal_fov>
+				<image>
+				<format>R8G8B8</format>
+				<width>640</width>
+				<height>480</height>
+				</image>
+				<clip>
+				<near>0.05</near>
+				<far>8.0</far>
+				</clip>
+			</camera>
+			<plugin name="kinect_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+				<cameraName>kinect_camera</cameraName>
+				<alwaysOn>true</alwaysOn>
+				<updateRate>10</updateRate>
+				<imageTopicName>rgb/image_raw</imageTopicName>
+				<depthImageTopicName>depth/image_raw</depthImageTopicName>
+				<pointCloudTopicName>depth/points</pointCloudTopicName>
+				<cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+				<depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+				<frameName>kinect_camera_optical</frameName>
+				<baseline>0.1</baseline>
+				<distortion_k1>0.0</distortion_k1>
+				<distortion_k2>0.0</distortion_k2>
+				<distortion_k3>0.0</distortion_k3>
+				<distortion_t1>0.0</distortion_t1>
+				<distortion_t2>0.0</distortion_t2>
+				<pointCloudCutoff>0.4</pointCloudCutoff>
+				<robotNamespace>/</robotNamespace>
+			</plugin>
+		</sensor>
+	</gazebo>
+
+</xacro:if>
+
+<!--................................................................................. -->
+
+
+</robot>
