@@ -35,6 +35,7 @@
 <xacro:property name="camera_height"               value="0.10"/>
 <xacro:property name="camera_horizontal_fov"       value="60"/>
 
+<xacro:arg      name="robot_namespace"             default="/"/>
 <xacro:arg      name="wheel_odom_topic"            default="odom" />
 <xacro:arg      name="camera_enabled"              default="false" />
 <xacro:arg      name="two_d_lidar_enabled"         default="false" />
