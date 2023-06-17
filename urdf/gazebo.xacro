@@ -9,6 +9,11 @@
 
 <gazebo>
 	<plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
+		 <ros>
+		  <namespace>$(arg robot_namespace)</namespace>
+		  <remapping>cmd_vel:=cmd_vel</remapping>
+		  <remapping>odom:=odom</remapping>
+		</ros>
 		<legacy_mode>false</legacy_mode>
 		<update_rate>50.0</update_rate>
 		<left_joint>middle_left_wheel_joint</left_joint>
@@ -61,11 +66,16 @@
 
 
 <gazebo>
+
 	<plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+		<ros>
+			<!-- Add namespace and remap the default topic -->
+			<namespace>$(arg robot_namespace)</namespace>
+			<remapping>odom:=p3d_ground_truth</remapping>
+		</ros>
 		<always_on>true</always_on>
 		<update_rate>30.0</update_rate>
 		<body_name>base_link</body_name>
-		<topic_name>ground_truth_pose</topic_name>
 		<gaussian_noise>0.00</gaussian_noise>
 		<frame_name>$(arg ground_truth_frame)</frame_name>
 	</plugin>
@@ -98,30 +108,32 @@
 				<noise>
 					<type>gaussian</type>
 					<mean>0.0</mean>
-					<stddev>0.001</stddev>
+					<stddev>0.0</stddev>
 				</noise>
 			</ray>
-			<plugin name="gazebo_ros_laser" filename="libgazebo_ros_laser.so">
-				<topicName>scan</topicName>
+			<plugin name="gazebo_ros_laser" filename="libgazebo_ros_ray_sensor.so">
+				<ros>
+					<remapping>~/out:=/$(arg robot_namespace)/scan</remapping>
+				</ros>
+				<output_type>sensor_msgs/LaserScan</output_type>
 				<frameName>two_d_lidar</frameName>
-				<robotNamespace>$(arg robot_namespace)</robotNamespace>
 			</plugin>
 		</sensor>
 	</gazebo>
-
 </xacro:if>
 
 <!-- ........................... CAMERA PLUGIN ................................... -->
 
 <xacro:if value="$(arg camera_enabled)">
 
-	<gazebo reference="kinect_camera">
+	 <gazebo reference="kinect_camera">
 
-		<sensor type="depth" name="kinect_camera">
-			<always_on>true</always_on>
-			<update_rate>30.0</update_rate>
+		<sensor name="kinect_camera" type="depth">
+			<pose> 0 0 0 0 0 0 </pose>
+			<visualize>true</visualize>
+			<update_rate>30</update_rate>
 			<camera>
-				<horizontal_fov>${radians(camera_horizontal_fov)}</horizontal_fov>
+				<horizontal_fov>1.089</horizontal_fov>
 				<image>
 					<format>R8G8B8</format>
 					<width>640</width>
@@ -132,24 +144,13 @@
 					<far>8.0</far>
 				</clip>
 			</camera>
-			<plugin name="kinect_camera_controller" filename="libgazebo_ros_openni_kinect.so">
-				<cameraName>kinect_camera</cameraName>
-				<alwaysOn>true</alwaysOn>
-				<updateRate>10</updateRate>
-				<imageTopicName>rgb/image_raw</imageTopicName>
-				<depthImageTopicName>depth/image_raw</depthImageTopicName>
-				<pointCloudTopicName>depth/points</pointCloudTopicName>
-				<cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
-				<depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
-				<frameName>kinect_camera_optical</frameName>
-				<baseline>0.1</baseline>
-				<distortion_k1>0.0</distortion_k1>
-				<distortion_k2>0.0</distortion_k2>
-				<distortion_k3>0.0</distortion_k3>
-				<distortion_t1>0.0</distortion_t1>
-				<distortion_t2>0.0</distortion_t2>
-				<pointCloudCutoff>0.4</pointCloudCutoff>
-				<robotNamespace>$(arg robot_namespace)</robotNamespace>
+			<plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+				<ros>
+					<namespace>$(arg robot_namespace)</namespace>
+				</ros>
+				<frame_name>kinect_camera_optical</frame_name>
+				<min_depth>0.1</min_depth>
+				<max_depth>100</max_depth>
 			</plugin>
 		</sensor>
 	</gazebo>

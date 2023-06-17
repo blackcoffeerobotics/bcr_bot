@@ -6,3 +6,4 @@ fi
 
 # Adding our models to the GAZEBO_MODEL_PATH
 ament_prepend_unique_value GAZEBO_MODEL_PATH "$COLCON_CURRENT_PREFIX/share/@PROJECT_NAME@/models"
+

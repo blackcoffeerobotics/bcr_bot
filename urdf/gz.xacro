@@ -1,10 +1,15 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="new_bcr_robot">
 
+<!-- ........................... SENSOR PLUGIN ................................... -->
+
 <gazebo>
     <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
         <render_engine>ogre2</render_engine>
     </plugin>
+
+<!-- ........................... DIFFERENTIAL DRIVE PLUGIN ................................... -->
+
     <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
         <left_joint>middle_left_wheel_joint</left_joint>
         <right_joint>middle_right_wheel_joint</right_joint>
@@ -18,6 +23,8 @@
         <child_frame_id>base_link</child_frame_id>
     </plugin>
 </gazebo>
+
+<!-- ........................... 2D LIDAR config ................................... -->
 
 <xacro:if value="$(arg two_d_lidar_enabled)">
     <gazebo reference="two_d_lidar">
@@ -50,6 +57,8 @@
         </sensor>
     </gazebo>
 </xacro:if>
+
+<!-- ........................... CAMERA config ................................... -->
 
 <xacro:if value="$(arg camera_enabled)">
     <gazebo reference="kinect_camera">

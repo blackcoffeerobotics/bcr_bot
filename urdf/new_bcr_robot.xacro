@@ -6,7 +6,7 @@
 <xacro:property name="chassis_mass"                value="70"/>
 <xacro:property name="chassis_length"              value="0.9"/>
 <xacro:property name="chassis_width"               value="0.64"/>
-<xacro:property name="chassis_height"              value="0.25"/>
+<xacro:property name="chassis_height"              value="0.19"/>
 
 <xacro:property name="traction_wheel_mass"         value="1"/>
 <xacro:property name="traction_wheel_base"         value="0.88"/>
@@ -35,7 +35,7 @@
 <xacro:property name="camera_height"               value="0.10"/>
 <xacro:property name="camera_horizontal_fov"       value="60"/>
 
-<xacro:arg      name="robot_namespace"             default="/"/>
+<xacro:arg      name="robot_namespace"             default="new_bcr_robot"/>
 <xacro:arg      name="wheel_odom_topic"            default="odom" />
 <xacro:arg      name="camera_enabled"              default="false" />
 <xacro:arg      name="two_d_lidar_enabled"         default="false" />
@@ -65,16 +65,16 @@
 <link name="chassis_link">
 
 	<collision>
-		<origin xyz="0 0 0" rpy="0 0 0" />
+		<origin xyz="0 0 -0.05" rpy="0 0 0" />
   		<geometry>
 			<box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
   		</geometry>
 	</collision>
 
 	<visual>
-		<origin xyz="0 0 -0.08" rpy="0 0 0" />
+		<origin xyz="0 0 -0.15" rpy="0 0 0" />
   		<geometry>
-    		<mesh filename="file://$(find new_bcr_robot)/meshes/bcr_chassis.dae" scale="0.1 0.1 0.1"/>
+    		<mesh filename="file://$(find new_bcr_robot)/meshes/bcr_bot_mesh.dae" scale="1 1 1"/>
   		</geometry>
 	</visual>
 
@@ -88,7 +88,7 @@
 <joint name="chassis_joint" type="fixed">
 	<parent link="base_link"/>
 	<child link="chassis_link"/>
-	<origin xyz="0.0 0 0.0" rpy="0 0 0.0" />
+	<origin xyz="0.0 0 0" rpy="0 0 0.0" />
 </joint>
 
 <!-- ................................ WHEELS ..................................... -->
@@ -119,7 +119,7 @@
           <geometry>
            <cylinder length="0.06" radius="0.075"/>
           </geometry>
-          <material name="orange"/>
+          <material name="aluminium"/>
         </visual>
 
         <inertial>
@@ -132,11 +132,11 @@
    <joint name="two_d_lidar_joint" type="fixed">
       <parent link="base_link"/>
       <child link="two_d_lidar"/>
-      <origin xyz="0.3 0 0.2" rpy="0 0 ${-pi/2}" />
+      <origin xyz="0.3 0 0.08" rpy="0 0 0" />
     </joint>
 
    <gazebo reference="two_d_lidar">
-       <material>Gazebo/Orange</material>
+       <material>Gazebo/White</material>
    </gazebo>
 
 </xacro:if>
@@ -172,7 +172,7 @@
 	</link>
 
 	<joint name="kinect_camera_joint" type="fixed">
-			<origin rpy="0 0 0" xyz="${chassis_length/2} 0 ${chassis_height/4}"/>
+			<origin rpy="0 0 0" xyz="${chassis_length/2} 0 ${chassis_height/7}"/>
 			<parent link="base_link"/>
 			<child link="kinect_camera"/>
 	</joint>
@@ -180,12 +180,36 @@
 	<link name="kinect_camera_optical"/>
 
 	<joint name="kinect_camera_optical_joint" type="fixed">
-		<origin xyz="0 0 0" rpy="-${pi/2} 0 -${pi/2}"/>
+		<origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
 		<parent link="kinect_camera"/>
 		<child link="kinect_camera_optical"/>
 	</joint>
 
 </xacro:if>
+
+<!-- ............................. ROOF ........................................ -->
+
+<link name="roof_link">
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+			<box size="${chassis_length} ${chassis_width} 0.015"/>
+			</geometry>
+		</collision>
+
+		<inertial>
+			<mass value="1"/>
+			<xacro:box_inertia m="1" x="1" y="0.6" z = "0.015"/>
+		</inertial>
+	
+	</link>
+
+	<joint name="roof joint" type="fixed">
+		<parent link="chassis_link"/>
+		<child link="roof_link"/>
+		<origin xyz="0 0 0.16" rpy="0 0 0" />
+	</joint>
 
 <!-- ............................. CONVEYOR ........................................ -->
 

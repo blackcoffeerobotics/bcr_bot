@@ -1,0 +1,348 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.6">
+  <world name="default">
+
+    <model name="aws_robomaker_warehouse_RoofB_01_001">
+        <include>
+            <uri>model://aws_robomaker_warehouse_RoofB_01</uri>
+        </include>
+        <pose frame="">0.0 0.0 0 0 0 0</pose>
+	</model>
+
+    <model name="aws_robomaker_warehouse_ShelfF_01_001">
+        <include>
+            <uri>model://aws_robomaker_warehouse_ShelfF_01</uri>
+        </include>
+        <pose frame="">-5.795143 -0.956635 0 0 0 0</pose>
+	</model>
+
+        <model name="aws_robomaker_warehouse_WallB_01_001">
+        <include>
+            <uri>model://aws_robomaker_warehouse_WallB_01</uri>
+        </include>
+        <pose frame="">0.0 0.0 0 0 0 0</pose>
+	</model>
+
+        <model name="aws_robomaker_warehouse_ShelfE_01_001">
+        <include>
+            <uri>model://aws_robomaker_warehouse_ShelfE_01</uri>
+        </include>
+        <pose frame="">4.73156 0.57943 0 0 0 0</pose>
+	</model>
+
+        <model name="aws_robomaker_warehouse_ShelfE_01_002">
+        <include>
+            <uri>model://aws_robomaker_warehouse_ShelfE_01</uri>
+        </include>
+        <pose frame="">4.73156 -4.827049 0 0 0 0</pose>
+	</model>
+        
+        <model name="aws_robomaker_warehouse_ShelfE_01_003">
+        <include>
+            <uri>model://aws_robomaker_warehouse_ShelfE_01</uri>
+        </include>
+        <pose frame="">4.73156 -8.6651 0 0 0 0</pose>
+	</model>
+
+        <model name="aws_robomaker_warehouse_ShelfD_01_001">
+        <include>
+            <uri>model://aws_robomaker_warehouse_ShelfD_01</uri>
+        </include>
+        <pose frame="">4.73156 -1.242668 0 0 0 0</pose>
+	</model>
+
+        <model name="aws_robomaker_warehouse_ShelfD_01_002">
+        <include>
+            <uri>model://aws_robomaker_warehouse_ShelfD_01</uri>
+        </include>
+        <pose frame="">4.73156 -3.038551 0 0 0 0</pose>
+	</model>
+
+        <model name="aws_robomaker_warehouse_ShelfD_01_003">
+        <include>
+            <uri>model://aws_robomaker_warehouse_ShelfD_01</uri>
+        </include>
+        <pose frame="">4.73156 -6.750542 0 0 0 0</pose>
+	</model>
+
+        <model name="aws_robomaker_warehouse_GroundB_01_001">
+        <include>
+            <uri>model://aws_robomaker_warehouse_GroundB_01</uri>
+        </include>
+        <pose frame="">0.0 0.0 -0.090092 0 0 0</pose>
+	</model> 
+       
+        <model name="aws_robomaker_warehouse_Lamp_01_005">
+        <include>
+            <uri>model://aws_robomaker_warehouse_Lamp_01</uri>
+        </include>
+        <pose frame="">0 0 -4 0 0 0</pose>
+	</model>
+       
+	
+
+        <model name="aws_robomaker_warehouse_Bucket_01_020">
+        <include>
+            <uri>model://aws_robomaker_warehouse_Bucket_01</uri>
+        </include>
+        <pose frame="">0.433449 9.631706 0 0 0 -1.563161</pose>
+	</model>
+
+        <!-- <model name="aws_robomaker_warehouse_Bucket_01_021">
+        <include>
+            <uri>model://aws_robomaker_warehouse_Bucket_01</uri>
+        </include>
+        <pose frame="">-1.8321 -6.3752 0 0 0 -1.563161</pose>
+	</model> -->
+
+        <!-- <model name="Table">
+            <pose frame="">-1.82 -6.35 0 0 0 0</pose>
+            <link name="link">
+                <collision name="surface">
+                    <pose>0 0 0.7 0 0 0</pose>
+                    <geometry>
+                        <box>
+                            <size>1.5 0.8 0.03</size>
+                        </box>
+                    </geometry>
+                    <surface>
+                        <friction>
+                        <ode>
+                            <mu>0.6</mu>
+                            <mu2>0.6</mu2>
+                        </ode>
+                        </friction>
+                    </surface>
+                </collision>
+                <visual name="visual1">
+                    <pose>0 0 0.7 0 0 0</pose>
+                    <geometry>
+                        <box>
+                            <size>1.5 0.8 0.03</size>
+                        </box>
+                    </geometry>
+                </visual>
+                <collision name="front_left_leg">
+                    <pose>0.68 0.38 0.5 0 0 0</pose>
+                    <geometry>
+                        <cylinder>
+                            <radius>0.02</radius>
+                            <length>0.4</length>
+                        </cylinder>
+                    </geometry>
+                </collision>
+                <visual name="front_left_leg">
+                    <pose>0.68 0.38 0.5 0 0 0</pose>
+                    <geometry>
+                        <cylinder>
+                            <radius>0.02</radius>
+                            <length>0.4</length>
+                        </cylinder>
+                    </geometry>
+                </visual>
+                <collision name="front_right_leg">
+                    <pose>0.68 -0.38 0.5 0 0 0</pose>
+                    <geometry>
+                        <cylinder>
+                            <radius>0.02</radius>
+                            <length>0.4</length>
+                        </cylinder>
+                    </geometry>
+                </collision>
+                <visual name="front_right_leg">
+                    <pose>0.68 -0.38 0.5 0 0 0</pose>
+                    <geometry>
+                        <cylinder>
+                            <radius>0.02</radius>
+                            <length>0.4</length>
+                        </cylinder>
+                    </geometry>
+                </visual>
+                <collision name="back_right_leg">
+                    <pose>-0.68 -0.38 0.5 0 0 0</pose>
+                    <geometry>
+                        <cylinder>
+                            <radius>0.02</radius>
+                            <length>0.4</length>
+                        </cylinder>
+                    </geometry>
+                </collision>
+                <visual name="back_right_leg">
+                    <pose>-0.68 -0.38 0.5 0 0 0</pose>
+                    <geometry>
+                        <cylinder>
+                            <radius>0.02</radius>
+                            <length>0.4</length>
+                        </cylinder>
+                    </geometry>
+                </visual>
+                <collision name="back_left_leg">
+                    <pose>-0.68 0.38 0.5 0 0 0</pose>
+                    <geometry>
+                        <cylinder>
+                            <radius>0.02</radius>
+                            <length>0.4</length>
+                        </cylinder>
+                    </geometry>
+                </collision>
+                <visual name="back_left_leg">
+                    <pose>-0.68 0.38 0.5 0 0 0</pose>
+                    <geometry>
+                        <cylinder>
+                            <radius>0.02</radius>
+                            <length>0.4</length>
+                        </cylinder>
+                    </geometry>
+                </visual>
+            </link>
+        </model> -->
+
+        <model name="aws_robomaker_warehouse_Bucket_01_022">
+        <include>
+            <uri>model://aws_robomaker_warehouse_Bucket_01</uri>
+        </include>
+        <pose frame="">0.433449 8.59 0 0 0 -1.563161</pose>
+	</model> 
+
+  <model name='aws_robomaker_warehouse_ClutteringA_01_016'>
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+        </include>
+        <pose frame=''>5.708138 8.616844 -0.017477 0 0 0</pose>
+	</model>
+
+      <model name='aws_robomaker_warehouse_ClutteringA_01_017'>
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+        </include>
+        <pose frame=''>3.408638 8.616844 -0.017477 0 0 0</pose>
+	</model>
+
+      <model name='aws_robomaker_warehouse_ClutteringA_01_018'>
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringA_01</uri>
+        </include>
+        <pose frame=''>-1.491287 5.222435 -0.017477 0 0 -1.583185</pose>
+	</model>
+
+
+     <model name="aws_robomaker_warehouse_ClutteringC_01_027">
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+        </include>
+        <pose frame="">3.324959 3.822449 -0.012064 0 0 1.563871</pose>
+	</model>
+
+     <model name="aws_robomaker_warehouse_ClutteringC_01_028">
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+        </include>
+        <pose frame="">5.54171 3.816475 -0.015663 0 0 -1.583191</pose>
+	</model>
+
+     <model name="aws_robomaker_warehouse_ClutteringC_01_029">
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+        </include>
+        <pose frame="">5.384239 6.137154 0 0 0 3.150000</pose>
+	</model>
+
+     <model name="aws_robomaker_warehouse_ClutteringC_01_030">
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+        </include>
+        <pose frame="">3.236 6.137154 0 0 0 3.150000</pose>
+	</model>
+
+     <model name="aws_robomaker_warehouse_ClutteringC_01_031">
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+        </include>
+        <pose frame="">-1.573677 2.301994 -0.015663 0 0 -3.133191</pose>
+	</model>
+
+     <model name="aws_robomaker_warehouse_ClutteringC_01_032">
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+        </include>
+        <pose frame="">-1.2196 9.407 -0.015663 0 0 1.563871</pose>
+	</model>
+
+     <model name='aws_robomaker_warehouse_ClutteringD_01_005'>
+        <include>
+            <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+        </include>
+        <pose frame=''>-1.634682 -7.811813 -0.319559 0 0 0</pose>
+	</model>
+                                                 
+      <model name='aws_robomaker_warehouse_TrashCanC_01_002'>
+        <include>
+            <uri>model://aws_robomaker_warehouse_TrashCanC_01</uri>
+        </include>
+        <pose frame=''>-1.592441 7.715420 0 0 0 0</pose>
+	</model>
+
+
+      <!-- <model name='aws_robomaker_warehouse_PalletJackB_01_001'>
+        <include>
+            <uri>model://aws_robomaker_warehouse_PalletJackB_01</uri>
+        </include>
+        <pose frame=''>-0.276098 -9.481944 0.023266 0 0 0</pose>
+	</model>  -->
+
+    <light name="Warehouse_CeilingLight_001" type="point">
+      <pose frame="">0 0 9 0 0 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>80</range>
+        <constant>0.3</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <cast_shadows>1</cast_shadows>
+      <direction>0.1 0.1 -1</direction>
+    </light>
+
+        <light type="directional" name="sun">
+            <cast_shadows>true</cast_shadows>
+            <pose>0 0 10 0 0 0</pose>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+            <attenuation>
+                <range>1000</range>
+                <constant>0.9</constant>
+                <linear>0.01</linear>
+                <quadratic>0.001</quadratic>
+            </attenuation>
+            <direction>-0.5 0.1 -0.9</direction>
+        </light>
+        
+        <model name="ground_plane">
+            <static>true</static>
+           <link name="link">
+                <collision name="collision">
+                    <geometry>
+                        <plane>
+                            <normal>0 0 1</normal>
+                        </plane>
+                    </geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry>
+                        <plane>
+                            <normal>0 0 1</normal>
+                            <size>100 100</size>
+                        </plane>
+                    </geometry>
+                    <material>
+                        <ambient>0.8 0.8 0.8 1</ambient>
+                        <diffuse>0.8 0.8 0.8 1</diffuse>
+                        <specular>0.8 0.8 0.8 1</specular>
+                    </material>
+                </visual>
+            </link>
+        </model>
+
+  </world>
+</sdf>

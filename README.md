@@ -2,7 +2,7 @@
 
 ## About
 
-A 6 wheeled differential drive robot with camera, 2D lidar and conveyor belt. The repository offers files for both simulators [gazebo classic](https://classic.gazebosim.org/) and [gazebo](https://gazebosim.org/home).
+Explore our indoor 6-wheeled differential drive robot with a depth camera and 2D lidar. Our repository supports [gazebo classic](https://classic.gazebosim.org/) and [gazebo](https://gazebosim.org/home), facilitating exploration and simulation. Maneuverable in indoor environments, this robot is equipped with a depth camera for precise navigation and object perception. The 2D lidar enhances perception with accurate distance measurements for mapping and obstacle avoidance. Join us on this exciting robotics journey, accessing comprehensive documentation, code samples, and simulation files to harness the full potential of our indoor robot with its advanced depth camera capabilities.
 
 ## Dependencies
 
@@ -25,23 +25,24 @@ A 6 wheeled differential drive robot with camera, 2D lidar and conveyor belt. Th
 Note: If required there is an example `Dockerfile` that shows the installation for Humble-Fortress combination
 
 * Build the package:
-
-		colcon build --symlink-install
-
+	```bash
+	colcon build --symlink-install
+	```
 ## Run Instructions
 
 * Launch the robot in gazebo:
-
-		ros2 launch new_bcr_robot gazebo.launch.py
-
+	```bash
+	ros2 launch new_bcr_robot gazebo.launch.py
+	```
 * Launch the robot in RViz:
-
-		ros2 launch new_bcr_robot rviz.launch.py
-
+	```bash
+	ros2 launch new_bcr_robot rviz.launch.py
+	```
 * Launch the robot in Ignition Gazebo Fortress
-
-		ros2 launch new_bcr_robot gz.launch.py
-
+	```bash
+	ros2 launch new_bcr_robot gz.launch.py
+	```
+	
 ## Configuration
 
 ### Xacro Configurations
@@ -68,36 +69,20 @@ robot_description_content = get_xacro_to_doc(
 
 ### World File Configurations
 
-The `worlds` directory has two subdirectories: `gazebo` and `gz`. Both of these host world files for each simulator respectively. Here are the expected outputs from each world configuration:
+The `worlds` directory has two subdirectories: `gazebo` and `gz`. Both of these host world file for each simulator respectively. Here are the expected outputs from each world configuration:
 
-1. Gazebo Classic (Empty World):
+1. Gazebo Classic (small_warehouse):
 
 	Launch file Change in the Launch Description:
 	```python
 	DeclareLaunchArgument(
-		'world', default_value=[FindPackageShare('gazebo_ros'), '/worlds/empty.world'],
+		'world', default_value=[FindPackageShare('new_bcr_robot'), '/worlds/small_warehouse.world'],
 	)
 	```
-	![](res/empty_gazebo.png)
+	![](res/gazebo.jpg)
 
-2. Gazebo Classic (Mars):
-	Launch file Change in the Launch Description:
-	```python
-	DeclareLaunchArgument(
-		'world', default_value=[FindPackageShare('new_bcr_robot'), '/worlds/gazebo/mars.world'],
-	)
-	```
-	![](res/mars_gazebo.png)
+2. Gz Sim (Ignition Gazebo) (small_warehouse World):
+	![](res/gz.png)
 
-3. Gazebo Classic (Corridor):
-	Launch file Change in the Launch Description:
-	```python
-	DeclareLaunchArgument(
-		'world', default_value=[FindPackageShare('new_bcr_robot'), '/worlds/gazebo/corridor.world'],
-	)
-	```
-	![](res/corridor_gazebo.png)
-
-4. Gz Sim (Ignition Gazebo) (Empty World):\
-	No Changes to launch file\
-	![](res/empty_gz.png)
+2. Rviz (Depth camera) (small_warehouse World):
+	![](res/rviz.png)

@@ -23,7 +23,7 @@ def generate_launch_description():
 
     # Path to the Xacro file
     xacro_path = join(get_package_share_directory('new_bcr_robot'), 'urdf', 'new_bcr_robot.xacro')
-    doc = get_xacro_to_doc(xacro_path, {"wheel_odom_topic": "odom", "sim_gazebo": "true"})
+    doc = get_xacro_to_doc(xacro_path, {"wheel_odom_topic": "odom", "sim_gazebo": "true", "two_d_lidar_enabled": "true", "camera_enabled": "true"})
 
     # Launch the robot_state_publisher node
     robot_state_publisher = Node(
@@ -31,7 +31,8 @@ def generate_launch_description():
         executable='robot_state_publisher',
         name='robot_state_publisher',
         output='screen',
-        parameters=[{'use_sim_time': use_sim_time}, {'robot_description': doc.toxml()}]
+        parameters=[{'use_sim_time': use_sim_time}, {'robot_description': doc.toxml()}],
+        remappings=[('joint_states', '/new_bcr_robot/joint_states')]
     )
 
     # Launch the spawn_entity node to spawn the robot in Gazebo
@@ -50,7 +51,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         # Declare launch arguments
-        DeclareLaunchArgument('world', default_value=[FindPackageShare('new_bcr_robot'), '/worlds/gazebo/mars.world']),
+        DeclareLaunchArgument('world', default_value=[FindPackageShare('new_bcr_robot'), '/worlds/gazebo/small_warehouse.world']),
         DeclareLaunchArgument('gui', default_value='true'),
         DeclareLaunchArgument('verbose', default_value='false'),
         DeclareLaunchArgument('use_sim_time', default_value='true'),

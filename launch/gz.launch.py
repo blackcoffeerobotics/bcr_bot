@@ -21,7 +21,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time", default=True)
 
     new_bcr_robot_path = get_package_share_directory("new_bcr_robot")
-    world_file = LaunchConfiguration("world_file", default = "-r " + join(new_bcr_robot_path, "worlds", "gz", "empty.sdf"))
+    world_file = LaunchConfiguration("world_file", default = "-r " + join(new_bcr_robot_path, "worlds", "gz", "small_warehouse.sdf"))
 
     position_x = LaunchConfiguration("x")
     position_y = LaunchConfiguration("y")
@@ -32,7 +32,7 @@ def generate_launch_description():
         {"wheel_odom_topic": "odom",
          "sim_gz": "true",
          "two_d_lidar_enabled": "true",
-         "conveyor_enabled": "true",
+         "conveyor_enabled": "false",
          "camera_enabled": "true"
         }
     ).toxml()
