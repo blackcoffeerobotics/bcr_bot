@@ -8,13 +8,13 @@
 
 <arg name="gazebo_gui_enabled" 		default="true"/>
 <arg name="two_d_lidar_enabled"		default="true"/>
-<arg name="camera_enabled"			default="false"/>
+<arg name="camera_enabled"			default="true"/>
 <arg name="wheel_odom_topic"		default="odom"/>
 <arg name="publish_wheel_odom_tf"	default="true"/>
 <arg name="conveyor_enabled"        default="false"/>
 <arg name="ground_truth_frame"      default="map"/>
 <arg name="robot_namespace"         default="new_bcr_robot"/>
-<arg name="world_name"              default="$(find new_bcr_robot)/worlds/corridor.world"/>
+<arg name="world_name"              default="$(find new_bcr_robot)/worlds/small_warehouse.world"/>
 
 <!-- ............................... LAUNCH WORLD ................................... -->
 

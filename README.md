@@ -1,6 +1,6 @@
 # New BCR Robot
 
-A 6 wheeled differential drive robot with camera, 2D lidar and conveyor belt. The repository offers files for [gazebo classic](https://classic.gazebosim.org/).
+This branch of our repository supports ROS Noetic integration with the classic Gazebo simulator. Now, you can leverage the power of ROS Noetic and the familiar environment of Gazebo Classic to develop and test your applications with our 6-wheeled differential drive robot. This combination allows for seamless integration with the ROS ecosystem and provides a robust simulation environment for your robotics projects.
 
 ## Dependencies
 
@@ -49,24 +49,19 @@ Example:
 ```
 
 1. `two_d_lidar_enabled`: If you want to use the 2D Lidar in the simulation.
-2. `conveyor_enabled`: If the conveyor belt atop the robot is to be used, enable this flag to true.
-3. `camera_enabled`: If the camera is to be used, enable this flag to true.
-4. `wheel_odom_topic`: The odometry topic to publish wheel odom from diff drive plugin into.
-5. `robot_namespace`: The namespace of the robot
+2. `camera_enabled`: If the camera is to be used, enable this flag to true.
+3. `wheel_odom_topic`: The odometry topic to publish wheel odom from diff drive plugin into.
+4. `robot_namespace`: The namespace of the robot
 
 
 ### World File
 
-The `worlds` directory has two `.world` files, to pass them to gazebo edit the `launch/gazebo.launch` and modify the arg `world_name`. The following are the world outputs:
+The `worlds` directory has two `.world` files, to pass them to gazebo edit the `launch/gazebo.launch` and modify the arg `world_name`.
 
-* Empty World (Default):
+* Small Warehouse World (Default):
 
-	![](res/empty.png)
+	![](res/gazebo.jpg)
 
-* Mars World:
+* Depth camera visualisation :
 
-	![](res/mars.png)
-
-* Corridor World:
-
-	![](res/corridor.png)
+	![](res/rviz.png)
