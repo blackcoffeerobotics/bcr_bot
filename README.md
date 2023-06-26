@@ -2,70 +2,144 @@
 
 ## About
 
-Explore our indoor 6-wheeled differential drive robot with a depth camera and 2D lidar. Our repository supports [gazebo classic](https://classic.gazebosim.org/) and [gazebo](https://gazebosim.org/home), facilitating exploration and simulation. Maneuverable in indoor environments, this robot is equipped with a depth camera for precise navigation and object perception. The 2D lidar enhances perception with accurate distance measurements for mapping and obstacle avoidance. Join us on this exciting robotics journey, accessing comprehensive documentation, code samples, and simulation files to harness the full potential of our indoor robot with its advanced depth camera capabilities.
+This repository contains a Gazebo simulation for a differential drive robot, equipped with an IMU, a depth camera and a 2D LiDAR. The primary contriution of this project is to support multiple ROS and Gazebo distros. Currently, the project supports the following versions - 
 
-## Dependencies
+1. ROS Noetic + Gazebo Classic 11
+2. ROS2 Humble + Gazebo Classic 11
+3. ROS2 Humble + Gazebo Fortress
 
-* ROS Dependencies:
-	```bash
-	# From the root directory of the workspace. This will install everything mentioned in package.xml
-	rosdep install --from-paths src --ignore-src -r -y
-	```
-* Gazebo Classic Dependencies:
-	```bash
-	sudo apt-get install ros-humble-gazebo-ros-pkgs
-	```
-* Gazebo Dependencies:
-	```bash
-	sudo apt-get install ros-humble-ros-gz-sim ros-humble-ros-gz-bridge ros-humble-ros-gz-interfaces 
-	```
+Each of the following sections describes depedencies, build and run instructions for each of the above combinations
 
-## Build Instructions
+## Noetic + Classic (Ubuntu 20.04)
 
-Note: If required there is an example `Dockerfile` that shows the installation for Humble-Fortress combination
+### Dependencies
 
-* Build the package:
-	```bash
-	colcon build --symlink-install
-	```
-## Run Instructions
+In addition to ROS1 Noetic and Gazebo Classic installations, the dependencies can be installed with [rosdep](http://wiki.ros.org/rosdep)
 
-* Launch the robot in gazebo:
-	```bash
-	ros2 launch new_bcr_robot gazebo.launch.py
-	```
-* Launch the robot in RViz:
-	```bash
-	ros2 launch new_bcr_robot rviz.launch.py
-	```
-* Launch the robot in Ignition Gazebo Fortress
-	```bash
-	ros2 launch new_bcr_robot gz.launch.py
-	```
-	
-## Configuration
-
-### Xacro Configurations
-
-The xacro (refer to `urdf/new_bcr_robot.xacro`) has loads of configuration options as xacro arguments. To mention any one of the configurations, head over to the desired launch file; `launch/gz.launch.py` or `launch/gazebo.launch.py` and add the options in the dictionary being passed to the `get_xacro_to_doc` function call.
-
-Example:
-```python
-robot_description_content = get_xacro_to_doc(
-	join(new_bcr_robot_path, "urdf", "new_bcr_robot.xacro"),
-	{"wheel_odom_topic": "odom",
-		"sim_gz": "true",
-		"two_d_lidar_enabled": "true",
-		"conveyor_enabled": "true",
-		"camera_enabled": "true"
-	}
-).toxml()
+```bash
+# From the root directory of the workspace. This will install everything mentioned in package.xml
+rosdep install --from-paths src --ignore-src -r -y
 ```
 
-1. `sim_gz`/`sim_gazebo`: Depending on the simulator being passed use the appropriate flag. If no simulator is to used do not pass anything.
-2. `two_d_lidar_enabled`: If you want to use the 2D Lidar in the simulation.
-3. `conveyor_enabled`: If the conveyor belt atop the robot is to be used, enable this flag to true.
-4. `camera_enabled`: If the camera is to be used, enable this flag to true.
+### Build
+
+```bash
+catkin build --packages-select new_bcr_robot
+```
+
+### Run
+
+To launch the robot in Gazebo,
+```bash
+roslaunch new_bcr_robot gazebo.launch
+```
+To view in rviz,
+```bash
+roslaunch new_bcr_robot rviz.launch
+```
+### Configuration
+
+The launch file accepts multiple launch arguments,
+```bash
+roslaunch new_bcr_robot gazebo.launch 
+	camera_enabled:=True
+	two_d_lidar_enabled:=True
+	position_x:=0.0
+	position_y:=0.0
+	orientation_yaw:=0.0
+	world_file:=small_warehouse.world
+```
+
+## Humble + Classic (Ubuntu 22.04)
+
+### Dependencies
+
+In addition to ROS2 Humble and Gazebo Classic installations, we need to manually install [gazebo_ros_pkgs](https://github.com/ros-simulation/gazebo_ros_pkgs/tree/ros2) (since the same branch supports Classic and Fortress)
+
+```bash
+sudo apt-get install ros-humble-gazebo-ros-pkgs
+```
+Remainder of the dependencies can be installed with [rosdep](http://wiki.ros.org/rosdep)
+
+```bash
+# From the root directory of the workspace. This will install everything mentioned in package.xml
+rosdep install --from-paths src --ignore-src -r -y
+```
+
+### Build
+
+```bash
+colcon build --packages-select new_bcr_robot
+```
+
+### Run
+
+To launch the robot in Gazebo,
+```bash
+ros2 launch new_bcr_robot gazebo.launch.py
+```
+To view in rviz,
+```bash
+ros2 launch new_bcr_robot rviz.launch.py
+```
+### Configuration
+
+The launch file accepts multiple launch arguments,
+```bash
+ros2 launch new_bcr_robot gazebo.launch.py 
+	camera_enabled:=True
+	two_d_lidar_enabled:=True
+	position_x:=0.0
+	position_y:=0.0
+	orientation_yaw:=0.0
+	world_file:=small_warehouse.world
+```
+
+## Humble + Fortress
+
+### Dependencies
+
+In addition to ROS2 Humble and [Gazebo Fortress installations](https://gazebosim.org/docs/fortress/install_ubuntu), we need to manually install interfaces between ROS2 and Gazebo sim as follows,
+
+```bash
+sudo apt-get install ros-humble-ros-gz-sim ros-humble-ros-gz-bridge ros-humble-ros-gz-interfaces 
+```
+Remainder of the dependencies can be installed with [rosdep](http://wiki.ros.org/rosdep)
+
+```bash
+# From the root directory of the workspace. This will install everything mentioned in package.xml
+rosdep install --from-paths src --ignore-src -r -y
+```
+
+### Build
+
+```bash
+colcon build --packages-select new_bcr_robot
+```
+
+### Run
+
+To launch the robot in Gazebo,
+```bash
+ros2 launch new_bcr_robot gz.launch.py
+```
+To view in rviz,
+```bash
+ros2 launch new_bcr_robot rviz.launch.py
+```
+
+### Configuration
+
+The launch file accepts multiple launch arguments,
+```bash
+ros2 launch new_bcr_robot gz.launch.py 
+	camera_enabled:=True
+	two_d_lidar_enabled:=True
+	position_x:=0.0
+	position_y:=0.0
+	orientation_yaw:=0.0
+	world_file:=small_warehouse.world
+```
 
 ### World File Configurations
 

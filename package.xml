@@ -4,8 +4,8 @@
 	<version>0.5.0</version>
 	<description>new_bcr_robot</description>
 
-	<maintainer email="leander@tblackcoffeerobotics.com">leander</maintainer>
-
+	<maintainer email="gaurav@blackcoffeerobotics.com">Gaurav Gupta</maintainer>
+        <maintainer email="devanshu@blackcoffeerobotics.com">Devanshu Sharma</maintainer>
 	<license>(C) Black Coffee Robotics</license>
 
 	<buildtool_depend>ament_cmake</buildtool_depend>
