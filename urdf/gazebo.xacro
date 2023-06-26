@@ -9,10 +9,10 @@
 
 <gazebo>
 	<plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
-		 <ros>
-		  <namespace>$(arg robot_namespace)</namespace>
-		  <remapping>cmd_vel:=cmd_vel</remapping>
-		  <remapping>odom:=odom</remapping>
+		<ros>
+			<namespace>$(arg robot_namespace)</namespace>
+			<remapping>cmd_vel:=cmd_vel</remapping>
+			<remapping>odom:=odom</remapping>
 		</ros>
 		<legacy_mode>false</legacy_mode>
 		<update_rate>50.0</update_rate>
@@ -28,7 +28,6 @@
 		<publish_odom_tf>$(arg publish_wheel_odom_tf)</publish_odom_tf>
 		<publish_wheel_tf>false</publish_wheel_tf>
 		<publish_odom>true</publish_odom>
-		<!-- <odometry_source>encoder</odometry_source> -->
 		<max_wheel_acceleration>5.0</max_wheel_acceleration>
 	</plugin>
 </gazebo>
@@ -66,7 +65,6 @@
 
 
 <gazebo>
-
 	<plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
 		<ros>
 			<!-- Add namespace and remap the default topic -->
@@ -125,9 +123,7 @@
 <!-- ........................... CAMERA PLUGIN ................................... -->
 
 <xacro:if value="$(arg camera_enabled)">
-
 	 <gazebo reference="kinect_camera">
-
 		<sensor name="kinect_camera" type="depth">
 			<pose> 0 0 0 0 0 0 </pose>
 			<visualize>true</visualize>
@@ -154,7 +150,6 @@
 			</plugin>
 		</sensor>
 	</gazebo>
-
 </xacro:if>
 
 <!--................................................................................. -->

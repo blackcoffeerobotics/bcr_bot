@@ -84,6 +84,19 @@ def generate_launch_description():
         ],
     )
 
+    transform_publisher = Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        arguments = ["--x", "0.0",
+                    "--y", "0.0",
+                    "--z", "0.0",
+                    "--yaw", "0.0",
+                    "--pitch", "0.0",
+                    "--roll", "0.0",
+                    "--frame-id", "kinect_camera",
+                    "--child-frame-id", "new_bcr_robot/base_link/kinect_camera"]
+    )
+
     return LaunchDescription([
         DeclareLaunchArgument("use_sim_time", default_value=use_sim_time),
         DeclareLaunchArgument("world_file", default_value=world_file),
@@ -91,5 +104,6 @@ def generate_launch_description():
         DeclareLaunchArgument("y", default_value="0.0"),
         DeclareLaunchArgument("yaw", default_value="0.0"),        
         robot_state_publisher,
-        gz_sim, gz_spawn_entity, gz_ros2_bridge
+        gz_sim, gz_spawn_entity, gz_ros2_bridge,
+        transform_publisher
     ])

@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>new_bcr_robot</name>
-  <version>0.5.0</version>
-  <description>new_bcr_robot</description>
+	<name>new_bcr_robot</name>
+	<version>0.5.0</version>
+	<description>new_bcr_robot</description>
 
-  <maintainer email="leander@tblackcoffeerobotics.com">leander</maintainer>
+	<maintainer email="leander@tblackcoffeerobotics.com">leander</maintainer>
 
-  <license>(C) Black Coffee Robotics</license>
+	<license>(C) Black Coffee Robotics</license>
 
-  <buildtool_depend>ament_cmake</buildtool_depend>
+	<buildtool_depend>ament_cmake</buildtool_depend>
 
-  <exec_depend>ament_index_python</exec_depend>
-  <exec_depend>launch</exec_depend>
-  <exec_depend>launch_ros</exec_depend>
-  <exec_depend>robot_state_publisher</exec_depend>
-  <exec_depend>xacro</exec_depend>
+	<exec_depend>ament_index_python</exec_depend>
+	<exec_depend>launch</exec_depend>
+	<exec_depend>launch_ros</exec_depend>
+	<exec_depend>robot_state_publisher</exec_depend>
+	<exec_depend>xacro</exec_depend>
 
-  <test_depend>ament_cmake_gtest</test_depend>
-  <test_depend>ament_lint_auto</test_depend>
-  <test_depend>ament_lint_common</test_depend>
+	<test_depend>ament_cmake_gtest</test_depend>
+	<test_depend>ament_lint_auto</test_depend>
+	<test_depend>ament_lint_common</test_depend>
 
-  <export>
-    <build_type>ament_cmake</build_type>
-  </export>
+	<export>
+		<build_type>ament_cmake</build_type>
+	</export>
 </package>

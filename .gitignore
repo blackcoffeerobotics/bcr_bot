@@ -17,6 +17,3 @@ CATKIN_IGNORE
 *.swp
 log/
 test/
-
-# Unity
-# Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
