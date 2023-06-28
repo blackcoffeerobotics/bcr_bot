@@ -141,22 +141,9 @@ ros2 launch new_bcr_robot gz.launch.py
 	world_file:=small_warehouse.world
 ```
 
-### World File Configurations
-
-The `worlds` directory has two subdirectories: `gazebo` and `gz`. Both of these host world file for each simulator respectively. Here are the expected outputs from each world configuration:
-
-1. Gazebo Classic (small_warehouse):
-
-	Launch file Change in the Launch Description:
-	```python
-	DeclareLaunchArgument(
-		'world', default_value=[FindPackageShare('new_bcr_robot'), '/worlds/small_warehouse.world'],
-	)
-	```
-	![](res/gazebo.jpg)
-
-2. Gz Sim (Ignition Gazebo) (small_warehouse World):
-	![](res/gz.png)
+### Simulation and Visualization
+1. Gz Sim (Ignition Gazebo) (small_warehouse World):
+	![](res/gz.jpg)
 
 2. Rviz (Depth camera) (small_warehouse World):
-	![](res/rviz.png)
+	![](res/rviz.jpg)

@@ -26,7 +26,7 @@
 		<odometry_topic>$(arg wheel_odom_topic)</odometry_topic>
 		<odometry_frame>odom</odometry_frame>
 		<publish_odom_tf>$(arg publish_wheel_odom_tf)</publish_odom_tf>
-		<publish_wheel_tf>false</publish_wheel_tf>
+		<publish_wheel_tf>true</publish_wheel_tf>
 		<publish_odom>true</publish_odom>
 		<max_wheel_acceleration>5.0</max_wheel_acceleration>
 	</plugin>
@@ -34,32 +34,18 @@
 
 <!--............................... IMU PLUGIN ..................................... -->
 
-<!--
-<gazebo>
-	<plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
-		<updateRate>50.0</updateRate>
-		<bodyName>base_link</bodyName>
-		<topicName>/imu</topicName>
-		<serviceName>/imu/calibrate</serviceName>
-		<accelOffset>0.0 0.0 0.0</accelOffset>
-		<accelDrift>0.0 0.0 0.0</accelDrift>
-		<accelDriftFrequency>0.0 0.0 0.0</accelDriftFrequency>
-		<accelGaussianNoise>0.0 0.0 0.0</accelGaussianNoise>
-		<rateOffset>0.0 0.0 0.0</rateOffset>
-		<rateDrift>0.0 0.0 0.0</rateDrift>
-		<rateDriftFrequency>0.0 0.0 0.0</rateDriftFrequency>
-		<rateGaussianNoise>0.0 0.0 0.0</rateGaussianNoise>
-		<headingOffset>0.0</headingOffset>
-		<headingDrift>0.0</headingDrift>
-		<headingDriftFrequency>0.0</headingDriftFrequency>
-		<headingGaussianNoise>0.0</headingGaussianNoise>
-		<rpyOffset>0.0 0.0 0.0</rpyOffset>
-		<xyzOffset>0.0 0.0 0.0</xyzOffset>
-		<gaussianNoise>0.0</gaussianNoise>
-		<frameName>imu_frame</frameName>
-	</plugin>
+<gazebo reference="imu_frame">
+		<sensor name="imu" type="imu">
+			<always_on>true</always_on>
+			<update_rate>5</update_rate>
+			<plugin name="imu_plugin" filename="libgazebo_ros_imu_sensor.so">
+				<ros>
+					<namespace>$(arg robot_namespace)</namespace>
+					<remapping>~/out:=imu</remapping>
+				</ros>
+			</plugin>
+		</sensor>
 </gazebo>
--->
 
 <!--............................... Ground truth PLUGIN .............................-->
 

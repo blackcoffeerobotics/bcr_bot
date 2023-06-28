@@ -72,7 +72,7 @@
 	</collision>
 
 	<visual>
-		<origin xyz="0 0 -0.15" rpy="0 0 0" />
+		<origin xyz="0 0 -0.205" rpy="0 0 0" />
   		<geometry>
     		<mesh filename="file://$(find new_bcr_robot)/meshes/bcr_bot_mesh.dae" scale="1 1 1"/>
   		</geometry>
@@ -140,6 +140,16 @@
    </gazebo>
 
 </xacro:if>
+
+<!-- ............................. IMU ........................................ -->
+
+<link name="imu_frame"/>
+
+<joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_frame"/>
+    <origin xyz="0.0 0.0 0.08" rpy="0.0 0.0 0.0"/>
+</joint>
 
 <!-- ............................. CAMERA ........................................ -->
 
