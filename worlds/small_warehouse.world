@@ -236,6 +236,12 @@
                 </visual>
             </link>
         </model>
-
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>-3.90827 -4.65526 4.77216 0 0.623643 0.728194</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
   </world>
 </sdf>

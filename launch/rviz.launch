@@ -9,7 +9,7 @@
 
 <!-- ........................... CONDITIONAL XACRO CALL .............................. -->
 
-<param name="robot_description" command="$(find xacro)/xacro $(find new_bcr_robot)/urdf/new_bcr_robot.xacro
+<param name="robot_description" command="$(find xacro)/xacro $(find bcr_bot)/urdf/bcr_bot.xacro
 	two_d_lidar_enabled:=$(arg two_d_lidar_enabled)
 	camera_enabled:=$(arg camera_enabled)
 	" />
@@ -19,7 +19,7 @@
 
 <!-- ............................... RVIZ LAUNCH ..................................... -->
 
-<node name="rviz" pkg="rviz" type="rviz" args="-d $(find new_bcr_robot)/rviz/$(arg rviz_config)"/>
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(find bcr_bot)/rviz/$(arg rviz_config)"/>
 
 <!-- ................................................................................. -->
 

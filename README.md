@@ -4,9 +4,9 @@
 
 This repository contains a Gazebo simulation for a differential drive robot, equipped with an IMU, a depth camera and a 2D LiDAR. The primary contriution of this project is to support multiple ROS and Gazebo distros. Currently, the project supports the following versions - 
 
-1. ROS Noetic + Gazebo Classic 11
-2. ROS2 Humble + Gazebo Classic 11
-3. ROS2 Humble + Gazebo Fortress
+1. [ROS Noetic + Gazebo Classic 11 (branch ros1)](#noetic--classic-ubuntu-2004)
+2. [ROS2 Humble + Gazebo Classic 11 (branch ros2)](#humble--classic-ubuntu-2204)
+3. [ROS2 Humble + Gazebo Fortress (branch ros2)](#humble--fortress-ubuntu-2204)
 
 Each of the following sections describes depedencies, build and run instructions for each of the above combinations
 
@@ -24,24 +24,24 @@ rosdep install --from-paths src --ignore-src -r -y
 ### Build
 
 ```bash
-catkin build --packages-select new_bcr_robot
+catkin build --packages-select bcr_bot
 ```
 
 ### Run
 
 To launch the robot in Gazebo,
 ```bash
-roslaunch new_bcr_robot gazebo.launch
+roslaunch bcr_bot gazebo.launch
 ```
 To view in rviz,
 ```bash
-roslaunch new_bcr_robot rviz.launch
+roslaunch bcr_bot rviz.launch
 ```
 ### Configuration
 
 The launch file accepts multiple launch arguments,
 ```bash
-roslaunch new_bcr_robot gazebo.launch 
+roslaunch bcr_bot gazebo.launch 
 	camera_enabled:=True
 	two_d_lidar_enabled:=True
 	position_x:=0.0
@@ -69,24 +69,24 @@ rosdep install --from-paths src --ignore-src -r -y
 ### Build
 
 ```bash
-colcon build --packages-select new_bcr_robot
+colcon build --packages-select bcr_bot
 ```
 
 ### Run
 
 To launch the robot in Gazebo,
 ```bash
-ros2 launch new_bcr_robot gazebo.launch.py
+ros2 launch bcr_bot gazebo.launch.py
 ```
 To view in rviz,
 ```bash
-ros2 launch new_bcr_robot rviz.launch.py
+ros2 launch bcr_bot rviz.launch.py
 ```
 ### Configuration
 
 The launch file accepts multiple launch arguments,
 ```bash
-ros2 launch new_bcr_robot gazebo.launch.py 
+ros2 launch bcr_bot gazebo.launch.py 
 	camera_enabled:=True
 	two_d_lidar_enabled:=True
 	position_x:=0.0
@@ -95,7 +95,7 @@ ros2 launch new_bcr_robot gazebo.launch.py
 	world_file:=small_warehouse.world
 ```
 
-## Humble + Fortress
+## Humble + Fortress (Ubuntu 22.04)
 
 ### Dependencies
 
@@ -114,25 +114,25 @@ rosdep install --from-paths src --ignore-src -r -y
 ### Build
 
 ```bash
-colcon build --packages-select new_bcr_robot
+colcon build --packages-select bcr_bot
 ```
 
 ### Run
 
 To launch the robot in Gazebo,
 ```bash
-ros2 launch new_bcr_robot gz.launch.py
+ros2 launch bcr_bot gz.launch.py
 ```
 To view in rviz,
 ```bash
-ros2 launch new_bcr_robot rviz.launch.py
+ros2 launch bcr_bot rviz.launch.py
 ```
 
 ### Configuration
 
 The launch file accepts multiple launch arguments,
 ```bash
-ros2 launch new_bcr_robot gz.launch.py 
+ros2 launch bcr_bot gz.launch.py 
 	camera_enabled:=True
 	two_d_lidar_enabled:=True
 	position_x:=0.0

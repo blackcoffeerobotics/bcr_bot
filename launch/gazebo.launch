@@ -4,7 +4,7 @@
 
 <!--............................ CONFIGURABLE PARAMETERS .............................-->
 
-<env name="GAZEBO_MODEL_PATH" value="$(find new_bcr_robot)/models:$(optenv GAZEBO_MODEL_PATH)"/>
+<env name="GAZEBO_MODEL_PATH" value="$(find bcr_bot)/models:$(optenv GAZEBO_MODEL_PATH)"/>
 
 <arg name="gazebo_gui_enabled" 		default="true"/>
 <arg name="two_d_lidar_enabled"		default="true"/>
@@ -13,8 +13,8 @@
 <arg name="publish_wheel_odom_tf"	default="true"/>
 <arg name="conveyor_enabled"        default="false"/>
 <arg name="ground_truth_frame"      default="map"/>
-<arg name="robot_namespace"         default="new_bcr_robot"/>
-<arg name="world_name"              default="$(find new_bcr_robot)/worlds/small_warehouse.world"/>
+<arg name="robot_namespace"         default="bcr_bot"/>
+<arg name="world_name"              default="$(find bcr_bot)/worlds/small_warehouse.world"/>
 <arg name="position_x"              default="0.0"/>
 <arg name="position_y"              default="0.0"/>
 <arg name="orientation_yaw"         default="0.0"/>
@@ -32,7 +32,7 @@
 
 <!-- ................................ XACRO CALL .................................... -->
 
-<param name="robot_description" command="$(find xacro)/xacro $(find new_bcr_robot)/urdf/new_bcr_robot.xacro
+<param name="robot_description" command="$(find xacro)/xacro $(find bcr_bot)/urdf/bcr_bot.xacro
 	two_d_lidar_enabled:=$(arg two_d_lidar_enabled)
 	camera_enabled:=$(arg camera_enabled)
 	wheel_odom_topic:=$(arg wheel_odom_topic)
@@ -48,7 +48,7 @@
 <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
 	args="-param robot_description
 		-urdf
-		-model new_bcr_robot
+		-model bcr_bot
 		-x $(arg position_x)
         -y $(arg position_y)
 		-z 0.9

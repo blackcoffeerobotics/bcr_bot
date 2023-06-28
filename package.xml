@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-	<name>new_bcr_robot</name>
+	<name>bcr_bot</name>
 	<version>0.0.0</version>
-	<description>The new_bcr_robot package</description>
+	<description>The bcr_bot package</description>
 
 	<maintainer email="gaurav@blackcoffeerobotics.com">Gaurav Gupta</maintainer>
     <maintainer email="devanshu@blackcoffeerobotics.com">Devanshu Sharma</maintainer>

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(new_bcr_robot)
+project(bcr_bot)
 
 find_package(catkin REQUIRED)
 
