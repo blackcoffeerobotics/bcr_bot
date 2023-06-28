@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(new_bcr_robot)
+project(bcr_bot)
 
 find_package(ament_cmake REQUIRED)
 

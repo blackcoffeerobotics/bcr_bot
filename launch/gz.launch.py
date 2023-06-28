@@ -20,8 +20,8 @@ def get_xacro_to_doc(xacro_file_path, mappings):
 def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time", default=True)
 
-    new_bcr_robot_path = get_package_share_directory("new_bcr_robot")
-    world_file = LaunchConfiguration("world_file", default = "-r " + join(new_bcr_robot_path, "worlds", "small_warehouse.sdf"))
+    bcr_bot_path = get_package_share_directory("bcr_bot")
+    world_file = LaunchConfiguration("world_file", default = "-r " + join(bcr_bot_path, "worlds", "small_warehouse.sdf"))
 
     position_x = LaunchConfiguration("position_x")
     position_y = LaunchConfiguration("position_y")
@@ -30,7 +30,7 @@ def generate_launch_description():
     two_d_lidar_enabled = LaunchConfiguration("two_d_lidar_enabled", default=True)
 
     # robot_description_content = get_xacro_to_doc(
-    #     join(new_bcr_robot_path, "urdf", "new_bcr_robot.xacro"),
+    #     join(bcr_bot_path, "urdf", "bcr_bot.xacro"),
     #     {"sim_gz": "true",
     #      "two_d_lidar_enabled": "true",
     #      "conveyor_enabled": "false",
@@ -44,7 +44,7 @@ def generate_launch_description():
         name="robot_state_publisher",
         parameters=[{"use_sim_time": use_sim_time},
                     {'robot_description': Command( \
-                    ['xacro ', join(new_bcr_robot_path, 'urdf/new_bcr_robot.xacro'),
+                    ['xacro ', join(bcr_bot_path, 'urdf/bcr_bot.xacro'),
                     ' camera_enabled:=', camera_enabled,
                     ' two_d_lidar_enabled:=', two_d_lidar_enabled,
                     ' sim_gz:=', "true"
@@ -64,7 +64,7 @@ def generate_launch_description():
         executable="create",
         arguments=[
             "-topic", "/robot_description",
-            "-name", "new_bcr_robot",
+            "-name", "bcr_bot",
             "-allow_renaming", "true",
             "-z", "0.28",
             "-x", position_x,
@@ -99,7 +99,7 @@ def generate_launch_description():
                     "--pitch", "0.0",
                     "--roll", "0.0",
                     "--frame-id", "kinect_camera",
-                    "--child-frame-id", "new_bcr_robot/base_link/kinect_camera"]
+                    "--child-frame-id", "bcr_bot/base_link/kinect_camera"]
     )
 
     return LaunchDescription([

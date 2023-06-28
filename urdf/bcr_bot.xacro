@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="new_bcr_robot">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="bcr_bot">
 
 <!--................................ XACRO CONSTANTS .............................. -->
 
@@ -35,7 +35,7 @@
 <xacro:property name="camera_height"               value="0.10"/>
 <xacro:property name="camera_horizontal_fov"       value="60"/>
 
-<xacro:arg      name="robot_namespace"             default="new_bcr_robot"/>
+<xacro:arg      name="robot_namespace"             default="bcr_bot"/>
 <xacro:arg      name="wheel_odom_topic"            default="odom" />
 <xacro:arg      name="camera_enabled"              default="false" />
 <xacro:arg      name="two_d_lidar_enabled"         default="false" />
@@ -47,15 +47,15 @@
 
 <!-- ............................... LOAD MACROS ................................. -->
 
-<xacro:include filename="$(find new_bcr_robot)/urdf/materials.xacro"/>
-<xacro:include filename="$(find new_bcr_robot)/urdf/macros.xacro"/>
+<xacro:include filename="$(find bcr_bot)/urdf/materials.xacro"/>
+<xacro:include filename="$(find bcr_bot)/urdf/macros.xacro"/>
 
 <xacro:if value="$(arg sim_gazebo)">
-	<xacro:include filename="$(find new_bcr_robot)/urdf/gazebo.xacro"/>
+	<xacro:include filename="$(find bcr_bot)/urdf/gazebo.xacro"/>
 </xacro:if>
 
 <xacro:if value="$(arg sim_gz)">
-	<xacro:include filename="$(find new_bcr_robot)/urdf/gz.xacro"/>
+	<xacro:include filename="$(find bcr_bot)/urdf/gz.xacro"/>
 </xacro:if>
 
 <!-- ................................ BASE LINK .................................. -->
@@ -74,7 +74,7 @@
 	<visual>
 		<origin xyz="0 0 -0.205" rpy="0 0 0" />
   		<geometry>
-    		<mesh filename="file://$(find new_bcr_robot)/meshes/bcr_bot_mesh.dae" scale="1 1 1"/>
+    		<mesh filename="file://$(find bcr_bot)/meshes/bcr_bot_mesh.dae" scale="1 1 1"/>
   		</geometry>
 	</visual>
 
@@ -169,7 +169,7 @@
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0" />
 				<geometry>
-					<mesh filename="file://$(find new_bcr_robot)/meshes/kinect/d415.dae"/>
+					<mesh filename="file://$(find bcr_bot)/meshes/kinect/d415.dae"/>
 				</geometry>
 				<material name="black"/>
 		</visual>
