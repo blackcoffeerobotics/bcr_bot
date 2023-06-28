@@ -15,6 +15,9 @@
 <arg name="ground_truth_frame"      default="map"/>
 <arg name="robot_namespace"         default="new_bcr_robot"/>
 <arg name="world_name"              default="$(find new_bcr_robot)/worlds/small_warehouse.world"/>
+<arg name="position_x"              default="0.0"/>
+<arg name="position_y"              default="0.0"/>
+<arg name="orientation_yaw"         default="0.0"/>
 
 <!-- ............................... LAUNCH WORLD ................................... -->
 
@@ -46,11 +49,15 @@
 	args="-param robot_description
 		-urdf
 		-model new_bcr_robot
-		-z 0.9"
+		-x $(arg position_x)
+        -y $(arg position_y)
+		-z 0.9
+		-Y $(arg orientation_yaw)"
+
 	output="screen" />
 
 <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
-	<remap from="/joint_states" to="/new_bcr_robot/joint_states"/>
+	<remap from="/joint_states" to="$(arg robot_namespace)/joint_states"/>
 </node>
 
 </launch>

@@ -1,67 +1,149 @@
 # New BCR Robot
 
-This branch of our repository supports ROS Noetic integration with the classic Gazebo simulator. Now, you can leverage the power of ROS Noetic and the familiar environment of Gazebo Classic to develop and test your applications with our 6-wheeled differential drive robot. This combination allows for seamless integration with the ROS ecosystem and provides a robust simulation environment for your robotics projects.
+## About
 
-## Dependencies
+This repository contains a Gazebo simulation for a differential drive robot, equipped with an IMU, a depth camera and a 2D LiDAR. The primary contriution of this project is to support multiple ROS and Gazebo distros. Currently, the project supports the following versions - 
+
+1. ROS Noetic + Gazebo Classic 11
+2. ROS2 Humble + Gazebo Classic 11
+3. ROS2 Humble + Gazebo Fortress
+
+Each of the following sections describes depedencies, build and run instructions for each of the above combinations
+
+## Noetic + Classic (Ubuntu 20.04)
+
+### Dependencies
+
+In addition to ROS1 Noetic and Gazebo Classic installations, the dependencies can be installed with [rosdep](http://wiki.ros.org/rosdep)
 
 ```bash
 # From the root directory of the workspace. This will install everything mentioned in package.xml
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
-## Build Instructions
-
-* Build the package:
+### Build
 
 ```bash
 catkin build --packages-select new_bcr_robot
 ```
 
-## Run Instructions
+### Run
 
-* To Launch the robot in gazebo:
-
+To launch the robot in Gazebo,
 ```bash
 roslaunch new_bcr_robot gazebo.launch
 ```
-
-* To Launch the robot in RViz:
-
+To view in rviz,
 ```bash
 roslaunch new_bcr_robot rviz.launch
 ```
+### Configuration
 
-## Configuration
-
-### Xacro 
-
-The xacro (refer to `urdf/new_bcr_robot.xacro`) has loads of configuration options as xacro arguments. To mention any one of the configurations, head over to the desired launch file; `gazebo.launch` or `rviz.launch` and edit the robot description parameter.
-
-Example:
-```xml
-<param name="robot_description" command="$(find xacro)/xacro $(find new_bcr_robot)/urdf/new_bcr_robot.xacro
-	two_d_lidar_enabled:=$(arg two_d_lidar_enabled)
-	camera_enabled:=$(arg camera_enabled)
-	wheel_odom_topic:=$(arg wheel_odom_topic)
-	conveyor_enabled:=$(arg conveyor_enabled)
-	robot_namespace:=$(arg robot_namespace)
-	" />
+The launch file accepts multiple launch arguments,
+```bash
+roslaunch new_bcr_robot gazebo.launch 
+	camera_enabled:=True
+	two_d_lidar_enabled:=True
+	position_x:=0.0
+	position_y:=0.0
+	orientation_yaw:=0.0
+	world_file:=small_warehouse.world
 ```
 
-1. `two_d_lidar_enabled`: If you want to use the 2D Lidar in the simulation.
-2. `camera_enabled`: If the camera is to be used, enable this flag to true.
-3. `wheel_odom_topic`: The odometry topic to publish wheel odom from diff drive plugin into.
-4. `robot_namespace`: The namespace of the robot
+## Humble + Classic (Ubuntu 22.04)
 
+### Dependencies
 
-### World File
+In addition to ROS2 Humble and Gazebo Classic installations, we need to manually install [gazebo_ros_pkgs](https://github.com/ros-simulation/gazebo_ros_pkgs/tree/ros2) (since the same branch supports Classic and Fortress)
 
-The `worlds` directory has two `.world` files, to pass them to gazebo edit the `launch/gazebo.launch` and modify the arg `world_name`.
+```bash
+sudo apt-get install ros-humble-gazebo-ros-pkgs
+```
+Remainder of the dependencies can be installed with [rosdep](http://wiki.ros.org/rosdep)
 
-* Small Warehouse World (Default):
+```bash
+# From the root directory of the workspace. This will install everything mentioned in package.xml
+rosdep install --from-paths src --ignore-src -r -y
+```
 
-	![](res/gazebo.jpg)
+### Build
 
-* Depth camera visualisation :
+```bash
+colcon build --packages-select new_bcr_robot
+```
 
-	![](res/rviz.png)
+### Run
+
+To launch the robot in Gazebo,
+```bash
+ros2 launch new_bcr_robot gazebo.launch.py
+```
+To view in rviz,
+```bash
+ros2 launch new_bcr_robot rviz.launch.py
+```
+### Configuration
+
+The launch file accepts multiple launch arguments,
+```bash
+ros2 launch new_bcr_robot gazebo.launch.py 
+	camera_enabled:=True
+	two_d_lidar_enabled:=True
+	position_x:=0.0
+	position_y:=0.0
+	orientation_yaw:=0.0
+	world_file:=small_warehouse.world
+```
+
+## Humble + Fortress
+
+### Dependencies
+
+In addition to ROS2 Humble and [Gazebo Fortress installations](https://gazebosim.org/docs/fortress/install_ubuntu), we need to manually install interfaces between ROS2 and Gazebo sim as follows,
+
+```bash
+sudo apt-get install ros-humble-ros-gz-sim ros-humble-ros-gz-bridge ros-humble-ros-gz-interfaces 
+```
+Remainder of the dependencies can be installed with [rosdep](http://wiki.ros.org/rosdep)
+
+```bash
+# From the root directory of the workspace. This will install everything mentioned in package.xml
+rosdep install --from-paths src --ignore-src -r -y
+```
+
+### Build
+
+```bash
+colcon build --packages-select new_bcr_robot
+```
+
+### Run
+
+To launch the robot in Gazebo,
+```bash
+ros2 launch new_bcr_robot gz.launch.py
+```
+To view in rviz,
+```bash
+ros2 launch new_bcr_robot rviz.launch.py
+```
+
+### Configuration
+
+The launch file accepts multiple launch arguments,
+```bash
+ros2 launch new_bcr_robot gz.launch.py 
+	camera_enabled:=True
+	two_d_lidar_enabled:=True
+	position_x:=0.0
+	position_y:=0.0
+	orientation_yaw:=0.0
+	world_file:=small_warehouse.world
+```
+
+### Simulation and Visualization
+1. Gz Sim (Ignition Gazebo) (small_warehouse World):
+	![](res/gz.jpg)
+
+2. Rviz (Depth camera) (small_warehouse World):
+	![](res/rviz.jpg)

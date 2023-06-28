@@ -133,6 +133,16 @@
 
 </xacro:if>
 
+<!-- ............................. IMU ........................................ -->
+
+<link name="imu_frame"/>
+
+<joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_frame"/>
+    <origin xyz="0.0 0.0 0.08" rpy="0.0 0.0 0.0"/>
+</joint>
+
 <!-- ............................. CAMERA ........................................ -->
 
 <xacro:if value="$(arg camera_enabled)">

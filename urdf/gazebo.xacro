@@ -34,31 +34,16 @@
 
 <!--............................... IMU PLUGIN ..................................... -->
 
-<!-- <gazebo>
-	<plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
-		<updateRate>50.0</updateRate>
-		<robotNamespace>$(arg robot_namespace)</robotNamespace>
-		<bodyName>base_link</bodyName>
-		<topicName>/imu</topicName>
-		<serviceName>/imu/calibrate</serviceName>
-		<accelOffset>0.0 0.0 0.0</accelOffset>
-		<accelDrift>0.0 0.0 0.0</accelDrift>
-		<accelDriftFrequency>0.0 0.0 0.0</accelDriftFrequency>
-		<accelGaussianNoise>0.0 0.0 0.0</accelGaussianNoise>
-		<rateOffset>0.0 0.0 0.0</rateOffset>
-		<rateDrift>0.0 0.0 0.0</rateDrift>
-		<rateDriftFrequency>0.0 0.0 0.0</rateDriftFrequency>
-		<rateGaussianNoise>0.0 0.0 0.0</rateGaussianNoise>
-		<headingOffset>0.0</headingOffset>
-		<headingDrift>0.0</headingDrift>
-		<headingDriftFrequency>0.0</headingDriftFrequency>
-		<headingGaussianNoise>0.0</headingGaussianNoise>
-		<rpyOffset>0.0 0.0 0.0</rpyOffset>
-		<xyzOffset>0.0 0.0 0.0</xyzOffset>
-		<gaussianNoise>0.0</gaussianNoise>
-		<frameName>imu_frame</frameName>
-	</plugin>
-</gazebo> -->
+<gazebo reference="imu_frame">
+	<sensor name="my_imu" type="imu">
+    <always_on>true</always_on>
+    <plugin name="my_imu_plugin" filename="libgazebo_ros_imu_sensor.so">
+      <topicName>$(arg robot_namespace)/imu</topicName>
+      <updateRate>5</updateRate>
+      <frameName>imu_frame</frameName>
+    </plugin>
+  </sensor>
+</gazebo>
 
 <!--............................... Ground truth PLUGIN .............................-->
 

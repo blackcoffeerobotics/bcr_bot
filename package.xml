@@ -4,8 +4,8 @@
 	<version>0.0.0</version>
 	<description>The new_bcr_robot package</description>
 
-	<maintainer email="leander@blackcoffeerobotics.com">leander</maintainer>
-	<maintainer email="praneeth@blackcoffeerobotics.com">Kvk Praneeth</maintainer>
+	<maintainer email="gaurav@blackcoffeerobotics.com">Gaurav Gupta</maintainer>
+    <maintainer email="devanshu@blackcoffeerobotics.com">Devanshu Sharma</maintainer>
 
 	<license>(C) Black Coffee Robotics</license>
 
