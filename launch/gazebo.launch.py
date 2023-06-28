@@ -27,7 +27,7 @@ def generate_launch_description():
     two_d_lidar_enabled = LaunchConfiguration("two_d_lidar_enabled", default=True)
 
     # Path to the Xacro file
-    xacro_path = join(get_package_share_directory('new_bcr_robot'), 'urdf', 'new_bcr_robot.xacro')
+    xacro_path = join(get_package_share_directory('bcr_bot'), 'urdf', 'bcr_bot.xacro')
     #doc = get_xacro_to_doc(xacro_path, {"wheel_odom_topic": "odom", "sim_gazebo": "true", "two_d_lidar_enabled": "true", "camera_enabled": "true"})
 
     # Launch the robot_state_publisher node
@@ -52,7 +52,7 @@ def generate_launch_description():
         output='screen',
         arguments=[
             '-topic', "/robot_description",
-            '-entity', "new_bcr_robot",
+            '-entity', "bcr_bot",
             '-z', "0.28",
             '-x', position_x,
             '-y', position_y,
@@ -68,7 +68,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         # Declare launch arguments
-        DeclareLaunchArgument('world', default_value=[FindPackageShare('new_bcr_robot'), '/worlds/small_warehouse.sdf']),
+        DeclareLaunchArgument('world', default_value=[FindPackageShare('bcr_bot'), '/worlds/small_warehouse.sdf']),
         DeclareLaunchArgument('gui', default_value='true'),
         DeclareLaunchArgument('verbose', default_value='false'),
         DeclareLaunchArgument('use_sim_time', default_value='true'),
