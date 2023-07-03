@@ -25,6 +25,7 @@ def generate_launch_description():
     orientation_yaw = LaunchConfiguration("orientation_yaw")
     camera_enabled = LaunchConfiguration("camera_enabled", default=True)
     two_d_lidar_enabled = LaunchConfiguration("two_d_lidar_enabled", default=True)
+    odometry_source = LaunchConfiguration("odometry_source", default=1)
 
     # Path to the Xacro file
     xacro_path = join(get_package_share_directory('bcr_bot'), 'urdf', 'bcr_bot.xacro')
@@ -41,8 +42,12 @@ def generate_launch_description():
                     ['xacro ', join(xacro_path),
                     ' camera_enabled:=', camera_enabled,
                     ' two_d_lidar_enabled:=', two_d_lidar_enabled,
-                    ' sim_gazebo:=', "true"
-                    ])}]
+                    ' sim_gazebo:=', "true",
+                    ' odometry_source:=', odometry_source,
+                    ])}],
+        remappings=[
+            ('/joint_states', 'bcr_bot/joint_states'),
+        ]
     )
 
     # Launch the spawn_entity node to spawn the robot in Gazebo
@@ -76,7 +81,8 @@ def generate_launch_description():
         DeclareLaunchArgument("two_d_lidar_enabled", default_value = two_d_lidar_enabled),
         DeclareLaunchArgument("position_x", default_value="0.0"),
         DeclareLaunchArgument("position_y", default_value="0.0"),
-        DeclareLaunchArgument("orientation_yaw", default_value="0.0"),   
+        DeclareLaunchArgument("orientation_yaw", default_value="0.0"),
+        DeclareLaunchArgument("odometry_source", default_value="1"),   
         # DeclareLaunchArgument('robot_description', default_value=doc.toxml()),
         gazebo,
         robot_state_publisher,

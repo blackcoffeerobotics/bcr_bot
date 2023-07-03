@@ -29,6 +29,8 @@
 		<publish_wheel_tf>true</publish_wheel_tf>
 		<publish_odom>true</publish_odom>
 		<max_wheel_acceleration>5.0</max_wheel_acceleration>
+		<!-- Odometry source, 0 for ENCODER, 1 for WORLD, defaults to WORLD -->
+		<odometry_source>$(arg odometry_source)</odometry_source>
 	</plugin>
 </gazebo>
 

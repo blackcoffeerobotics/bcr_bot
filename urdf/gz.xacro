@@ -12,6 +12,10 @@
         name="ignition::gazebo::systems::Imu">
     </plugin>
 
+    <plugin filename="ignition-gazebo-joint-state-publisher-system" 
+        name="ignition::gazebo::systems::JointStatePublisher">
+    </plugin>
+
 <!-- ........................... DIFFERENTIAL DRIVE PLUGIN ................................... -->
 
     <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">

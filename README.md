@@ -47,6 +47,7 @@ roslaunch bcr_bot gazebo.launch
 	position_x:=0.0
 	position_y:=0.0
 	orientation_yaw:=0.0
+	odometry_source:=1
 	world_file:=small_warehouse.world
 ```
 
@@ -92,6 +93,7 @@ ros2 launch bcr_bot gazebo.launch.py
 	position_x:=0.0
 	position_y:=0.0
 	orientation_yaw:=0.0
+	odometry_source:=1
 	world_file:=small_warehouse.world
 ```
 
