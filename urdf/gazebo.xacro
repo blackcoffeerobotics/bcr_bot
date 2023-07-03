@@ -27,7 +27,7 @@
 		<publishWheelTF>false</publishWheelTF>
 		<publishWheelJointState>true</publishWheelJointState>
 		<publishOdometryMsg>true</publishOdometryMsg>
-		<odometrySource>encoder</odometrySource>
+		<odometrySource>$(arg odometry_source)</odometrySource>
 		<wheelAcceleration>5.0</wheelAcceleration>
 	</plugin>
 </gazebo>

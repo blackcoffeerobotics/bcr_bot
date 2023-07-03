@@ -18,6 +18,7 @@
 <arg name="position_x"              default="0.0"/>
 <arg name="position_y"              default="0.0"/>
 <arg name="orientation_yaw"         default="0.0"/>
+<arg name="odometry_source"         default="world"/>
 
 <!-- ............................... LAUNCH WORLD ................................... -->
 
@@ -40,6 +41,7 @@
 	conveyor_enabled:=$(arg conveyor_enabled)
 	ground_truth_frame:=$(arg ground_truth_frame)
 	robot_namespace:=$(arg robot_namespace)
+	odometry_source:=$(arg odometry_source)
 	" />
 
 <!-- ................................ SPAWN MODEL .................................... -->
@@ -48,7 +50,7 @@
 <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
 	args="-param robot_description
 		-urdf
-		-model bcr_bot
+		-model $(arg robot_namespace)
 		-x $(arg position_x)
         -y $(arg position_y)
 		-z 0.9
