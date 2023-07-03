@@ -45,7 +45,6 @@
 <xacro:arg      name="sim_gazebo"                  default="false" />
 <xacro:arg      name="sim_gz"                      default="false" />
 <xacro:arg      name="odometry_source"             default="1" />
-
 <!-- ............................... LOAD MACROS ................................. -->
 
 <xacro:include filename="$(find bcr_bot)/urdf/materials.xacro"/>
