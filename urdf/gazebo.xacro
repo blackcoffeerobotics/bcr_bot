@@ -29,6 +29,13 @@
 		<publish_wheel_tf>true</publish_wheel_tf>
 		<publish_odom>true</publish_odom>
 		<max_wheel_acceleration>5.0</max_wheel_acceleration>
+		<!-- Odometry source, 0 for ENCODER, 1 for WORLD, defaults to WORLD -->
+		<xacro:if value="${odometry_source == 'world'}">
+			<odometry_source>1</odometry_source>
+		</xacro:if>
+		<xacro:if value="${odometry_source == 'encoder'}">
+			<odometry_source>0</odometry_source>
+		</xacro:if>
 	</plugin>
 </gazebo>
 
@@ -100,7 +107,7 @@
 					<remapping>~/out:=/$(arg robot_namespace)/scan</remapping>
 				</ros>
 				<output_type>sensor_msgs/LaserScan</output_type>
-				<frameName>two_d_lidar</frameName>
+				<frame_name>two_d_lidar</frame_name>
 			</plugin>
 		</sensor>
 	</gazebo>

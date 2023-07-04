@@ -28,7 +28,7 @@
 <xacro:property name="two_d_lidar_sample_size"     value="361"/>
 <xacro:property name="two_d_lidar_min_angle"       value="0"/>
 <xacro:property name="two_d_lidar_max_angle"       value="360"/>
-<xacro:property name="two_d_lidar_min_range"       value="0.1"/>
+<xacro:property name="two_d_lidar_min_range"       value="0.55"/>
 <xacro:property name="two_d_lidar_max_range"       value="16"/>
 
 <xacro:property name="camera_baseline"             value="0.06"/>
@@ -44,6 +44,9 @@
 <xacro:arg      name="ground_truth_frame"          default="map"/>
 <xacro:arg      name="sim_gazebo"                  default="false" />
 <xacro:arg      name="sim_gz"                      default="false" />
+<xacro:arg      name="odometry_source"             default="world" />
+
+<xacro:property name="odometry_source"             value="$(arg odometry_source)"/>
 
 <!-- ............................... LOAD MACROS ................................. -->
 
@@ -132,7 +135,7 @@
    <joint name="two_d_lidar_joint" type="fixed">
       <parent link="base_link"/>
       <child link="two_d_lidar"/>
-      <origin xyz="0.3 0 0.08" rpy="0 0 0" />
+      <origin xyz="0.0 0 0.08" rpy="0 0 0" />
     </joint>
 
    <gazebo reference="two_d_lidar">
