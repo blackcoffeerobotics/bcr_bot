@@ -10,7 +10,6 @@ from launch.substitutions import LaunchConfiguration, Command
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 from launch_ros.actions import Node
-from launch_ros.substitutions import FindPackageShare
 
 def get_xacro_to_doc(xacro_file_path, mappings):
     doc = xacro.parse(open(xacro_file_path))
@@ -18,6 +17,9 @@ def get_xacro_to_doc(xacro_file_path, mappings):
     return doc
 
 def generate_launch_description():
+    # Get bcr_bot package's share directory path
+    bcr_bot_path = get_package_share_directory('bcr_bot')
+
     # Retrieve launch configuration arguments
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     position_x = LaunchConfiguration("position_x")
@@ -25,9 +27,11 @@ def generate_launch_description():
     orientation_yaw = LaunchConfiguration("orientation_yaw")
     camera_enabled = LaunchConfiguration("camera_enabled", default=True)
     two_d_lidar_enabled = LaunchConfiguration("two_d_lidar_enabled", default=True)
+    odometry_source = LaunchConfiguration("odometry_source", default="world")
+    world_file = LaunchConfiguration("world_file", default = join(bcr_bot_path, 'worlds', 'small_warehouse.sdf'))
 
     # Path to the Xacro file
-    xacro_path = join(get_package_share_directory('bcr_bot'), 'urdf', 'bcr_bot.xacro')
+    xacro_path = join(bcr_bot_path, 'urdf', 'bcr_bot.xacro')
     #doc = get_xacro_to_doc(xacro_path, {"wheel_odom_topic": "odom", "sim_gazebo": "true", "two_d_lidar_enabled": "true", "camera_enabled": "true"})
 
     # Launch the robot_state_publisher node
@@ -38,11 +42,15 @@ def generate_launch_description():
         output='screen',
         parameters=[{"use_sim_time": use_sim_time},
                     {'robot_description': Command( \
-                    ['xacro ', join(xacro_path),
+                    ['xacro ', xacro_path,
                     ' camera_enabled:=', camera_enabled,
                     ' two_d_lidar_enabled:=', two_d_lidar_enabled,
-                    ' sim_gazebo:=', "true"
-                    ])}]
+                    ' sim_gazebo:=', "true",
+                    ' odometry_source:=', odometry_source,
+                    ])}],
+        remappings=[
+            ('/joint_states', 'bcr_bot/joint_states'),
+        ]
     )
 
     # Launch the spawn_entity node to spawn the robot in Gazebo
@@ -68,15 +76,16 @@ def generate_launch_description():
 
     return LaunchDescription([
         # Declare launch arguments
-        DeclareLaunchArgument('world', default_value=[FindPackageShare('bcr_bot'), '/worlds/small_warehouse.sdf']),
+        DeclareLaunchArgument('world', default_value = world_file),
         DeclareLaunchArgument('gui', default_value='true'),
         DeclareLaunchArgument('verbose', default_value='false'),
-        DeclareLaunchArgument('use_sim_time', default_value='true'),
+        DeclareLaunchArgument('use_sim_time', default_value = use_sim_time),
         DeclareLaunchArgument("camera_enabled", default_value = camera_enabled),
         DeclareLaunchArgument("two_d_lidar_enabled", default_value = two_d_lidar_enabled),
         DeclareLaunchArgument("position_x", default_value="0.0"),
         DeclareLaunchArgument("position_y", default_value="0.0"),
-        DeclareLaunchArgument("orientation_yaw", default_value="0.0"),   
+        DeclareLaunchArgument("orientation_yaw", default_value="0.0"),
+        DeclareLaunchArgument("odometry_source", default_value = odometry_source),   
         # DeclareLaunchArgument('robot_description', default_value=doc.toxml()),
         gazebo,
         robot_state_publisher,

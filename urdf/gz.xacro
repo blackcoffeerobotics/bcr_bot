@@ -12,6 +12,10 @@
         name="ignition::gazebo::systems::Imu">
     </plugin>
 
+    <plugin filename="ignition-gazebo-joint-state-publisher-system" 
+        name="ignition::gazebo::systems::JointStatePublisher">
+    </plugin>
+
 <!-- ........................... DIFFERENTIAL DRIVE PLUGIN ................................... -->
 
     <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
@@ -68,7 +72,7 @@
     <gazebo reference="kinect_camera">
         <sensor type="depth_camera" name="kinect_camera">
             <update_rate>30.0</update_rate>
-            <topic>depth_camera</topic>
+            <topic>kinect_camera</topic>
             <ignition_frame_id>kinect_camera</ignition_frame_id>
             <camera_info_topic>camera_info</camera_info_topic>
             <camera>

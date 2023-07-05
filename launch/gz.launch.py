@@ -21,7 +21,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time", default=True)
 
     bcr_bot_path = get_package_share_directory("bcr_bot")
-    world_file = LaunchConfiguration("world_file", default = "-r " + join(bcr_bot_path, "worlds", "small_warehouse.sdf"))
+    world_file = LaunchConfiguration("world_file", default = join(bcr_bot_path, "worlds", "small_warehouse.sdf"))
 
     position_x = LaunchConfiguration("position_x")
     position_y = LaunchConfiguration("position_y")
@@ -48,7 +48,10 @@ def generate_launch_description():
                     ' camera_enabled:=', camera_enabled,
                     ' two_d_lidar_enabled:=', two_d_lidar_enabled,
                     ' sim_gz:=', "true"
-                    ])}]
+                    ])}],
+        remappings=[
+            ('/joint_states', 'bcr_bot/joint_states'),
+        ]
     )
  
     gz_sim_share = get_package_share_directory("ros_gz_sim")
@@ -82,11 +85,22 @@ def generate_launch_description():
             "/odom@nav_msgs/msg/Odometry[ignition.msgs.Odometry",
             "/tf@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V",
             "/scan@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan",
-            "/depth_camera@sensor_msgs/msg/Image[ignition.msgs.Image",
+            "/kinect_camera@sensor_msgs/msg/Image[ignition.msgs.Image",
             "/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo",
-            "/depth_camera/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked",
+            "/kinect_camera/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked",
             "/imu@sensor_msgs/msg/Imu[ignition.msgs.IMU",
+            "/world/default/model/bcr_bot/joint_state@sensor_msgs/msg/JointState[ignition.msgs.Model"
         ],
+        remappings=[
+            ('/world/default/model/bcr_bot/joint_state', 'bcr_bot/joint_states'),
+            ('/odom', 'bcr_bot/odom'),
+            ('/scan', 'bcr_bot/scan'),
+            ('/kinect_camera', 'bcr_bot/kinect_camera'),
+            ('/imu', 'bcr_bot/imu'),
+            ('/cmd_vel', 'bcr_bot/cmd_vel'),
+            ('/camera_info', 'bcr_bot/camera_info'),
+            ('/kinect_camera/points', 'bcr_bot/kinect_camera/points'),
+        ]
     )
 
     transform_publisher = Node(
