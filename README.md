@@ -41,12 +41,13 @@ roslaunch bcr_bot rviz.launch
 
 The launch file accepts multiple launch arguments,
 ```bash
-roslaunch bcr_bot gazebo.launch 
-	camera_enabled:=True
-	two_d_lidar_enabled:=True
-	position_x:=0.0
-	position_y:=0.0
-	orientation_yaw:=0.0
+roslaunch bcr_bot gazebo.launch \
+	camera_enabled:=True \
+	two_d_lidar_enabled:=True \
+	position_x:=0.0 \
+	position_y:=0.0 \
+	orientation_yaw:=0.0 \
+	odometry_source:=world \
 	world_file:=small_warehouse.world
 ```
 
@@ -86,13 +87,14 @@ ros2 launch bcr_bot rviz.launch.py
 
 The launch file accepts multiple launch arguments,
 ```bash
-ros2 launch bcr_bot gazebo.launch.py 
-	camera_enabled:=True
-	two_d_lidar_enabled:=True
-	position_x:=0.0
-	position_y:=0.0
-	orientation_yaw:=0.0
-	world_file:=small_warehouse.world
+ros2 launch bcr_bot gazebo.launch.py \
+	camera_enabled:=True \
+	two_d_lidar_enabled:=True \
+	position_x:=0.0 \
+	position_y:=0.0 \
+	orientation_yaw:=0.0 \
+	odometry_source:=world \
+	world_file:=small_warehouse.sdf
 ```
 
 ## Humble + Fortress (Ubuntu 22.04)
@@ -132,13 +134,13 @@ ros2 launch bcr_bot rviz.launch.py
 
 The launch file accepts multiple launch arguments,
 ```bash
-ros2 launch bcr_bot gz.launch.py 
-	camera_enabled:=True
-	two_d_lidar_enabled:=True
-	position_x:=0.0
-	position_y:=0.0
-	orientation_yaw:=0.0
-	world_file:=small_warehouse.world
+ros2 launch bcr_bot gz.launch.py \
+	camera_enabled:=True \
+	two_d_lidar_enabled:=True \
+	position_x:=0.0 \
+	position_y:=0.0 \
+	orientation_yaw:=0.0 \
+	world_file:=small_warehouse.sdf
 ```
 
 ### Simulation and Visualization
