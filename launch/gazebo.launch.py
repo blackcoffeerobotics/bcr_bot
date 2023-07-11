@@ -8,6 +8,7 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.substitutions import LaunchConfiguration, Command
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import PythonExpression
 
 from launch_ros.actions import Node
 
@@ -28,6 +29,7 @@ def generate_launch_description():
     camera_enabled = LaunchConfiguration("camera_enabled", default=True)
     two_d_lidar_enabled = LaunchConfiguration("two_d_lidar_enabled", default=True)
     odometry_source = LaunchConfiguration("odometry_source", default="world")
+    robot_namespace = LaunchConfiguration("robot_namespace", default='')
     world_file = LaunchConfiguration("world_file", default = join(bcr_bot_path, 'worlds', 'small_warehouse.sdf'))
 
     # Path to the Xacro file
@@ -47,9 +49,10 @@ def generate_launch_description():
                     ' two_d_lidar_enabled:=', two_d_lidar_enabled,
                     ' sim_gazebo:=', "true",
                     ' odometry_source:=', odometry_source,
+                    ' robot_namespace:=', robot_namespace,
                     ])}],
         remappings=[
-            ('/joint_states', 'bcr_bot/joint_states'),
+            ('/joint_states', PythonExpression(['"', robot_namespace, '/joint_states"'])),
         ]
     )
 
@@ -60,7 +63,7 @@ def generate_launch_description():
         output='screen',
         arguments=[
             '-topic', "/robot_description",
-            '-entity', "bcr_bot",
+            '-entity', PythonExpression(['"', robot_namespace, '_robot"']), #default enitity name _bcr_bot
             '-z', "0.28",
             '-x', position_x,
             '-y', position_y,
@@ -85,7 +88,8 @@ def generate_launch_description():
         DeclareLaunchArgument("position_x", default_value="0.0"),
         DeclareLaunchArgument("position_y", default_value="0.0"),
         DeclareLaunchArgument("orientation_yaw", default_value="0.0"),
-        DeclareLaunchArgument("odometry_source", default_value = odometry_source),   
+        DeclareLaunchArgument("odometry_source", default_value = odometry_source),
+        DeclareLaunchArgument("robot_namespace", default_value = robot_namespace),    
         # DeclareLaunchArgument('robot_description', default_value=doc.toxml()),
         gazebo,
         robot_state_publisher,

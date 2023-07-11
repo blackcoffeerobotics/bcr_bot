@@ -104,7 +104,7 @@
 			</ray>
 			<plugin name="gazebo_ros_laser" filename="libgazebo_ros_ray_sensor.so">
 				<ros>
-					<remapping>~/out:=/$(arg robot_namespace)/scan</remapping>
+					<remapping>~/out:=$(arg robot_namespace)/scan</remapping>
 				</ros>
 				<output_type>sensor_msgs/LaserScan</output_type>
 				<frame_name>two_d_lidar</frame_name>
