@@ -48,7 +48,8 @@ roslaunch bcr_bot gazebo.launch \
 	position_y:=0.0 \
 	orientation_yaw:=0.0 \
 	odometry_source:=world \
-	world_file:=small_warehouse.world
+	world_file:=small_warehouse.world \
+	robot_namespace:="bcr_bot"
 ```
 
 ## Humble + Classic (Ubuntu 22.04)
@@ -94,7 +95,8 @@ ros2 launch bcr_bot gazebo.launch.py \
 	position_y:=0.0 \
 	orientation_yaw:=0.0 \
 	odometry_source:=world \
-	world_file:=small_warehouse.sdf
+	world_file:=small_warehouse.sdf \
+	robot_namespace:="bcr_bot"
 ```
 
 ## Humble + Fortress (Ubuntu 22.04)
