@@ -13,7 +13,7 @@
 <arg name="publish_wheel_odom_tf"	default="true"/>
 <arg name="conveyor_enabled"        default="false"/>
 <arg name="ground_truth_frame"      default="map"/>
-<arg name="robot_namespace"         default="bcr_bot"/>
+<arg name="robot_namespace"         default=""/>
 <arg name="world_name"              default="$(find bcr_bot)/worlds/small_warehouse.world"/>
 <arg name="position_x"              default="0.0"/>
 <arg name="position_y"              default="0.0"/>
@@ -50,7 +50,7 @@
 <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
 	args="-param robot_description
 		-urdf
-		-model $(arg robot_namespace)
+		-model $(arg robot_namespace)_robot
 		-x $(arg position_x)
         -y $(arg position_y)
 		-z 0.9
