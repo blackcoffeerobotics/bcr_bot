@@ -18,7 +18,7 @@
 		<update_rate>50.0</update_rate>
 		<left_joint>middle_left_wheel_joint</left_joint>
 		<right_joint>middle_right_wheel_joint</right_joint>
-		<wheel_separation>${traction_wheel_base+traction_wheel_width-0.01}</wheel_separation>
+		<wheel_separation>${traction_track_width+traction_wheel_width-0.01}</wheel_separation>
 		<wheel_diameter>${2*traction_wheel_radius+0.01}</wheel_diameter>
 		<robot_base_frame>base_link</robot_base_frame>
 		<max_wheel_torque>${traction_max_wheel_torque}</max_wheel_torque>
