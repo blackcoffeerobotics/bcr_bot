@@ -14,7 +14,7 @@
 <xacro:property name="traction_wheel_friction"     value="5.0"/>
 
 <xacro:property name="trolley_wheel_mass"          value="0.1"/>
-<xacro:property name="trolley_wheel_base"          value="0.54"/>
+<xacro:property name="trolley_track_width"          value="0.54"/>
 <xacro:property name="trolley_wheel_friction"      value="0.0"/>
 <xacro:property name="trolley_wheel_radius"        value="0.06"/>
 <!-- a small constant -->
@@ -22,7 +22,7 @@
 
 <xacro:property name="traction_wheel_radius"       value="0.1"/>
 <xacro:property name="traction_wheel_width"        value="0.05"/>
-<xacro:property name="traction_wheel_base"         value="0.8"/>
+<xacro:property name="traction_track_width"         value="0.8"/>
 
 <xacro:property name="two_d_lidar_update_rate"     value="30"/>
 <xacro:property name="two_d_lidar_sample_size"     value="361"/>
@@ -96,14 +96,14 @@
 
 <!-- ................................ WHEELS ..................................... -->
 
-<xacro:trolley_wheel cardinality="front" dexterity="left"  origin_x="${chassis_length/2}" origin_y="${trolley_wheel_base/2}" origin_z="-${trolley_wheel_radius+chassis_height/2}"/>
-<xacro:trolley_wheel cardinality="front" dexterity="right" origin_x="${chassis_length/2}" origin_y="-${trolley_wheel_base/2}" origin_z="-${trolley_wheel_radius+chassis_height/2}"/>
+<xacro:trolley_wheel cardinality="front" dexterity="left"  origin_x="${chassis_length/2}" origin_y="${trolley_track_width/2}" origin_z="-${trolley_wheel_radius+chassis_height/2}"/>
+<xacro:trolley_wheel cardinality="front" dexterity="right" origin_x="${chassis_length/2}" origin_y="-${trolley_track_width/2}" origin_z="-${trolley_wheel_radius+chassis_height/2}"/>
 
-<xacro:trolley_wheel cardinality="back" dexterity="left"  origin_x="-${chassis_length/2}" origin_y="${trolley_wheel_base/2}" origin_z="-${trolley_wheel_radius+chassis_height/2}"/>
-<xacro:trolley_wheel cardinality="back" dexterity="right" origin_x="-${chassis_length/2}" origin_y="-${trolley_wheel_base/2}" origin_z="-${trolley_wheel_radius+chassis_height/2}"/>
+<xacro:trolley_wheel cardinality="back" dexterity="left"  origin_x="-${chassis_length/2}" origin_y="${trolley_track_width/2}" origin_z="-${trolley_wheel_radius+chassis_height/2}"/>
+<xacro:trolley_wheel cardinality="back" dexterity="right" origin_x="-${chassis_length/2}" origin_y="-${trolley_track_width/2}" origin_z="-${trolley_wheel_radius+chassis_height/2}"/>
 
-<xacro:traction_wheel cardinality="middle" dexterity="left"  origin_x="0" origin_y="${traction_wheel_base/2}" origin_z="-${chassis_height/2+2*trolley_wheel_radius+eps-traction_wheel_radius}"/>
-<xacro:traction_wheel cardinality="middle" dexterity="right" origin_x="0" origin_y="-${traction_wheel_base/2}" origin_z="-${chassis_height/2+2*trolley_wheel_radius+eps-traction_wheel_radius}"/>
+<xacro:traction_wheel cardinality="middle" dexterity="left"  origin_x="0" origin_y="${traction_track_width/2}" origin_z="-${chassis_height/2+2*trolley_wheel_radius+eps-traction_wheel_radius}"/>
+<xacro:traction_wheel cardinality="middle" dexterity="right" origin_x="0" origin_y="-${traction_track_width/2}" origin_z="-${chassis_height/2+2*trolley_wheel_radius+eps-traction_wheel_radius}"/>
 
 <!-- ............................. 2D LIDAR ........................................ -->
 
