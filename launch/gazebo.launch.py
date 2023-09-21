@@ -27,10 +27,12 @@ def generate_launch_description():
     position_y = LaunchConfiguration("position_y")
     orientation_yaw = LaunchConfiguration("orientation_yaw")
     camera_enabled = LaunchConfiguration("camera_enabled", default=True)
+    stereo_camera_enabled = LaunchConfiguration("stereo_camera_enabled", default=False)
     two_d_lidar_enabled = LaunchConfiguration("two_d_lidar_enabled", default=True)
     odometry_source = LaunchConfiguration("odometry_source", default="world")
     robot_namespace = LaunchConfiguration("robot_namespace", default='')
     world_file = LaunchConfiguration("world_file", default = join(bcr_bot_path, 'worlds', 'small_warehouse.sdf'))
+    
 
     # Path to the Xacro file
     xacro_path = join(bcr_bot_path, 'urdf', 'bcr_bot.xacro')
@@ -46,6 +48,7 @@ def generate_launch_description():
                     {'robot_description': Command( \
                     ['xacro ', xacro_path,
                     ' camera_enabled:=', camera_enabled,
+                    ' stereo_camera_enabled:=', stereo_camera_enabled,
                     ' two_d_lidar_enabled:=', two_d_lidar_enabled,
                     ' sim_gazebo:=', "true",
                     ' odometry_source:=', odometry_source,
@@ -84,12 +87,13 @@ def generate_launch_description():
         DeclareLaunchArgument('verbose', default_value='false'),
         DeclareLaunchArgument('use_sim_time', default_value = use_sim_time),
         DeclareLaunchArgument("camera_enabled", default_value = camera_enabled),
+        DeclareLaunchArgument("stereo_camera_enabled", default_value = stereo_camera_enabled),
         DeclareLaunchArgument("two_d_lidar_enabled", default_value = two_d_lidar_enabled),
         DeclareLaunchArgument("position_x", default_value="0.0"),
         DeclareLaunchArgument("position_y", default_value="0.0"),
         DeclareLaunchArgument("orientation_yaw", default_value="0.0"),
         DeclareLaunchArgument("odometry_source", default_value = odometry_source),
-        DeclareLaunchArgument("robot_namespace", default_value = robot_namespace),    
+        DeclareLaunchArgument("robot_namespace", default_value = robot_namespace),
         # DeclareLaunchArgument('robot_description', default_value=doc.toxml()),
         gazebo,
         robot_state_publisher,

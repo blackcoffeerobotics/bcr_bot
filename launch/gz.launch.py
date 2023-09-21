@@ -27,6 +27,7 @@ def generate_launch_description():
     position_y = LaunchConfiguration("position_y")
     orientation_yaw = LaunchConfiguration("orientation_yaw")
     camera_enabled = LaunchConfiguration("camera_enabled", default=True)
+    stereo_camera_enabled = LaunchConfiguration("stereo_camera_enabled", default=False)
     two_d_lidar_enabled = LaunchConfiguration("two_d_lidar_enabled", default=True)
 
     # robot_description_content = get_xacro_to_doc(
@@ -46,6 +47,7 @@ def generate_launch_description():
                     {'robot_description': Command( \
                     ['xacro ', join(bcr_bot_path, 'urdf/bcr_bot.xacro'),
                     ' camera_enabled:=', camera_enabled,
+                    ' stereo_camera_enabled:=', stereo_camera_enabled,
                     ' two_d_lidar_enabled:=', two_d_lidar_enabled,
                     ' sim_gz:=', "true"
                     ])}],
@@ -86,7 +88,11 @@ def generate_launch_description():
             "/tf@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V",
             "/scan@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan",
             "/kinect_camera@sensor_msgs/msg/Image[ignition.msgs.Image",
-            "/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo",
+            "/stereo_camera/left/image_raw@sensor_msgs/msg/Image[ignition.msgs.Image",
+            "stereo_camera/right/image_raw@sensor_msgs/msg/Image[ignition.msgs.Image",
+            "kinect_camera/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo",
+            "stereo_camera/left/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo",
+            "stereo_camera/right/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo",
             "/kinect_camera/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked",
             "/imu@sensor_msgs/msg/Imu[ignition.msgs.IMU",
             "/world/default/model/bcr_bot/joint_state@sensor_msgs/msg/JointState[ignition.msgs.Model"
@@ -96,9 +102,13 @@ def generate_launch_description():
             ('/odom', 'bcr_bot/odom'),
             ('/scan', 'bcr_bot/scan'),
             ('/kinect_camera', 'bcr_bot/kinect_camera'),
+            ('/stereo_camera/left/image_raw', 'bcr_bot/stereo_camera/left/image_raw'),
+            ('/stereo_camera/right/image_raw', 'bcr_bot/stereo_camera/right/image_raw'),
             ('/imu', 'bcr_bot/imu'),
             ('/cmd_vel', 'bcr_bot/cmd_vel'),
-            ('/camera_info', 'bcr_bot/camera_info'),
+            ('kinect_camera/camera_info', 'bcr_bot/kinect_camera/camera_info'),
+            ('stereo_camera/left/camera_info', 'bcr_bot/stereo_camera/left/camera_info'),
+            ('stereo_camera/right/camera_info', 'bcr_bot/stereo_camera/right/camera_info'),
             ('/kinect_camera/points', 'bcr_bot/kinect_camera/points'),
         ]
     )
@@ -120,6 +130,7 @@ def generate_launch_description():
         DeclareLaunchArgument("use_sim_time", default_value=use_sim_time),
         DeclareLaunchArgument("world_file", default_value=world_file),
         DeclareLaunchArgument("camera_enabled", default_value = camera_enabled),
+        DeclareLaunchArgument("stereo_camera_enabled", default_value = stereo_camera_enabled),
         DeclareLaunchArgument("two_d_lidar_enabled", default_value = two_d_lidar_enabled),
         DeclareLaunchArgument("position_x", default_value="0.0"),
         DeclareLaunchArgument("position_y", default_value="0.0"),
