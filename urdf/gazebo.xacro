@@ -145,6 +145,79 @@
 	</gazebo>
 </xacro:if>
 
-<!--................................................................................. -->
+<!-- ...........................STEREO CAMERA PLUGIN ................................... -->
 
+<xacro:if value="$(arg stereo_camera_enabled)">
+	<gazebo reference="stereo_camera">
+		<sensor type="multicamera" name="stereo_camera">
+			<update_rate>10.0</update_rate>
+			<always_on>true</always_on>
+			<camera name="left">
+				<pose>0 0 0 0 0 0</pose>
+				<horizontal_fov>1.3962634</horizontal_fov>
+				<image>
+				<width>1024</width>
+				<height>1024</height>
+				<format>R8G8B8</format>
+				</image>
+				<clip>
+				<near>0.3</near>
+				<far>20</far>
+				</clip>
+				<noise>
+				<type>gaussian</type>
+				<mean>0.0</mean>
+				<stddev>0.0</stddev>
+				</noise>
+				<distortion>
+				<k1>0.0</k1>
+				<k2>0.0</k2>
+				<k3>0.0</k3>
+				<p1>0.0</p1>
+				<p2>0.0</p2>
+				<center>0.5 0.5</center>
+				</distortion>
+			</camera>
+
+			<camera name="right">
+				<pose>0 -0.12 0 0 0 0</pose>
+				<horizontal_fov>1.3962634</horizontal_fov>
+				<image>
+				<width>1024</width>
+				<height>1024</height>
+				<format>R8G8B8</format>
+				</image>
+				<clip>
+				<near>0.3</near>
+				<far>20</far>
+				</clip>
+				<noise>
+				<type>gaussian</type>
+				<mean>0.0</mean>
+				<stddev>0.0</stddev>
+				</noise>
+				<distortion>
+				<k1>0.0</k1>
+				<k2>0.0</k2>
+				<k3>0.0</k3>
+				<p1>0.0</p1>
+				<p2>0.0</p2>
+				<center>0.5 0.5</center>
+				</distortion>
+			</camera>
+
+			<plugin name="stereo_camera_controller" filename="libgazebo_ros_camera.so">
+				<ros>
+				<namespace>$(arg robot_namespace)</namespace>
+				<argument>image_raw:=image_raw</argument>
+				<argument>camera_info:=camera_info</argument>
+				</ros>
+				<camera_name>stereo_camera</camera_name>
+				<frame_name>stereo_camera_optical</frame_name>
+				<hack_baseline>0.12</hack_baseline>
+			</plugin>
+			
+		</sensor>
+	</gazebo>
+</xacro:if>
 </robot>

@@ -4,103 +4,145 @@
 <!-- ........................... SENSOR PLUGIN ................................... -->
 
 <gazebo>
-    <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
-        <render_engine>ogre2</render_engine>
-    </plugin>
+	<plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
+		<render_engine>ogre2</render_engine>
+	</plugin>
 
-    <plugin filename="ignition-gazebo-imu-system"
-        name="ignition::gazebo::systems::Imu">
-    </plugin>
+	<plugin filename="ignition-gazebo-imu-system"
+		name="ignition::gazebo::systems::Imu">
+	</plugin>
 
-    <plugin filename="ignition-gazebo-joint-state-publisher-system" 
-        name="ignition::gazebo::systems::JointStatePublisher">
-    </plugin>
+	<plugin filename="ignition-gazebo-joint-state-publisher-system" 
+		name="ignition::gazebo::systems::JointStatePublisher">
+	</plugin>
 
 <!-- ........................... DIFFERENTIAL DRIVE PLUGIN ................................... -->
 
-    <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
-        <left_joint>middle_left_wheel_joint</left_joint>
-        <right_joint>middle_right_wheel_joint</right_joint>
-        <wheel_separation>${traction_track_width+traction_wheel_width-0.01}</wheel_separation>
-        <wheel_radius>${traction_wheel_radius+0.01}</wheel_radius>
-        <odom_publish_frequency>30</odom_publish_frequency>
-        <topic>/cmd_vel</topic>
-        <odom_topic>$(arg wheel_odom_topic)</odom_topic>
-        <tf_topic>/tf</tf_topic>
-        <frame_id>odom</frame_id>
-        <child_frame_id>base_link</child_frame_id>
-    </plugin>
+	<plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
+		<left_joint>middle_left_wheel_joint</left_joint>
+		<right_joint>middle_right_wheel_joint</right_joint>
+		<wheel_separation>${traction_track_width+traction_wheel_width-0.01}</wheel_separation>
+		<wheel_radius>${traction_wheel_radius+0.01}</wheel_radius>
+		<odom_publish_frequency>30</odom_publish_frequency>
+		<topic>/cmd_vel</topic>
+		<odom_topic>$(arg wheel_odom_topic)</odom_topic>
+		<tf_topic>/tf</tf_topic>
+		<frame_id>odom</frame_id>
+		<child_frame_id>base_link</child_frame_id>
+	</plugin>
 </gazebo>
 
 <!-- ........................... 2D LIDAR config ................................... -->
 
 <xacro:if value="$(arg two_d_lidar_enabled)">
-    <gazebo reference="two_d_lidar">
-        <sensor name='gpu_lidar' type='gpu_lidar'>
-            <topic>scan</topic>
-            <update_rate>${two_d_lidar_update_rate}</update_rate>
-            <ignition_frame_id>two_d_lidar</ignition_frame_id>
-            <lidar>
-                <scan>
-                    <horizontal>
-                        <samples>${two_d_lidar_sample_size}</samples>
-                        <resolution>1</resolution>
-                        <min_angle>${radians(two_d_lidar_min_angle)}</min_angle>
-                        <max_angle>${radians(two_d_lidar_max_angle)}</max_angle>
-                    </horizontal>
-                </scan>
-                <range>
-                    <min>${two_d_lidar_min_range}</min>
-                    <max>${two_d_lidar_max_range}</max>
-                    <resolution>0.01</resolution>
-                </range>
-                <noise>
-                    <type>gaussian</type>
-                    <mean>0.0</mean>
-                    <stddev>0.001</stddev>
-                </noise>
-            </lidar>
-            <alwaysOn>1</alwaysOn>
-            <visualize>true</visualize>
-        </sensor>
-    </gazebo>
+	<gazebo reference="two_d_lidar">
+		<sensor name='gpu_lidar' type='gpu_lidar'>
+			<topic>scan</topic>
+			<update_rate>${two_d_lidar_update_rate}</update_rate>
+			<ignition_frame_id>two_d_lidar</ignition_frame_id>
+			<lidar>
+				<scan>
+					<horizontal>
+						<samples>${two_d_lidar_sample_size}</samples>
+						<resolution>1</resolution>
+						<min_angle>${radians(two_d_lidar_min_angle)}</min_angle>
+						<max_angle>${radians(two_d_lidar_max_angle)}</max_angle>
+					</horizontal>
+				</scan>
+				<range>
+					<min>${two_d_lidar_min_range}</min>
+					<max>${two_d_lidar_max_range}</max>
+					<resolution>0.01</resolution>
+				</range>
+				<noise>
+					<type>gaussian</type>
+					<mean>0.0</mean>
+					<stddev>0.001</stddev>
+				</noise>
+			</lidar>
+			<alwaysOn>1</alwaysOn>
+			<visualize>true</visualize>
+		</sensor>
+	</gazebo>
 </xacro:if>
 
 <!-- ........................... CAMERA config ................................... -->
 
 <xacro:if value="$(arg camera_enabled)">
-    <gazebo reference="kinect_camera">
-        <sensor type="depth_camera" name="kinect_camera">
-            <update_rate>30.0</update_rate>
-            <topic>kinect_camera</topic>
-            <ignition_frame_id>kinect_camera</ignition_frame_id>
-            <camera_info_topic>camera_info</camera_info_topic>
-            <camera>
-                <horizontal_fov>${radians(camera_horizontal_fov)}</horizontal_fov>
-                <image>
-                    <width>640</width>
-                    <height>480</height>
-                    <format>R8G8B8</format>
-                </image>
-                <clip>
-                    <near>0.05</near>
-                    <far>8.0</far>
-                </clip>
-            </camera>
-        </sensor>
-    </gazebo>
+	<gazebo reference="kinect_camera">
+		<sensor type="depth_camera" name="kinect_camera">
+			<update_rate>30.0</update_rate>
+			<topic>kinect_camera</topic>
+			<ignition_frame_id>kinect_camera</ignition_frame_id>
+			<camera_info_topic>kinect_camera/camera_info</camera_info_topic>
+			<camera>
+				<horizontal_fov>${radians(camera_horizontal_fov)}</horizontal_fov>
+				<image>
+					<width>640</width>
+					<height>480</height>
+					<format>R8G8B8</format>
+				</image>
+				<clip>
+					<near>0.05</near>
+					<far>8.0</far>
+				</clip>
+			</camera>
+		</sensor>
+	</gazebo>
 </xacro:if>
 
 <!-- ........................... IMU config ................................... -->
 
 <gazebo reference="imu_frame">
-    <sensor name="imu_sensor" type="imu">
-        <always_on>1</always_on>
-        <update_rate>1</update_rate>
-        <ignition_frame_id>imu_frame</ignition_frame_id>
-        <visualize>true</visualize>
-        <topic>imu</topic>
-    </sensor>
+	<sensor name="imu_sensor" type="imu">
+		<always_on>1</always_on>
+		<update_rate>1</update_rate>
+		<ignition_frame_id>imu_frame</ignition_frame_id>
+		<visualize>true</visualize>
+		<topic>imu</topic>
+	</sensor>
 </gazebo> 
 
+<!-- ........................... Stereo camera ................................... -->
+<xacro:if value="$(arg stereo_camera_enabled)">
+	<gazebo reference="stereo_camera">
+		<sensor type="camera" name="right">
+			<update_rate>10.0</update_rate>
+			<always_on>true</always_on>
+			<ignition_frame_id>stereo_camera_optical</ignition_frame_id>
+			<pose>0 -0.12 0 0 0 0</pose>
+			<topic>stereo_camera/right/image_raw</topic>
+			<camera_info_topic>stereo_camera/right/camera_info</camera_info_topic>
+			<horizontal_fov>1.3962634</horizontal_fov>
+			<image>
+				<width>1024</width>
+				<height>1024</height>
+				<format>R8G8B8</format>
+			</image>
+			<clip>
+				<near>0.3</near>
+				<far>20</far>
+			</clip>
+		</sensor>
+
+		<sensor type="camera" name="left">
+			<topic>stereo_camera/left/image_raw</topic>
+			<update_rate>10.0</update_rate>
+			<always_on>true</always_on>
+			<ignition_frame_id>stereo_camera_optical</ignition_frame_id>
+			<camera_info_topic>stereo_camera/left/camera_info</camera_info_topic>
+			<pose>0 0 0 0 0 0</pose>
+			<horizontal_fov>1.3962634</horizontal_fov>
+			<image>
+				<width>1024</width>
+				<height>1024</height>
+				<format>R8G8B8</format>
+			</image>
+			<clip>
+				<near>0.3</near>
+				<far>20</far>
+			</clip>
+		</sensor>
+	</gazebo>
+</xacro:if>
 </robot>

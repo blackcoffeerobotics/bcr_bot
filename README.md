@@ -4,7 +4,7 @@ https://github.com/blackcoffeerobotics/bcr_bot/assets/13151010/0fc570a3-c70c-415
 
 ## About
 
-This repository contains a Gazebo simulation for a differential drive robot, equipped with an IMU, a depth camera and a 2D LiDAR. The primary contriution of this project is to support multiple ROS and Gazebo distros. Currently, the project supports the following versions - 
+This repository contains a Gazebo simulation for a differential drive robot, equipped with an IMU, a depth camera, stereo camera and a 2D LiDAR. The primary contriution of this project is to support multiple ROS and Gazebo distros. Currently, the project supports the following versions - 
 
 1. [ROS Noetic + Gazebo Classic 11 (branch ros1)](#noetic--classic-ubuntu-2004)
 2. [ROS2 Humble + Gazebo Classic 11 (branch ros2)](#humble--classic-ubuntu-2204)
@@ -53,6 +53,10 @@ roslaunch bcr_bot gazebo.launch
 	world_file:=small_warehouse.world \
 	robot_namespace:="bcr_bot"
 ```
+**Note:** To use stereo_image_proc with the stereo images excute following command: 
+```bash
+ROS_NAMESPACE=bcr_bot/stereo_camera rosrun stereo_image_proc stereo_image_proc
+```
 
 ## Humble + Classic (Ubuntu 22.04)
 
@@ -93,6 +97,7 @@ The launch file accepts multiple launch arguments,
 ros2 launch bcr_bot gazebo.launch.py \
 	camera_enabled:=True \
 	two_d_lidar_enabled:=True \
+	stereo_camera_enabled:=False \
 	position_x:=0.0 \
 	position_y:=0.0 \
 	orientation_yaw:=0.0 \
@@ -100,7 +105,10 @@ ros2 launch bcr_bot gazebo.launch.py \
 	world_file:=small_warehouse.sdf \
 	robot_namespace:="bcr_bot"
 ```
-
+**Note:** To use stereo_image_proc with the stereo images excute following command: 
+```bash
+ros2 launch stereo_image_proc stereo_image_proc.launch.py left_namespace:=bcr_bot/stereo_camera/left right_namespace:=bcr_bot/stereo_camera/right
+```
 ## Humble + Fortress (Ubuntu 22.04)
 
 ### Dependencies
@@ -140,13 +148,17 @@ The launch file accepts multiple launch arguments,
 ```bash
 ros2 launch bcr_bot gz.launch.py \
 	camera_enabled:=True \
+	stereo_camera_enabled:=False \
 	two_d_lidar_enabled:=True \
 	position_x:=0.0 \
 	position_y:=0.0  \
 	orientation_yaw:=0.0 \
 	world_file:=small_warehouse.sdf
 ```
-
+**Note:** To use stereo_image_proc with the stereo images excute following command: 
+```bash
+ros2 launch stereo_image_proc stereo_image_proc.launch.py left_namespace:=bcr_bot/stereo_camera/left right_namespace:=bcr_bot/stereo_camera/right
+```
 ### Simulation and Visualization
 1. Gz Sim (Ignition Gazebo) (small_warehouse World):
 	![](res/gz.jpg)
