@@ -29,6 +29,7 @@ def generate_launch_description():
     camera_enabled = LaunchConfiguration("camera_enabled", default=True)
     stereo_camera_enabled = LaunchConfiguration("stereo_camera_enabled", default=False)
     two_d_lidar_enabled = LaunchConfiguration("two_d_lidar_enabled", default=True)
+    odometry_source = LaunchConfiguration("odometry_source")
 
     # robot_description_content = get_xacro_to_doc(
     #     join(bcr_bot_path, "urdf", "bcr_bot.xacro"),
@@ -49,6 +50,7 @@ def generate_launch_description():
                     ' camera_enabled:=', camera_enabled,
                     ' stereo_camera_enabled:=', stereo_camera_enabled,
                     ' two_d_lidar_enabled:=', two_d_lidar_enabled,
+                    ' odometry_source:=', odometry_source,
                     ' sim_gz:=', "true"
                     ])}],
         remappings=[
@@ -135,7 +137,8 @@ def generate_launch_description():
         DeclareLaunchArgument("two_d_lidar_enabled", default_value = two_d_lidar_enabled),
         DeclareLaunchArgument("position_x", default_value="0.0"),
         DeclareLaunchArgument("position_y", default_value="0.0"),
-        DeclareLaunchArgument("orientation_yaw", default_value="0.0"),        
+        DeclareLaunchArgument("orientation_yaw", default_value="0.0"),
+        DeclareLaunchArgument("odometry_source", default_value="world"),
         robot_state_publisher,
         gz_sim, gz_spawn_entity, gz_ros2_bridge,
         transform_publisher
