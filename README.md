@@ -153,6 +153,7 @@ ros2 launch bcr_bot gz.launch.py \
 	position_x:=0.0 \
 	position_y:=0.0  \
 	orientation_yaw:=0.0 \
+	odometry_source:=world \
 	world_file:=small_warehouse.sdf
 ```
 **Note:** To use stereo_image_proc with the stereo images excute following command: 

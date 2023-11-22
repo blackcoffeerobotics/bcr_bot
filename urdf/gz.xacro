@@ -23,12 +23,30 @@
             <wheel_radius>${traction_wheel_radius+0.01}</wheel_radius>
             <odom_publish_frequency>30</odom_publish_frequency>
             <topic>/cmd_vel</topic>
-            <odom_topic>$(arg wheel_odom_topic)</odom_topic>
-            <tf_topic>/tf</tf_topic>
+            <xacro:if value="${odometry_source == 'encoders'}">
+                <odom_topic>$(arg wheel_odom_topic)</odom_topic>
+                <tf_topic>/tf</tf_topic>
+            </xacro:if>
             <frame_id>odom</frame_id>
             <child_frame_id>base_link</child_frame_id>
         </plugin>
     </gazebo>
+
+    <!-- ............................. ground truth .................................... -->
+
+    <xacro:if value="${odometry_source == 'world'}">
+    <gazebo>
+        <plugin filename="libignition-gazebo6-odometry-publisher-system"
+            name="ignition::gazebo::systems::OdometryPublisher">
+            <odom_frame>odom</odom_frame>
+            <robot_base_frame>base_link</robot_base_frame>
+            <odom_topic>$(arg wheel_odom_topic)</odom_topic>
+            <tf_topic>/tf</tf_topic>
+            <dimensions>2</dimensions>
+            <odom_publish_frequency>10</odom_publish_frequency>
+        </plugin>
+    </gazebo>
+    </xacro:if>
 
     <!-- ........................... 2D LIDAR config ................................... -->
 
