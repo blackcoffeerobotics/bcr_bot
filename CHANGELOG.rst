@@ -2,8 +2,8 @@
 Changelog for package bcr_bot
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.1 (2023-12-20)
+------------------
 * added stereo camera
 * New Chassis, Updated URDF, new small_warehouse World, Updated readme
 * Conveyor

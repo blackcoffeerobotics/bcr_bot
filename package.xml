@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
 	<name>bcr_bot</name>
-	<version>0.0.0</version>
+	<version>0.0.1</version>
 	<description>The bcr_bot package</description>
 
 	<maintainer email="gaurav@blackcoffeerobotics.com">Gaurav Gupta</maintainer>
