@@ -5,9 +5,9 @@
 	<description>The bcr_bot package</description>
 
 	<maintainer email="gaurav@blackcoffeerobotics.com">Gaurav Gupta</maintainer>
-    <maintainer email="devanshu@blackcoffeerobotics.com">Devanshu Sharma</maintainer>
+	<maintainer email="devanshu@blackcoffeerobotics.com">Devanshu Sharma</maintainer>
 
-	<license>(C) Black Coffee Robotics</license>
+	<license>Apache License 2.0</license>
 
 	<buildtool_depend>catkin</buildtool_depend>
 
