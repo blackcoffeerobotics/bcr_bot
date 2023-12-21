@@ -2,8 +2,8 @@
 Changelog for package bcr_bot
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.1 (2023-12-21)
+------------------
 * added ground truth odometry
 * added stereo_cam to bcr_bot
 * Modified chassis desgin, Updated URDF, all the sensors working, namespace done
