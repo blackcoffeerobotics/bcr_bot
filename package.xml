@@ -5,8 +5,8 @@
 	<description>bcr_bot</description>
 
 	<maintainer email="gaurav@blackcoffeerobotics.com">Gaurav Gupta</maintainer>
-        <maintainer email="devanshu@blackcoffeerobotics.com">Devanshu Sharma</maintainer>
-	<license>(C) Black Coffee Robotics</license>
+	<maintainer email="devanshu@blackcoffeerobotics.com">Devanshu Sharma</maintainer>
+	<license>Apache License 2.0</license>
 
 	<buildtool_depend>ament_cmake</buildtool_depend>
 
