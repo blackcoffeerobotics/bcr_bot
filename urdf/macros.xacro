@@ -49,12 +49,15 @@
 
     <xacro:macro name="traction_wheel" params="cardinality dexterity origin_x origin_y origin_z">
         <link name="${cardinality}_${dexterity}_wheel">
+
             <collision>
                 <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
                 <geometry>
                     <cylinder length="${traction_wheel_width}" radius="${traction_wheel_radius}"/>
                 </geometry>
+                <self_collide>false</self_collide>
             </collision>
+
 
             <inertial>
                 <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
