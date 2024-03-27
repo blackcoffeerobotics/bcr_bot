@@ -22,7 +22,7 @@
 
     <xacro:property name="traction_wheel_radius" value="0.1"/>
     <xacro:property name="traction_wheel_width" value="0.05"/>
-    <xacro:property name="traction_track_width" value="0.8"/>
+    <xacro:property name="traction_track_width" value="0.6"/>
 
     <xacro:property name="two_d_lidar_update_rate" value="30"/>
     <xacro:property name="two_d_lidar_sample_size" value="361"/>

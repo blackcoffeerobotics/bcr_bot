@@ -8,6 +8,8 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.substitutions import LaunchConfiguration
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.actions import SetEnvironmentVariable
+from launch.actions import AppendEnvironmentVariable
 
 def generate_launch_description():
     # Get bcr_bot package's share directory path
@@ -32,6 +34,14 @@ def generate_launch_description():
 
     return LaunchDescription([
         # Declare launch arguments
+        
+        AppendEnvironmentVariable(
+        name='GAZEBO_MODEL_PATH',
+        value=join(bcr_bot_path, "models")),
+
+        SetEnvironmentVariable(
+        name='GAZEBO_RESOURCE_PATH',
+        value="/usr/share/gazebo-11:" + join(bcr_bot_path, "worlds")),
         DeclareLaunchArgument('world', default_value = world_file),
         DeclareLaunchArgument('gui', default_value='true'),
         DeclareLaunchArgument('verbose', default_value='false'),
