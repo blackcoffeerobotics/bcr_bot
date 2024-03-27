@@ -58,6 +58,7 @@
                 <geometry>
                     <cylinder length="${traction_wheel_width}" radius="${traction_wheel_radius}"/>
                 </geometry>
+                <self_collide>false</self_collide>
             </collision>
 
             <inertial>
