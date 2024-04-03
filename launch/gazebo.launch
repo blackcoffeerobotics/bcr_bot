@@ -2,66 +2,53 @@
 
 <launch>
 
-<!--............................ CONFIGURABLE PARAMETERS .............................-->
+	<!--............................ CONFIGURABLE PARAMETERS .............................-->
 
-<env name="GAZEBO_MODEL_PATH" value="$(find bcr_bot)/models:$(optenv GAZEBO_MODEL_PATH)"/>
+	<env name="GAZEBO_MODEL_PATH"     value="$(find bcr_bot)/models:$(optenv GAZEBO_MODEL_PATH)"/>
+	<env name="GAZEBO_RESOURCE_PATH"  value="$(find bcr_bot)/worlds:$(optenv GAZEBO_RESOURCE_PATH)"/>
+	<arg name="world_name"            default="$(find bcr_bot)/worlds/small_warehouse.world"/>
+	<arg name="gazebo_gui_enabled"    default="true"/>
+	<arg name="two_d_lidar_enabled"   default="true"/>
+	<arg name="camera_enabled"        default="true"/>
+	<arg name="stereo_camera_enabled" default="false"/>
+	<arg name="wheel_odom_topic"      default="odom"/>
+	<arg name="publish_wheel_odom_tf" default="true"/>
+	<arg name="conveyor_enabled"      default="false"/>
+	<arg name="ground_truth_frame"    default="map"/>
+	<arg name="robot_namespace"       default=""/>
+	<arg name="position_x"            default="0.0"/>
+	<arg name="position_y"            default="0.0"/>
+	<arg name="orientation_yaw"       default="0.0"/>
+	<arg name="odometry_source"       default="world"/>
 
-<arg name="gazebo_gui_enabled" 		default="true"/>
-<arg name="two_d_lidar_enabled"		default="true"/>
-<arg name="camera_enabled"			default="true"/>
-<arg name="stereo_camera_enabled"	default="false"/>
-<arg name="wheel_odom_topic"		default="odom"/>
-<arg name="publish_wheel_odom_tf"	default="true"/>
-<arg name="conveyor_enabled"        default="false"/>
-<arg name="ground_truth_frame"      default="map"/>
-<arg name="robot_namespace"         default=""/>
-<arg name="world_name"              default="$(find bcr_bot)/worlds/small_warehouse.world"/>
-<arg name="position_x"              default="0.0"/>
-<arg name="position_y"              default="0.0"/>
-<arg name="orientation_yaw"         default="0.0"/>
-<arg name="odometry_source"         default="world"/>
+	<!-- ............................... LAUNCH WORLD ................................... -->
 
-<!-- ............................... LAUNCH WORLD ................................... -->
-
-<include file="$(find gazebo_ros)/launch/empty_world.launch">
-	<arg name="world_name"    value="$(arg world_name)"/>
-	<arg name="paused"        value="false"/>
-	<arg name="use_sim_time"  value="true"/>
-	<arg name="gui"           value="$(arg gazebo_gui_enabled)"/>
-	<arg name="headless"      value="true"/>
-	<arg name="debug"         value="false"/>
-</include>
-
-<!-- ................................ XACRO CALL .................................... -->
-
-<param name="robot_description" command="$(find xacro)/xacro $(find bcr_bot)/urdf/bcr_bot.xacro
-	two_d_lidar_enabled:=$(arg two_d_lidar_enabled)
-	camera_enabled:=$(arg camera_enabled)
-	stereo_camera_enabled:=$(arg stereo_camera_enabled)
-	wheel_odom_topic:=$(arg wheel_odom_topic)
-	publish_wheel_odom_tf:=$(arg publish_wheel_odom_tf)
-	conveyor_enabled:=$(arg conveyor_enabled)
-	ground_truth_frame:=$(arg ground_truth_frame)
-	robot_namespace:=$(arg robot_namespace)
-	odometry_source:=$(arg odometry_source)
-	" />
-
-<!-- ................................ SPAWN MODEL .................................... -->
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="world_name"    value="$(arg world_name)"/>
+		<arg name="paused"        value="false"/>
+		<arg name="use_sim_time"  value="true"/>
+		<arg name="gui"           value="$(arg gazebo_gui_enabled)"/>
+		<arg name="headless"      value="true"/>
+		<arg name="debug"         value="false"/>
+	</include>
 
 
-<node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
-	args="-param robot_description
-		-urdf
-		-model $(arg robot_namespace)_robot
-		-x $(arg position_x)
-        -y $(arg position_y)
-		-z 0.9
-		-Y $(arg orientation_yaw)"
+	<!-- .....................Call the launch file to spawn the robot ................... -->
 
-	output="screen" />
+	<include file="$(find bcr_bot)/launch/bcr_bot_spawn.launch">
+		<arg name="two_d_lidar_enabled"        value="$(arg two_d_lidar_enabled)"/>
+		<arg name="camera_enabled"             value="$(arg camera_enabled)"/>
+		<arg name="stereo_camera_enabled"      value="$(arg stereo_camera_enabled)"/>
+		<arg name="wheel_odom_topic"           value="$(arg wheel_odom_topic)"/>
+		<arg name="publish_wheel_odom_tf"      value="$(arg publish_wheel_odom_tf)"/>
+		<arg name="conveyor_enabled"           value="$(arg conveyor_enabled)"/>
+		<arg name="ground_truth_frame"         value="$(arg ground_truth_frame)"/>
+		<arg name="robot_namespace"            value="$(arg robot_namespace)"/>
+		<arg name="position_x"                 value="$(arg position_x)"/>
+		<arg name="position_y"                 value="$(arg position_y)"/>
+		<arg name="orientation_yaw"            value="$(arg orientation_yaw)"/>
+		<arg name="odometry_source"            value="$(arg odometry_source)"/>
+	</include>
 
-<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
-	<remap from="/joint_states" to="$(arg robot_namespace)/joint_states"/>
-</node>
 
 </launch>

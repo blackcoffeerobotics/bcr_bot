@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+<!--............................ CONFIGURABLE PARAMETERS .............................-->
+
+
+<arg name="two_d_lidar_enabled"     default="true"/>
+<arg name="camera_enabled"          default="true"/>
+<arg name="stereo_camera_enabled"   default="false"/>
+<arg name="wheel_odom_topic"        default="odom"/>
+<arg name="publish_wheel_odom_tf"   default="true"/>
+<arg name="conveyor_enabled"        default="false"/>
+<arg name="ground_truth_frame"      default="map"/>
+<arg name="robot_namespace"         default=""/>
+<arg name="position_x"              default="0.0"/>
+<arg name="position_y"              default="0.0"/>
+<arg name="orientation_yaw"         default="0.0"/>
+<arg name="odometry_source"         default="world"/>
+
+<!-- ................................ XACRO CALL .................................... -->
+
+<param name="robot_description" command="$(find xacro)/xacro $(find bcr_bot)/urdf/bcr_bot.xacro
+    two_d_lidar_enabled:=$(arg two_d_lidar_enabled)
+    camera_enabled:=$(arg camera_enabled)
+    stereo_camera_enabled:=$(arg stereo_camera_enabled)
+    wheel_odom_topic:=$(arg wheel_odom_topic)
+    publish_wheel_odom_tf:=$(arg publish_wheel_odom_tf)
+    conveyor_enabled:=$(arg conveyor_enabled)
+    ground_truth_frame:=$(arg ground_truth_frame)
+    robot_namespace:=$(arg robot_namespace)
+    odometry_source:=$(arg odometry_source)
+    " />
+
+<!-- ................................ SPAWN MODEL .................................... -->
+
+
+<node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
+    args="-param robot_description
+        -urdf
+        -model $(arg robot_namespace)_robot
+        -x $(arg position_x)
+        -y $(arg position_y)
+        -z 0.9
+        -Y $(arg orientation_yaw)"
+
+    output="screen" />
+
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+    <remap from="/joint_states" to="$(arg robot_namespace)/joint_states"/>
+</node>
+
+</launch>

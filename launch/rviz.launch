@@ -3,16 +3,16 @@
 
 <!--............................ CONFIGURABLE PARAMETERS ..............................-->
 
-<arg name="rviz_config"   	  		default="entire_setup.rviz"/>
-<arg name="two_d_lidar_enabled"		default="true"/>
-<arg name="camera_enabled"				default="true"/>
+<arg name="rviz_config"             default="entire_setup.rviz"/>
+<arg name="two_d_lidar_enabled"	    default="true"/>
+<arg name="camera_enabled"          default="true"/>
 
 <!-- ........................... CONDITIONAL XACRO CALL .............................. -->
 
 <param name="robot_description" command="$(find xacro)/xacro $(find bcr_bot)/urdf/bcr_bot.xacro
-	two_d_lidar_enabled:=$(arg two_d_lidar_enabled)
-	camera_enabled:=$(arg camera_enabled)
-	" />
+    two_d_lidar_enabled:=$(arg two_d_lidar_enabled)
+    camera_enabled:=$(arg camera_enabled)
+    " />
 
 <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> -->
