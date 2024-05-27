@@ -44,6 +44,7 @@
     <xacro:arg name="conveyor_enabled" default="false"/>
     <xacro:arg name="ground_truth_frame" default="map"/>
     <xacro:arg name="sim_gazebo" default="false" />
+    <xacro:arg name="sim_ign" default="false" />
     <xacro:arg name="sim_gz" default="false" />
     <xacro:arg name="odometry_source" default="world" />
 
@@ -56,6 +57,10 @@
 
     <xacro:if value="$(arg sim_gazebo)">
         <xacro:include filename="$(find bcr_bot)/urdf/gazebo.xacro"/>
+    </xacro:if>
+
+    <xacro:if value="$(arg sim_ign)">
+        <xacro:include filename="$(find bcr_bot)/urdf/ign.xacro"/>
     </xacro:if>
 
     <xacro:if value="$(arg sim_gz)">
