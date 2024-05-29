@@ -53,8 +53,15 @@
     <xacro:include filename="$(find bcr_bot)/urdf/gazebo.xacro"/>
 
     <!-- ................................ BASE LINK .................................. -->
+    <link name="base_footprint"/>
 
     <link name="base_link"/>
+
+    <joint name="base_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0.0 0 ${chassis_height/2 + traction_wheel_radius}" rpy="0 0 0.0" />
+    </joint>
 
     <link name="chassis_link">
 
