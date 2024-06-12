@@ -4,19 +4,19 @@
     <!-- ........................... SENSOR PLUGIN ................................... -->
 
     <gazebo>
-        <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+        <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
             <render_engine>ogre2</render_engine>
         </plugin>
 
-        <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu">
+        <plugin filename="ignition-gazebo-imu-system" name="ignition::gazebo::systems::Imu">
         </plugin>
 
-        <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
+        <plugin filename="ignition-gazebo-joint-state-publisher-system" name="ignition::gazebo::systems::JointStatePublisher">
         </plugin>
 
         <!-- ........................... DIFFERENTIAL DRIVE PLUGIN ................................... -->
 
-        <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
+        <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
             <left_joint>middle_left_wheel_joint</left_joint>
             <right_joint>middle_right_wheel_joint</right_joint>
             <wheel_separation>${traction_track_width+traction_wheel_width-0.01}</wheel_separation>
@@ -36,8 +36,8 @@
 
     <xacro:if value="${odometry_source == 'world'}">
     <gazebo>
-        <plugin filename="libgz-sim-odometry-publisher-system"
-            name="gz::sim::systems::OdometryPublisher">
+        <plugin filename="libignition-gazebo6-odometry-publisher-system"
+            name="ignition::gazebo::systems::OdometryPublisher">
             <odom_frame>odom</odom_frame>
             <robot_base_frame>base_footprint</robot_base_frame>
             <odom_topic>$(arg wheel_odom_topic)</odom_topic>
@@ -55,7 +55,7 @@
             <sensor name='gpu_lidar' type='gpu_lidar'>
                 <topic>scan</topic>
                 <update_rate>${two_d_lidar_update_rate}</update_rate>
-                <gz_frame_id>two_d_lidar</gz_frame_id>
+                <ignition_frame_id>two_d_lidar</ignition_frame_id>
                 <lidar>
                     <scan>
                         <horizontal>
@@ -76,7 +76,7 @@
                         <stddev>0.001</stddev>
                     </noise>
                 </lidar>
-                <always_on>1</always_on>
+                <alwaysOn>1</alwaysOn>
                 <visualize>true</visualize>
             </sensor>
         </gazebo>
@@ -89,9 +89,9 @@
             <sensor type="depth_camera" name="kinect_camera">
                 <update_rate>30.0</update_rate>
                 <topic>kinect_camera</topic>
-                <gz_frame_id>kinect_camera</gz_frame_id>
+                <ignition_frame_id>kinect_camera</ignition_frame_id>
+                <camera_info_topic>kinect_camera/camera_info</camera_info_topic>
                 <camera>
-                    <camera_info_topic>kinect_camera/camera_info</camera_info_topic>
                     <horizontal_fov>${radians(camera_horizontal_fov)}</horizontal_fov>
                     <image>
                         <width>640</width>
@@ -113,7 +113,7 @@
         <sensor name="imu_sensor" type="imu">
             <always_on>1</always_on>
             <update_rate>1</update_rate>
-            <gz_frame_id>imu_frame</gz_frame_id>
+            <ignition_frame_id>imu_frame</ignition_frame_id>
             <visualize>true</visualize>
             <topic>imu</topic>
         </sensor>
@@ -125,7 +125,7 @@
             <sensor type="camera" name="right">
                 <update_rate>10.0</update_rate>
                 <always_on>true</always_on>
-                <gz_frame_id>stereo_camera_optical</gz_frame_id>
+                <ignition_frame_id>stereo_camera_optical</ignition_frame_id>
                 <pose>0 -0.12 0 0 0 0</pose>
                 <topic>stereo_camera/right/image_raw</topic>
                 <camera_info_topic>stereo_camera/right/camera_info</camera_info_topic>
@@ -145,7 +145,7 @@
                 <topic>stereo_camera/left/image_raw</topic>
                 <update_rate>10.0</update_rate>
                 <always_on>true</always_on>
-                <gz_frame_id>stereo_camera_optical</gz_frame_id>
+                <ignition_frame_id>stereo_camera_optical</ignition_frame_id>
                 <camera_info_topic>stereo_camera/left/camera_info</camera_info_topic>
                 <pose>0 0 0 0 0 0</pose>
                 <horizontal_fov>1.3962634</horizontal_fov>

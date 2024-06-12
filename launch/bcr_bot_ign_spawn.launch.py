@@ -47,7 +47,7 @@ def generate_launch_description():
                     ' stereo_camera_enabled:=', stereo_camera_enabled,
                     ' two_d_lidar_enabled:=', two_d_lidar_enabled,
                     ' odometry_source:=', odometry_source,
-                    ' sim_gz:=', "true"
+                    ' sim_ign:=', "true"
                     ])}],
         remappings=[
             ('/joint_states', 'bcr_bot/joint_states'),
@@ -72,20 +72,20 @@ def generate_launch_description():
         package="ros_gz_bridge",
         executable="parameter_bridge",
         arguments=[
-            "/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist",
-            "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
-            "/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry",
-            "/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
-            "/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan",
-            "/kinect_camera@sensor_msgs/msg/Image[gz.msgs.Image",
-            "/stereo_camera/left/image_raw@sensor_msgs/msg/Image[gz.msgs.Image",
-            "stereo_camera/right/image_raw@sensor_msgs/msg/Image[gz.msgs.Image",
-            "kinect_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
-            "stereo_camera/left/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
-            "stereo_camera/right/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
-            "/kinect_camera/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
-            "/imu@sensor_msgs/msg/Imu[gz.msgs.IMU",
-            "/world/default/model/bcr_bot/joint_state@sensor_msgs/msg/JointState[gz.msgs.Model"
+            "/cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist",
+            "/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock",
+            "/odom@nav_msgs/msg/Odometry[ignition.msgs.Odometry",
+            "/tf@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V",
+            "/scan@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan",
+            "/kinect_camera@sensor_msgs/msg/Image[ignition.msgs.Image",
+            "/stereo_camera/left/image_raw@sensor_msgs/msg/Image[ignition.msgs.Image",
+            "stereo_camera/right/image_raw@sensor_msgs/msg/Image[ignition.msgs.Image",
+            "kinect_camera/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo",
+            "stereo_camera/left/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo",
+            "stereo_camera/right/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo",
+            "/kinect_camera/points@sensor_msgs/msg/PointCloud2[ignition.msgs.PointCloudPacked",
+            "/imu@sensor_msgs/msg/Imu[ignition.msgs.IMU",
+            "/world/default/model/bcr_bot/joint_state@sensor_msgs/msg/JointState[ignition.msgs.Model"
         ],
         remappings=[
             ('/world/default/model/bcr_bot/joint_state', 'bcr_bot/joint_states'),

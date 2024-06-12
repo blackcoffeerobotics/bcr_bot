@@ -25,7 +25,7 @@ def generate_launch_description():
     )
 
     spawn_bcr_bot_node = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(join(bcr_bot_path, "launch", "bcr_bot_gz_spawn.launch.py")),
+        PythonLaunchDescriptionSource(join(bcr_bot_path, "launch", "bcr_bot_ign_spawn.launch.py")),
         launch_arguments={
             # Pass any arguments if your spawn.launch.py requires
         }.items()
@@ -34,11 +34,11 @@ def generate_launch_description():
     return LaunchDescription([
 
         AppendEnvironmentVariable(
-        name='GZ_SIM_RESOURCE_PATH',
+        name='IGN_GAZEBO_RESOURCE_PATH',
         value=join(bcr_bot_path, "worlds")),
 
         AppendEnvironmentVariable(
-        name='GZ_SIM_RESOURCE_PATH',
+        name='IGN_GAZEBO_RESOURCE_PATH',
         value=join(bcr_bot_path, "models")),
 
         DeclareLaunchArgument("use_sim_time", default_value=use_sim_time),
