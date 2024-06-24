@@ -24,12 +24,18 @@ In addition to ROS1 Noetic and Gazebo Classic installations, the dependencies ca
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
-### Build
+### Source Build
 
 ```bash
 catkin build --packages-select bcr_bot
 ```
 
+### Binary Install
+To install BCR bot in the binaries:
+
+```bash
+sudo apt-get install ros-noetic-bcr-bot
+```
 ### Run
 
 To launch the robot in Gazebo,
@@ -75,10 +81,17 @@ Remainder of the dependencies can be installed with [rosdep](http://wiki.ros.org
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
-### Build
+### Source Build
 
 ```bash
 colcon build --packages-select bcr_bot
+```
+
+### Binary Install
+To install BCR bot in the binaries:
+
+```bash
+sudo apt-get install ros-humble-bcr-bot
 ```
 
 ### Run
@@ -126,10 +139,17 @@ Remainder of the dependencies can be installed with [rosdep](http://wiki.ros.org
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
-### Build
+### Source Build
 
 ```bash
 colcon build --packages-select bcr_bot
+```
+
+### Binary Install
+To install BCR bot in the binaries:
+
+```bash
+sudo apt-get install ros-humble-bcr-bot
 ```
 
 ### Run
@@ -209,11 +229,15 @@ ros2 launch bcr_bot gz.launch.py \
 	odometry_source:=world \
 	world_file:=small_warehouse.sdf
 ```
-**Note:** To use stereo_image_proc with the stereo images excute following command: 
+**Note:** 
+1. To use stereo_image_proc with the stereo images excute following command: 
 ```bash
 ros2 launch stereo_image_proc stereo_image_proc.launch.py left_namespace:=bcr_bot/stereo_camera/left right_namespace:=bcr_bot/stereo_camera/right
 ```
+2. Harmonic support is not available in the bcr_bot binaries yet.
+
 **Warning:**  `gz-harmonic` cannot be installed alongside gazebo-classic (eg. gazebo11) since both use the `gz` command line tool.
+
 
 ### Simulation and Visualization
 1. Gz Sim (Ignition Gazebo) (small_warehouse World):
