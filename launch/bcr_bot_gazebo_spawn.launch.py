@@ -28,7 +28,7 @@ def generate_launch_description():
     stereo_camera_enabled = LaunchConfiguration("stereo_camera_enabled", default=False)
     two_d_lidar_enabled = LaunchConfiguration("two_d_lidar_enabled", default=True)
     odometry_source = LaunchConfiguration("odometry_source", default="world")
-    robot_namespace = LaunchConfiguration("robot_namespace", default='')
+    robot_namespace = LaunchConfiguration("robot_namespace", default='bcr_bot')
     
     # Path to the Xacro file
     xacro_path = join(bcr_bot_path, 'urdf', 'bcr_bot.xacro')

@@ -26,12 +26,14 @@ RUN apt-get install --no-install-recommends -yqqq \
 # Python Dependencies
 RUN apt-get install --no-install-recommends -yqqq \
     python3-pip
-
-# Gazebo Fortress
-RUN apt-get install --no-install-recommends -yqqq \
-    ros-$ROS_DISTRO-ros-gz-sim \
-    ros-$ROS_DISTRO-ros-gz-interfaces \
-    ros-$ROS_DISTRO-ros-gz-bridge
+        
+# Install additional ROS packages
+RUN apt-get install --no-install-recommends -yqq \
+    ros-$ROS_DISTRO-rviz2 \
+    ros-$ROS_DISTRO-xacro \
+    ros-$ROS_DISTRO-teleop-twist-keyboard \
+    ros-$ROS_DISTRO-navigation2 \
+    ros-$ROS_DISTRO-nav2-bringup
 
 # Using shell to use bash commands like 'source'
 SHELL ["/bin/bash", "-c"]

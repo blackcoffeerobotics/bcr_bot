@@ -238,6 +238,39 @@ ros2 launch stereo_image_proc stereo_image_proc.launch.py left_namespace:=bcr_bo
 
 **Warning:**  `gz-harmonic` cannot be installed alongside gazebo-classic (eg. gazebo11) since both use the `gz` command line tool.
 
+### Mapping with SLAM Toolbox
+
+SLAM Toolbox is an open-source package designed to map the environment using laser scans and odometry, generating a map for autonomous navigation.
+
+NOTE: The command to run mapping is common between all versions of gazebo.
+
+To start mapping:
+```bash
+ros2 launch bcr_bot mapping.launch.py
+```
+
+Use the teleop twist keyboard to control the robot and map the area:
+```bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard cmd_vel:=/bcr_bot/cmd_vel
+```
+
+To save the map:
+```bash
+cd src/bcr_bot/config
+ros2 run nav2_map_server map_saver_cli -f bcr_map
+```
+
+### Using Nav2 with bcr_bot
+
+Nav2 is an open-source navigation package that enables a robot to navigate through an environment easily. It takes laser scan and odometry data, along with the map of the environment, as inputs.
+
+NOTE: The command to run navigation is common between all versions of gazebo.
+
+To run Nav2 on bcr_bot:
+```bash
+ros2 launch bcr_bot nav2.launch.py
+```
+
 
 ### Simulation and Visualization
 1. Gz Sim (Ignition Gazebo) (small_warehouse World):
