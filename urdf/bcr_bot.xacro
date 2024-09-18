@@ -27,9 +27,9 @@
     <xacro:property name="two_d_lidar_update_rate" value="30"/>
     <xacro:property name="two_d_lidar_sample_size" value="361"/>
     <xacro:property name="two_d_lidar_min_angle" value="0"/>
-    <xacro:property name="two_d_lidar_max_angle" value="360"/>
+    <xacro:property name="two_d_lidar_max_angle" value="180"/>
     <xacro:property name="two_d_lidar_min_range" value="0.55"/>
-    <xacro:property name="two_d_lidar_max_range" value="16"/>
+    <xacro:property name="two_d_lidar_max_range" value="30"/>
 
     <xacro:property name="camera_baseline" value="0.06"/>
     <xacro:property name="camera_height" value="0.10"/>
@@ -68,15 +68,15 @@
     </xacro:if>
 
     <!-- ................................ BASE LINK .................................. -->
-    <link name="base_footprint"/>
+    <!-- <link name="base_footprint"/> -->
 
     <link name="base_link"/>
 
-    <joint name="base_joint" type="fixed">
+    <!-- <joint name="base_joint" type="fixed">
         <parent link="base_footprint"/>
         <child link="base_link"/>
         <origin xyz="0.0 0 ${chassis_height/2 + traction_wheel_radius}" rpy="0 0 0.0" />
-    </joint>
+    </joint> -->
 
     <link name="chassis_link">
 
@@ -148,7 +148,7 @@
         <joint name="two_d_lidar_joint" type="fixed">
             <parent link="base_link"/>
             <child link="two_d_lidar"/>
-            <origin xyz="0.0 0 0.08" rpy="0 0 0" />
+            <origin xyz="0.0 0 0.08" rpy="0 0 -1.57" />
         </joint>
 
         <gazebo reference="two_d_lidar">

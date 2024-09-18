@@ -17,7 +17,7 @@ def get_xacro_to_doc(xacro_file_path, mappings):
 
 def generate_launch_description():
 
-	use_sim_time = LaunchConfiguration('use_sim_time', default='false')
+	use_sim_time = LaunchConfiguration('use_sim_time', default='true')
 
 	xacro_path = os.path.join(get_package_share_directory('bcr_bot'), 'urdf', 'bcr_bot.xacro')
 	doc = get_xacro_to_doc(xacro_path, {"wheel_odom_topic": "odom"})
@@ -35,7 +35,7 @@ def generate_launch_description():
 		executable='rviz2',
 		name='rviz2',
 		output='screen',
-		arguments=['-d', os.path.join(get_package_share_directory('bcr_bot'), 'rviz', 'entire_setup.rviz')]
+		arguments=['-d', os.path.join(get_package_share_directory('bcr_bot'), 'rviz', 'map.rviz')]
 	)
 
 	return LaunchDescription([

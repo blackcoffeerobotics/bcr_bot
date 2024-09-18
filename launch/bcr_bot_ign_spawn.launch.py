@@ -113,7 +113,7 @@ def generate_launch_description():
                     "--pitch", "0.0",
                     "--roll", "0.0",
                     "--frame-id", "kinect_camera",
-                    "--child-frame-id", "bcr_bot/base_footprint/kinect_camera"]
+                    "--child-frame-id", "bcr_bot/base_link/kinect_camera"]
     )
 
     return LaunchDescription([

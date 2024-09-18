@@ -14,4 +14,9 @@ install( DIRECTORY config/
 install(PROGRAMS scripts/remapper.py
         DESTINATION lib/${PROJECT_NAME})
 
+install(PROGRAMS scripts/localization_wrapper.py
+        DESTINATION lib/${PROJECT_NAME})
+install(PROGRAMS scripts/scan_matching.py
+        DESTINATION lib/${PROJECT_NAME})
+
 ament_package()

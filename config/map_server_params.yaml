@@ -1,0 +1,4 @@
+# map_server_params.yaml
+map_server:
+    ros__parameters:
+        yaml_filename: "bcr_map.yaml"

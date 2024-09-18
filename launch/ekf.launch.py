@@ -23,7 +23,7 @@ def generate_launch_description():
         launch_arguments={
             'use_sim_time': use_sim_time,
             'autostart': autostart,
-            'map': os.path.join(pkg_bcr, 'config', 'bcr_map3.yaml'),
+            'map': os.path.join(pkg_bcr, 'config', 'bcr_map2.yaml'),
             'params_file': os.path.join(pkg_bcr, 'config', 'nav2_params.yaml'),
             'package_path': pkg_bcr, 
         }.items()
@@ -42,14 +42,14 @@ def generate_launch_description():
         ]
     )
 
-    # start_robot_localization_cmd = Node(
-    #     package='robot_localization',
-    #     executable='ekf_node',
-    #     name='ekf_filter_node',
-    #     output='screen',
-    #     parameters=[robot_localization_file_path, 
-    #     {'use_sim_time': use_sim_time}]
-    # )
+    start_robot_localization_cmd = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_filter_node',
+        output='screen',
+        parameters=[robot_localization_file_path, 
+        {'use_sim_time': use_sim_time}]
+    )
     
     amcl_node = Node(
         package='nav2_amcl',
@@ -64,7 +64,7 @@ def generate_launch_description():
         executable='map_server',
         name='map_server',
         output='screen',
-        parameters=[{'yaml_filename': os.path.join(pkg_bcr, 'config', 'bcr_map3.yaml')}],
+        parameters=[{'yaml_filename': os.path.join(pkg_bcr, 'config', 'bcr_map2.yaml')}],
     )
 
     static_transform_publisher_node = Node(
@@ -84,7 +84,7 @@ def generate_launch_description():
 
     ld = LaunchDescription()
       
-    # ld.add_action(start_robot_localization_cmd)
+    ld.add_action(start_robot_localization_cmd)
 
     ld.add_action(nav2_launch_cmd)
     ld.add_action(rviz_launch_cmd)

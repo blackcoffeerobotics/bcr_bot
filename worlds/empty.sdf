@@ -1,6 +1,269 @@
 <?xml version="1.0" ?>
 <sdf version="1.7">
     <world name="empty_world">
+        <!-- First set of walls -->
+        <!-- First wall at x = 5, y = 0 (vertical) -->
+        <model name="wall_1">
+            <static>true</static>
+            <link name="link">
+                <collision name="collision">
+                    <geometry>
+                        <box>
+                            <size>30 0.5 2.5</size> <!-- Length, Width, Height -->
+                        </box>
+                    </geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry>
+                        <box>
+                            <size>30 0.5 2.5</size>
+                        </box>
+                    </geometry>
+                    <material>
+                        <ambient>0.8 0.8 0.8 1</ambient>
+                        <diffuse>0.8 0.8 0.8 1</diffuse>
+                    </material>
+                </visual>
+            </link>
+            <pose>5 0 1.25 0 0 1.5708</pose> <!-- Wall at x = 5, rotated 90 degrees -->
+        </model>
+
+        <!-- Second wall at x = 10, y = 0 (vertical) -->
+        <model name="wall_2">
+            <static>true</static>
+            <link name="link">
+                <collision name="collision">
+                    <geometry>
+                        <box>
+                            <size>30 0.5 2.5</size>
+                        </box>
+                    </geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry>
+                        <box>
+                            <size>30 0.5 2.5</size>
+                        </box>
+                    </geometry>
+                    <material>
+                        <ambient>0.8 0.8 0.8 1</ambient>
+                        <diffuse>0.8 0.8 0.8 1</diffuse>
+                    </material>
+                </visual>
+            </link>
+            <pose>10 0 1.25 0 0 1.5708</pose> <!-- Wall at x = 10, rotated 90 degrees -->
+        </model>
+
+        <!-- Third wall at x = 20, y = 0 (vertical) -->
+        <model name="wall_3">
+            <static>true</static>
+            <link name="link">
+                <collision name="collision">
+                    <geometry>
+                        <box>
+                            <size>30 0.5 2.5</size>
+                        </box>
+                    </geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry>
+                        <box>
+                            <size>30 0.5 2.5</size>
+                        </box>
+                    </geometry>
+                    <material>
+                        <ambient>0.8 0.8 0.8 1</ambient>
+                        <diffuse>0.8 0.8 0.8 1</diffuse>
+                    </material>
+                </visual>
+            </link>
+            <pose>15 0 1.25 0 0 1.5708</pose> <!-- Wall at x = 20, rotated 90 degrees -->
+        </model>
+
+        <!-- Second set of walls, shifted by 2 meters along the y-axis -->
+        <!-- Fourth wall at x = 5, y = 2 -->
+        <model name="wall_4">
+            <static>true</static>
+            <link name="link">
+                <collision name="collision">
+                    <geometry>
+                        <box>
+                            <size>30 0.5 2.5</size> <!-- Length, Width, Height -->
+                        </box>
+                    </geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry>
+                        <box>
+                            <size>30 0.5 2.5</size>
+                        </box>
+                    </geometry>
+                    <material>
+                        <ambient>0.8 0.8 0.8 1</ambient>
+                        <diffuse>0.8 0.8 0.8 1</diffuse>
+                    </material>
+                </visual>
+            </link>
+            <pose>5 36 1.25 0 0 1.5708</pose> <!-- Wall at x = 5, y = 2, rotated 90 degrees -->
+        </model>
+
+        <!-- Fifth wall at x = 10, y = 2 -->
+        <model name="wall_5">
+            <static>true</static>
+            <link name="link">
+                <collision name="collision">
+                    <geometry>
+                        <box>
+                            <size>30 0.5 2.5</size>
+                        </box>
+                    </geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry>
+                        <box>
+                            <size>30 0.5 2.5</size>
+                        </box>
+                    </geometry>
+                    <material>
+                        <ambient>0.8 0.8 0.8 1</ambient>
+                        <diffuse>0.8 0.8 0.8 1</diffuse>
+                    </material>
+                </visual>
+            </link>
+            <pose>10 36 1.25 0 0 1.5708</pose> <!-- Wall at x = 10, y = 2, rotated 90 degrees -->
+        </model>
+
+        <!-- Sixth wall at x = 20, y = 2 -->
+        <model name="wall_6">
+            <static>true</static>
+            <link name="link">
+                <collision name="collision">
+                    <geometry>
+                        <box>
+                            <size>30 0.5 2.5</size>
+                        </box>
+                    </geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry>
+                        <box>
+                            <size>30 0.5 2.5</size>
+                        </box>
+                    </geometry>
+                    <material>
+                        <ambient>0.8 0.8 0.8 1</ambient>
+                        <diffuse>0.8 0.8 0.8 1</diffuse>
+                    </material>
+                </visual>
+            </link>
+            <pose>15 36 1.25 0 0 1.5708</pose> <!-- Wall at x = 20, y = 2, rotated 90 degrees -->
+        </model>
+
+        <model name="front_wall">
+            <static>true</static>
+            <link name="link">
+                <collision name="collision">
+                    <geometry>
+                        <box>
+                            <size>80 0.5 2.5</size> <!-- Wall size 80x0.5x2.5 -->
+                        </box>
+                    </geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry>
+                        <box>
+                            <size>80 0.5 2.5</size>
+                        </box>
+                    </geometry>
+                    <material>
+                        <ambient>0.8 0.8 0.8 1</ambient>
+                        <diffuse>0.8 0.8 0.8 1</diffuse>
+                    </material>
+                </visual>
+            </link>
+            <pose>0 -40 1.25 0 0 0</pose> <!-- Front wall at y = -40 -->
+        </model>
+
+        <!-- Back wall -->
+        <model name="back_wall">
+            <static>true</static>
+            <link name="link">
+                <collision name="collision">
+                    <geometry>
+                        <box>
+                            <size>80 0.5 2.5</size>
+                        </box>
+                    </geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry>
+                        <box>
+                            <size>80 0.5 2.5</size>
+                        </box>
+                    </geometry>
+                    <material>
+                        <ambient>0.8 0.8 0.8 1</ambient>
+                        <diffuse>0.8 0.8 0.8 1</diffuse>
+                    </material>
+                </visual>
+            </link>
+            <pose>0 40 1.25 0 0 0</pose> <!-- Back wall at y = 40 -->
+        </model>
+
+        <!-- Left wall -->
+        <model name="left_wall">
+            <static>true</static>
+            <link name="link">
+                <collision name="collision">
+                    <geometry>
+                        <box>
+                            <size>0.5 80 2.5</size> <!-- Wall size 0.5x80x2.5 -->
+                        </box>
+                    </geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry>
+                        <box>
+                            <size>0.5 80 2.5</size>
+                        </box>
+                    </geometry>
+                    <material>
+                        <ambient>0.8 0.8 0.8 1</ambient>
+                        <diffuse>0.8 0.8 0.8 1</diffuse>
+                    </material>
+                </visual>
+            </link>
+            <pose>-20 0 1.25 0 0 0</pose> <!-- Left wall at x = -40 -->
+        </model>
+
+        <!-- Right wall -->
+        <model name="right_wall">
+            <static>true</static>
+            <link name="link">
+                <collision name="collision">
+                    <geometry>
+                        <box>
+                            <size>0.5 80 2.5</size>
+                        </box>
+                    </geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry>
+                        <box>
+                            <size>0.5 80 2.5</size>
+                        </box>
+                    </geometry>
+                    <material>
+                        <ambient>0.8 0.8 0.8 1</ambient>
+                        <diffuse>0.8 0.8 0.8 1</diffuse>
+                    </material>
+                </visual>
+            </link>
+            <pose>20 0 1.25 0 0 0</pose> <!-- Right wall at x = 40 -->
+        </model>
+
+
+        <!-- Lighting -->
         <light type="directional" name="sun">
             <cast_shadows>true</cast_shadows>
             <pose>0 0 10 0 0 0</pose>
@@ -15,9 +278,10 @@
             <direction>-0.5 0.1 -0.9</direction>
         </light>
         
+        <!-- Ground plane -->
         <model name="ground_plane">
             <static>true</static>
-           <link name="link">
+            <link name="link">
                 <collision name="collision">
                     <geometry>
                         <plane>
@@ -41,4 +305,4 @@
             </link>
         </model>
     </world>
-</sdf> 
+</sdf>
