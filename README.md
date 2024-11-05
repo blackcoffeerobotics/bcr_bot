@@ -4,12 +4,13 @@ https://github.com/blackcoffeerobotics/bcr_bot/assets/13151010/0fc570a3-c70c-415
 
 ## About
 
-This repository contains a Gazebo simulation for a differential drive robot, equipped with an IMU, a depth camera, stereo camera and a 2D LiDAR. The primary contriution of this project is to support multiple ROS and Gazebo distros. Currently, the project supports the following versions - 
+This repository contains a Gazebo and Isaac Sim simulation for a differential drive robot, equipped with an IMU, a depth camera, stereo camera and a 2D LiDAR. The primary contriution of this project is to support multiple ROS and Gazebo distros. Currently, the project supports the following versions - 
 
 1. [ROS Noetic + Gazebo Classic 11 (branch ros1)](#noetic--classic-ubuntu-2004)
 2. [ROS2 Humble + Gazebo Classic 11 (branch ros2)](#humble--classic-ubuntu-2204)
 3. [ROS2 Humble + Gazebo Fortress (branch ros2)](#humble--fortress-ubuntu-2204)
 4. [ROS2 Humble + Gazebo Harmonic (branch ros2)](#humble--harmonic-ubuntu-2204)
+5. [ROS2 Humble + Isaac Sim (branch ros2)](#humble--isaac-sim-ubuntu-2204)
 
 Each of the following sections describes depedencies, build and run instructions for each of the above combinations
 
@@ -238,6 +239,35 @@ ros2 launch stereo_image_proc stereo_image_proc.launch.py left_namespace:=bcr_bo
 
 **Warning:**  `gz-harmonic` cannot be installed alongside gazebo-classic (eg. gazebo11) since both use the `gz` command line tool.
 
+### Humble + Isaac Sim (Ubuntu 22.04)
+
+### Dependencies
+
+In addition to ROS2 Humble [Isaac Sim installation](https://docs.omniverse.nvidia.com/isaacsim/latest/installation/index.html) with ROS2 extension is required. Remainder of bcr_bot specific dependencies can be installed with [rosdep](http://wiki.ros.org/rosdep)
+
+```bash
+# From the root directory of the workspace. This will install everything mentioned in package.xml
+rosdep install --from-paths src --ignore-src -r -y
+```
+
+### Build
+
+```bash
+colcon build --packages-select bcr_bot
+```
+
+### Run
+
+To launch the robot in Isaac Sim:
+- Open Isaac Sim and load the `bcr_bot` robot usd model from [here](usd). 
+- Start the Simulation: Run the simulation directly within Isaac Sim.
+
+To view in rviz:
+```bash
+ros2 launch bcr_bot rviz.launch.py isaac_sim:=True
+```
+NOTE: The command to run mapping and navigation is common between all versions of gazebo and Isaac sim see [here](#mapping-with-slam-toolbox).
+
 ### Mapping with SLAM Toolbox
 
 SLAM Toolbox is an open-source package designed to map the environment using laser scans and odometry, generating a map for autonomous navigation.
@@ -264,17 +294,19 @@ ros2 run nav2_map_server map_saver_cli -f bcr_map
 
 Nav2 is an open-source navigation package that enables a robot to navigate through an environment easily. It takes laser scan and odometry data, along with the map of the environment, as inputs.
 
-NOTE: The command to run navigation is common between all versions of gazebo.
+NOTE: The command to run navigation is common between all versions of gazebo and Isaac sim.
 
 To run Nav2 on bcr_bot:
 ```bash
 ros2 launch bcr_bot nav2.launch.py
 ```
 
-
 ### Simulation and Visualization
 1. Gz Sim (Ignition Gazebo) (small_warehouse World):
 	![](res/gz.jpg)
 
-2. Rviz (Depth camera) (small_warehouse World):
+2. Isaac Sim:
+	![](res/isaac.jpg) 
+
+3. Rviz (Depth camera) (small_warehouse World):
 	![](res/rviz.jpg)
