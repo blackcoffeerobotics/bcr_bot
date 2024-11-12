@@ -259,12 +259,18 @@ colcon build --packages-select bcr_bot
 ### Run
 
 To launch the robot in Isaac Sim:
-- Open Isaac Sim and load the `bcr_bot` robot usd model from [here](usd). 
+- Open Isaac Sim and load the `warehouse_scene.usd` or `scene.usd` from [here](usd). 
+- Add in extra viewports for different camera views.
 - Start the Simulation: Run the simulation directly within Isaac Sim.
+- The following USDs are included in the package:
+	- `warehouse_scene.usd` - Warehouse scene with a robot.
+	- `scene.usd` - Scene with a robot in a empty world.
+	- `bcr_bot.usd` - Robot model that can be imported into any scene.
+	- `ActionGraphFull.usd` - Action graph for the robot to publish all the required topics.
 
 To view in rviz:
 ```bash
-ros2 launch bcr_bot rviz.launch.py isaac_sim:=True
+ros2 launch bcr_bot rviz.launch.py
 ```
 NOTE: The command to run mapping and navigation is common between all versions of gazebo and Isaac sim see [here](#mapping-with-slam-toolbox).
 
