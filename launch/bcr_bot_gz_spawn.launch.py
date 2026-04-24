@@ -17,7 +17,9 @@ def get_xacro_to_doc(xacro_file_path, mappings):
     return doc
 
 def generate_launch_description():
-   
+    
+    namespace = LaunchConfiguration("namespace", default="")
+       
     bcr_bot_path = get_package_share_directory("bcr_bot")
     position_x = LaunchConfiguration("position_x")
     position_y = LaunchConfiguration("position_y")
@@ -126,4 +128,5 @@ def generate_launch_description():
         DeclareLaunchArgument("odometry_source", default_value="world"),
         robot_state_publisher,
         gz_spawn_entity, transform_publisher, gz_ros2_bridge
+        DeclareLaunchArgument("namespace", default_value=namespace, description="Robot namespace"),
     ])
