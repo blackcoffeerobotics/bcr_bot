@@ -61,7 +61,7 @@ def generate_launch_description():
         executable="create",
         arguments=[
             "-topic", "/robot_description",
-            "-name", "bcr_bot",
+            "-name", namespace,
             "-allow_renaming", "true",
             "-z", "0.28",
             "-x", position_x,
