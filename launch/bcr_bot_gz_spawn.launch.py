@@ -42,9 +42,11 @@ def generate_launch_description():
         package="robot_state_publisher",
         executable="robot_state_publisher",
         name="robot_state_publisher",
+        namespace=namespace, 
         parameters=[
                     {'robot_description': Command( \
-                    ['xacro ', join(bcr_bot_path, 'urdf/bcr_bot.xacro'),
+                    # DO NOT TOUCH THIS PATH. The blueprint stays the same.
+                    ['xacro ', join(bcr_bot_path, 'urdf/bcr_bot.xacro'), 
                     ' camera_enabled:=', camera_enabled,
                     ' stereo_camera_enabled:=', stereo_camera_enabled,
                     ' two_d_lidar_enabled:=', two_d_lidar_enabled,
@@ -52,7 +54,8 @@ def generate_launch_description():
                     ' sim_gz:=', "true"
                     ])}],
         remappings=[
-            ('/joint_states', 'bcr_bot/joint_states'),
+            # CHANGE THIS: Inject the namespace into the topic string
+            ('/joint_states', [namespace, '/joint_states']), 
         ]
     )
 
