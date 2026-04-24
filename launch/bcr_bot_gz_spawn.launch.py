@@ -19,7 +19,7 @@ def get_xacro_to_doc(xacro_file_path, mappings):
 def generate_launch_description():
     
     namespace = LaunchConfiguration("namespace", default="")
-       
+        
     bcr_bot_path = get_package_share_directory("bcr_bot")
     position_x = LaunchConfiguration("position_x")
     position_y = LaunchConfiguration("position_y")
@@ -29,32 +29,23 @@ def generate_launch_description():
     two_d_lidar_enabled = LaunchConfiguration("two_d_lidar_enabled", default=True)
     odometry_source = LaunchConfiguration("odometry_source")
 
-    # robot_description_content = get_xacro_to_doc(
-    #     join(bcr_bot_path, "urdf", "bcr_bot.xacro"),
-    #     {"sim_gz": "true",
-    #      "two_d_lidar_enabled": "true",
-    #      "conveyor_enabled": "false",
-    #      "camera_enabled": "true"
-    #     }
-    # ).toxml()
-
     robot_state_publisher = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
         name="robot_state_publisher",
         namespace=namespace, 
-        parameters=[
-                    {'robot_description': Command( \
-                    # DO NOT TOUCH THIS PATH. The blueprint stays the same.
-                    ['xacro ', join(bcr_bot_path, 'urdf/bcr_bot.xacro'), 
-                    ' camera_enabled:=', camera_enabled,
-                    ' stereo_camera_enabled:=', stereo_camera_enabled,
-                    ' two_d_lidar_enabled:=', two_d_lidar_enabled,
-                    ' odometry_source:=', odometry_source,
-                    ' sim_gz:=', "true"
-                    ])}],
+        parameters=[{
+            'robot_description': Command([
+                'xacro ', join(bcr_bot_path, 'urdf/bcr_bot.xacro'), 
+                ' camera_enabled:=', camera_enabled,
+                ' stereo_camera_enabled:=', stereo_camera_enabled,
+                ' two_d_lidar_enabled:=', two_d_lidar_enabled,
+                ' odometry_source:=', odometry_source,
+                ' sim_gz:=', "true"
+            ]),
+            'frame_prefix': [namespace, '/']
+        }],
         remappings=[
-            # CHANGE THIS: Inject the namespace into the topic string
             ('/joint_states', [namespace, '/joint_states']), 
         ]
     )
@@ -63,7 +54,7 @@ def generate_launch_description():
         package="ros_gz_sim",
         executable="create",
         arguments=[
-            "-topic", "/robot_description",
+            "-topic", ["/", namespace, "/robot_description"],
             "-name", namespace,
             "-allow_renaming", "true",
             "-z", "0.28",
@@ -90,21 +81,21 @@ def generate_launch_description():
             "stereo_camera/right/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
             "/kinect_camera/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
             "/imu@sensor_msgs/msg/Imu[gz.msgs.IMU",
-            "/world/default/model/bcr_bot/joint_state@sensor_msgs/msg/JointState[gz.msgs.Model"
+            ["/world/default/model/", namespace, "/joint_state@sensor_msgs/msg/JointState[gz.msgs.Model"]
         ],
         remappings=[
-            ('/world/default/model/bcr_bot/joint_state', 'bcr_bot/joint_states'),
-            ('/odom', 'bcr_bot/odom'),
-            ('/scan', 'bcr_bot/scan'),
-            ('/kinect_camera', 'bcr_bot/kinect_camera'),
-            ('/stereo_camera/left/image_raw', 'bcr_bot/stereo_camera/left/image_raw'),
-            ('/stereo_camera/right/image_raw', 'bcr_bot/stereo_camera/right/image_raw'),
-            ('/imu', 'bcr_bot/imu'),
-            ('/cmd_vel', 'bcr_bot/cmd_vel'),
-            ('kinect_camera/camera_info', 'bcr_bot/kinect_camera/camera_info'),
-            ('stereo_camera/left/camera_info', 'bcr_bot/stereo_camera/left/camera_info'),
-            ('stereo_camera/right/camera_info', 'bcr_bot/stereo_camera/right/camera_info'),
-            ('/kinect_camera/points', 'bcr_bot/kinect_camera/points'),
+            (['/world/default/model/', namespace, '/joint_state'], [namespace, '/joint_states']),
+            ('/odom', [namespace, '/odom']),
+            ('/scan', [namespace, '/scan']),
+            ('/kinect_camera', [namespace, '/kinect_camera']),
+            ('/stereo_camera/left/image_raw', [namespace, '/stereo_camera/left/image_raw']),
+            ('/stereo_camera/right/image_raw', [namespace, '/stereo_camera/right/image_raw']),
+            ('/imu', [namespace, '/imu']),
+            ('/cmd_vel', [namespace, '/cmd_vel']),
+            ('kinect_camera/camera_info', [namespace, '/kinect_camera/camera_info']),
+            ('stereo_camera/left/camera_info', [namespace, '/stereo_camera/left/camera_info']),
+            ('stereo_camera/right/camera_info', [namespace, '/stereo_camera/right/camera_info']),
+            ('/kinect_camera/points', [namespace, '/kinect_camera/points']),
         ]
     )
 
@@ -118,7 +109,7 @@ def generate_launch_description():
                     "--pitch", "0.0",
                     "--roll", "0.0",
                     "--frame-id", "kinect_camera",
-                    "--child-frame-id", "bcr_bot/base_footprint/kinect_camera"]
+                    "--child-frame-id", [namespace, "/base_footprint/kinect_camera"]]
     )
 
     return LaunchDescription([
@@ -130,6 +121,8 @@ def generate_launch_description():
         DeclareLaunchArgument("orientation_yaw", default_value="0.0"),
         DeclareLaunchArgument("odometry_source", default_value="world"),
         robot_state_publisher,
-        gz_spawn_entity, transform_publisher, gz_ros2_bridge
+        gz_spawn_entity, 
+        transform_publisher, 
+        gz_ros2_bridge,
         DeclareLaunchArgument("namespace", default_value=namespace, description="Robot namespace"),
     ])
