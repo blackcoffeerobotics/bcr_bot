@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="bcr_bot">
+  <compiler angle="radian" meshdir="../meshes" texturedir="../meshes"/>
+
+  <option timestep="0.002" gravity="0 0 -9.81"/>
+
+  <default>
+    <default class="collision">
+      <geom group="3" rgba="0 0 0 0"/>
+    </default>
+    <default class="visual">
+      <geom contype="0" conaffinity="0" density="0" group="2"/>
+    </default>
+  </default>
+
+  <asset>
+    <mesh name="bcr_bot_combined_visual" file="bcr_bot_mesh.obj"/>
+    <mesh name="d415_visual" file="kinect/d415.obj"/>
+    <texture name="bcr_bot_texture" type="2d" file="bcr_bot_texture.png"/>
+    <texture name="d415_texture" type="2d" file="realsense_texture.png"/>
+    <material name="chassis_material" texture="bcr_bot_texture" rgba="1 1 1 1"/>
+    <material name="aluminium" rgba="0.5 0.5 0.5 1"/>
+    <material name="d415_material" texture="d415_texture" rgba="1 1 1 1"/>
+  </asset>
+
+  <worldbody>
+    <!-- Start with the traction wheels resting on the ground. -->
+    <body name="base_footprint" pos="0 0 0.022">
+      <freejoint name="base_footprint_joint"/>
+
+      <body name="base_link" pos="0 0 0.195">
+        <body name="chassis_link">
+          <inertial pos="0 0 0" mass="70"
+                    diaginertia="2.5999166667 4.9355833333 7.1143333333"/>
+          <geom name="chassis_collision" class="collision" type="box"
+                pos="0 0 -0.05" size="0.45 0.32 0.095"/>
+          <!-- The converted OBJ is Y-up, so rotate it to the Xacro's Z-up frame. -->
+          <geom name="chassis_visual" class="visual" type="mesh"
+                mesh="bcr_bot_combined_visual" material="chassis_material"
+                pos="0 0 -0.205" euler="1.5707963268 0 0"/>
+
+          <body name="roof_link" pos="0 0 0.16">
+            <inertial pos="0 0 0" mass="1"
+                      diaginertia="0.03001875 0.0833520833 0.1133333333"/>
+            <geom name="roof_collision" class="collision" type="box"
+                  size="0.45 0.32 0.0075"/>
+          </body>
+        </body>
+
+        <body name="front_left_wheel" pos="0.45 0.27 -0.155">
+          <inertial pos="0 0 0" mass="0.1" diaginertia="0.000144 0.000144 0.000144"/>
+          <geom name="front_left_wheel_collision" class="collision" type="sphere"
+                size="0.06" friction="0 0 0" priority="1" condim="1"/>
+        </body>
+
+        <body name="front_right_wheel" pos="0.45 -0.27 -0.155">
+          <inertial pos="0 0 0" mass="0.1" diaginertia="0.000144 0.000144 0.000144"/>
+          <geom name="front_right_wheel_collision" class="collision" type="sphere"
+                size="0.06" friction="0 0 0" priority="1" condim="1"/>
+        </body>
+
+        <body name="back_left_wheel" pos="-0.45 0.27 -0.155">
+          <inertial pos="0 0 0" mass="0.1" diaginertia="0.000144 0.000144 0.000144"/>
+          <geom name="back_left_wheel_collision" class="collision" type="sphere"
+                size="0.06" friction="0 0 0" priority="1" condim="1"/>
+        </body>
+
+        <body name="back_right_wheel" pos="-0.45 -0.27 -0.155">
+          <inertial pos="0 0 0" mass="0.1" diaginertia="0.000144 0.000144 0.000144"/>
+          <geom name="back_right_wheel_collision" class="collision" type="sphere"
+                size="0.06" friction="0 0 0" priority="1" condim="1"/>
+        </body>
+
+        <body name="middle_left_wheel" pos="0 0.3 -0.117">
+          <joint name="middle_left_wheel_joint" type="hinge" axis="0 1 0"/>
+          <inertial pos="0 0 0" mass="1"
+                    diaginertia="0.0027083333 0.005 0.0027083333"/>
+          <geom name="middle_left_wheel_collision" class="collision" type="cylinder"
+                size="0.1 0.025" euler="1.5707963268 0 0" friction="5 0 0"/>
+        </body>
+
+        <body name="middle_right_wheel" pos="0 -0.3 -0.117">
+          <joint name="middle_right_wheel_joint" type="hinge" axis="0 1 0"/>
+          <inertial pos="0 0 0" mass="1"
+                    diaginertia="0.0027083333 0.005 0.0027083333"/>
+          <geom name="middle_right_wheel_collision" class="collision" type="cylinder"
+                size="0.1 0.025" euler="1.5707963268 0 0" friction="5 0 0"/>
+        </body>
+
+        <body name="imu_frame" pos="0 0 0.08">
+          <site name="imu_site" size="0.005" rgba="0 0 0 0"/>
+        </body>
+
+        <body name="two_d_lidar" pos="0 0 0.08">
+          <inertial pos="0 0 0" mass="0.1"
+                    diaginertia="0.000170625 0.000170625 0.00028125"/>
+          <geom name="two_d_lidar_collision" class="collision" type="cylinder"
+                size="0.075 0.03"/>
+          <geom name="two_d_lidar_visual" class="visual" type="cylinder"
+                size="0.075 0.03" material="aluminium"/>
+          <site name="two_d_lidar_site" size="0.005" rgba="0 0 0 0"/>
+        </body>
+
+        <body name="kinect_camera" pos="0.45 0 0.0271428571">
+          <inertial pos="0 0 0" mass="0.01"
+                    diaginertia="0.00008175 0.0000108333 0.0000790833"/>
+          <geom name="kinect_camera_collision" class="collision" type="box"
+                size="0.035 0.15 0.045"/>
+          <!-- The exported OBJ's wide axis is Z; rotate it into the Xacro frame. -->
+          <geom name="kinect_camera_visual" class="visual" type="mesh"
+                mesh="d415_visual" material="d415_material"
+                euler="1.5707963268 0 0"/>
+          <camera name="kinect_camera_sensor" fovy="46.8264488927"
+                  xyaxes="0 -1 0 0 0 1"/>
+
+          <body name="kinect_camera_optical" euler="-1.5707963268 0 -1.5707963268"/>
+        </body>
+
+        <body name="stereo_camera" pos="0.45 0 0.0271428571">
+          <inertial pos="0 0 0" mass="0.01"
+                    diaginertia="0.00008175 0.0000108333 0.0000790833"/>
+          <geom name="stereo_camera_collision" class="collision" type="box"
+                size="0.035 0.15 0.045"/>
+          <geom name="stereo_camera_visual" class="visual" type="mesh"
+                mesh="d415_visual" material="d415_material"
+                euler="1.5707963268 0 0"/>
+
+          <camera name="stereo_camera_left" pos="0 0 0" fovy="80"
+                  xyaxes="0 -1 0 0 0 1"/>
+          <camera name="stereo_camera_right" pos="0 -0.12 0" fovy="80"
+                  xyaxes="0 -1 0 0 0 1"/>
+
+          <body name="stereo_camera_optical"
+                euler="-1.5707963268 0 -1.5707963268"/>
+        </body>
+
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <velocity name="middle_left_wheel_joint" joint="middle_left_wheel_joint" kv="100"
+              forcelimited="true" forcerange="-20000 20000"/>
+    <velocity name="middle_right_wheel_joint" joint="middle_right_wheel_joint" kv="100"
+              forcelimited="true" forcerange="-20000 20000"/>
+  </actuator>
+
+  <sensor>
+    <accelerometer name="imu_accelerometer" site="imu_site"/>
+    <gyro name="imu_gyroscope" site="imu_site"/>
+  </sensor>
+</mujoco>

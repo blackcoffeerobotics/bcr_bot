@@ -3,7 +3,7 @@ project(bcr_bot)
 
 find_package(ament_cmake REQUIRED)
 
-install(DIRECTORY launch meshes models urdf worlds rviz config
+install(DIRECTORY launch meshes models urdf worlds rviz config mjcf
     DESTINATION share/${PROJECT_NAME}/
 )
          

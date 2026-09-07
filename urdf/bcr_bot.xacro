@@ -46,6 +46,7 @@
     <xacro:arg name="sim_gazebo" default="false" />
     <xacro:arg name="sim_ign" default="false" />
     <xacro:arg name="sim_gz" default="false" />
+    <xacro:arg name="sim_mujoco" default="false" />
     <xacro:arg name="odometry_source" default="world" />
 
     <xacro:property name="odometry_source" value="$(arg odometry_source)"/>
@@ -65,6 +66,10 @@
 
     <xacro:if value="$(arg sim_gz)">
         <xacro:include filename="$(find bcr_bot)/urdf/gz.xacro"/>
+    </xacro:if>
+
+    <xacro:if value="$(arg sim_mujoco)">
+        <xacro:include filename="$(find bcr_bot)/urdf/mujoco_ros2_control.xacro"/>
     </xacro:if>
 
     <!-- ................................ BASE LINK .................................. -->
