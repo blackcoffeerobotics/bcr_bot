@@ -99,6 +99,11 @@
           <geom name="two_d_lidar_visual" class="visual" type="cylinder"
                 size="0.075 0.03" material="aluminium"/>
           <site name="two_d_lidar_site" size="0.005" rgba="0 0 0 0"/>
+          <replicate site="two_d_lidar_site" count="361" sep="-"
+                     euler="0 0 0.0174532925">
+            <site name="two_d_lidar_ray" size="0.001"
+                  euler="0 1.5707963268 0" rgba="0 0 0 0"/>
+          </replicate>
         </body>
 
         <body name="kinect_camera" pos="0.45 0 0.0271428571">
@@ -110,7 +115,7 @@
           <geom name="kinect_camera_visual" class="visual" type="mesh"
                 mesh="d415_visual" material="d415_material"
                 euler="1.5707963268 0 0"/>
-          <camera name="kinect_camera_sensor" fovy="46.8264488927"
+          <camera name="kinect_camera_sensor" fovy="46.8264488927" resolution="640 480"
                   xyaxes="0 -1 0 0 0 1"/>
 
           <body name="kinect_camera_optical" euler="-1.5707963268 0 -1.5707963268"/>
@@ -125,9 +130,11 @@
                 mesh="d415_visual" material="d415_material"
                 euler="1.5707963268 0 0"/>
 
-          <camera name="stereo_camera_left" pos="0 0 0" fovy="80"
+          <camera name="stereo_camera_left" pos="0 0 0" fovy="64.365484"
+                  resolution="640 480"
                   xyaxes="0 -1 0 0 0 1"/>
-          <camera name="stereo_camera_right" pos="0 -0.12 0" fovy="80"
+          <camera name="stereo_camera_right" pos="0 -0.12 0" fovy="64.365484"
+                  resolution="640 480"
                   xyaxes="0 -1 0 0 0 1"/>
 
           <body name="stereo_camera_optical"
@@ -146,7 +153,9 @@
   </actuator>
 
   <sensor>
-    <accelerometer name="imu_accelerometer" site="imu_site"/>
-    <gyro name="imu_gyroscope" site="imu_site"/>
+    <framequat name="imu_quat" objtype="site" objname="imu_site"/>
+    <gyro name="imu_gyro" site="imu_site"/>
+    <accelerometer name="imu_accel" site="imu_site"/>
+    <rangefinder name="two_d_lidar" site="two_d_lidar_ray"/>
   </sensor>
 </mujoco>

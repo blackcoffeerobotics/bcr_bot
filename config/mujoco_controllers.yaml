@@ -5,8 +5,16 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
+    imu_sensor_broadcaster:
+      type: imu_sensor_broadcaster/IMUSensorBroadcaster
+
     diff_drive_controller:
       type: diff_drive_controller/DiffDriveController
+
+imu_sensor_broadcaster:
+  ros__parameters:
+    sensor_name: imu
+    frame_id: imu_frame
 
 diff_drive_controller:
   ros__parameters:

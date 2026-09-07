@@ -54,6 +54,31 @@ def generate_launch_description():
         on_exit=Shutdown(),
     )
 
+    point_cloud = Node(
+        package="depth_image_proc",
+        executable="point_cloud_xyzrgb_node",
+        name="kinect_point_cloud",
+        output="both",
+        parameters=[{"use_sim_time": use_sim_time, "exact_sync": True}],
+        remappings=[
+            ("rgb/image_rect_color", "/kinect_camera_sensor/color"),
+            ("depth_registered/image_rect", "/kinect_camera_sensor/depth"),
+            ("points", "/bcr_bot/kinect_camera/points"),
+        ],
+    )
+
+    twist_stamper = Node(
+        package="twist_stamper",
+        executable="twist_stamper",
+        name="bcr_bot_twist_stamper",
+        output="both",
+        parameters=[{"use_sim_time": use_sim_time, "frame_id": "base_footprint"}],
+        remappings=[
+            ("cmd_vel_in", "/bcr_bot/cmd_vel"),
+            ("cmd_vel_out", "/bcr_bot/cmd_vel_stamped"),
+        ],
+    )
+
     joint_state_broadcaster = Node(
         package="controller_manager",
         executable="spawner",
@@ -61,6 +86,19 @@ def generate_launch_description():
             "joint_state_broadcaster",
             "--param-file",
             controller_parameters,
+        ],
+        output="both",
+    )
+
+    imu_sensor_broadcaster = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=[
+            "imu_sensor_broadcaster",
+            "--param-file",
+            controller_parameters,
+            "--controller-ros-args",
+            "--ros-args --remap /imu_sensor_broadcaster/imu:=/bcr_bot/imu",
         ],
         output="both",
     )
@@ -73,7 +111,7 @@ def generate_launch_description():
             "--param-file",
             controller_parameters,
             "--controller-ros-args",
-            "--ros-args --remap /diff_drive_controller/cmd_vel:=/bcr_bot/cmd_vel "
+            "--ros-args --remap /diff_drive_controller/cmd_vel:=/bcr_bot/cmd_vel_stamped "
             "--remap /diff_drive_controller/odom:=/bcr_bot/odom",
         ],
         output="both",
@@ -84,7 +122,10 @@ def generate_launch_description():
             DeclareLaunchArgument("use_sim_time", default_value="true"),
             robot_state_publisher,
             mujoco_control,
+            point_cloud,
+            twist_stamper,
             joint_state_broadcaster,
+            imu_sensor_broadcaster,
             diff_drive_controller,
         ]
     )

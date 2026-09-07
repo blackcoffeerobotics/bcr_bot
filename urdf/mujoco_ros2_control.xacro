@@ -6,6 +6,8 @@
             <plugin>mujoco_ros2_control/MujocoSystemInterface</plugin>
             <param name="mujoco_model">$(find bcr_bot)/mjcf/empty_world.xml</param>
             <param name="headless">false</param>
+            <param name="camera_publish_rate">15.0</param>
+            <param name="lidar_publish_rate">30.0</param>
         </hardware>
 
         <joint name="middle_left_wheel_joint">
@@ -21,6 +23,52 @@
             <state_interface name="velocity"/>
             <state_interface name="effort"/>
         </joint>
+
+        <sensor name="imu">
+            <param name="mujoco_type">imu</param>
+            <param name="mujoco_sensor_name">imu</param>
+            <state_interface name="orientation.x"/>
+            <state_interface name="orientation.y"/>
+            <state_interface name="orientation.z"/>
+            <state_interface name="orientation.w"/>
+            <state_interface name="angular_velocity.x"/>
+            <state_interface name="angular_velocity.y"/>
+            <state_interface name="angular_velocity.z"/>
+            <state_interface name="linear_acceleration.x"/>
+            <state_interface name="linear_acceleration.y"/>
+            <state_interface name="linear_acceleration.z"/>
+        </sensor>
+
+        <sensor name="two_d_lidar">
+            <param name="frame_name">two_d_lidar</param>
+            <param name="angle_increment">0.0174532925</param>
+            <param name="min_angle">0.0</param>
+            <param name="max_angle">6.2831853072</param>
+            <param name="range_min">0.55</param>
+            <param name="range_max">16.0</param>
+            <param name="laserscan_topic">/bcr_bot/scan</param>
+        </sensor>
+
+        <sensor name="kinect_camera_sensor">
+            <param name="frame_name">kinect_camera_optical</param>
+            <param name="info_topic">/kinect_camera_sensor/camera_info</param>
+            <param name="image_topic">/kinect_camera_sensor/color</param>
+            <param name="depth_topic">/kinect_camera_sensor/depth</param>
+        </sensor>
+
+        <sensor name="stereo_camera_left">
+            <param name="frame_name">stereo_camera_optical</param>
+            <param name="info_topic">/bcr_bot/stereo_camera/left/camera_info</param>
+            <param name="image_topic">/bcr_bot/stereo_camera/left/image_raw</param>
+            <param name="depth_topic">/bcr_bot/stereo_camera/left/depth</param>
+        </sensor>
+
+        <sensor name="stereo_camera_right">
+            <param name="frame_name">stereo_camera_optical</param>
+            <param name="info_topic">/bcr_bot/stereo_camera/right/camera_info</param>
+            <param name="image_topic">/bcr_bot/stereo_camera/right/image_raw</param>
+            <param name="depth_topic">/bcr_bot/stereo_camera/right/depth</param>
+        </sensor>
     </ros2_control>
 
 </robot>
