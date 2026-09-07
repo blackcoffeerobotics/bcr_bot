@@ -63,11 +63,11 @@ ros2 launch bcr_bot gz.launch.py \
 	odometry_source:=world \
 	world_file:=small_warehouse.sdf
 ```
-<!-- **Note:** 
+**Note:** 
 1. To use stereo_image_proc with the stereo images excute following command: 
 ```bash
 ros2 launch stereo_image_proc stereo_image_proc.launch.py left_namespace:=bcr_bot/stereo_camera/left right_namespace:=bcr_bot/stereo_camera/right
-``` -->
+```
 ## Jazzy + MuJoCo (Ubuntu 24.04)
 
 ### Dependencies
@@ -206,8 +206,11 @@ ros2 launch bcr_bot nav2.launch.py map:="$(ros2 pkg prefix --share bcr_bot)/conf
 1. Gz Sim (Ignition Gazebo) (small_warehouse World):
 	![](res/gz.jpg)
 
-2. Isaac Sim:
+2. MuJoCo:
+   ![MuJoCo simulation](res/mujoco.png)
+
+3. Isaac Sim:
 	![](res/isaac.jpg) 
 
-3. Rviz (Depth camera) (small_warehouse World):
+4. Rviz (Depth camera) (small_warehouse World):
 	![](res/rviz.jpg)
