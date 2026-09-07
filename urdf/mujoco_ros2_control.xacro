@@ -4,7 +4,7 @@
     <ros2_control name="MujocoSystem" type="system">
         <hardware>
             <plugin>mujoco_ros2_control/MujocoSystemInterface</plugin>
-            <param name="mujoco_model">$(find bcr_bot)/mjcf/empty_world.xml</param>
+            <param name="mujoco_model">$(find bcr_bot)/mjcf/small_warehouse.xml</param>
             <param name="headless">false</param>
             <param name="camera_publish_rate">15.0</param>
             <param name="lidar_publish_rate">30.0</param>

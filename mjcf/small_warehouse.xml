@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="bcr_bot_small_warehouse">
+  <include file="bcr_bot.xml"/>
+
+  <asset>
+    <texture name="warehouse_floor_texture" type="2d" builtin="checker"
+             rgb1="0.42 0.42 0.42" rgb2="0.62 0.62 0.62"
+             width="512" height="512"/>
+    <material name="warehouse_floor" texture="warehouse_floor_texture"
+              texrepeat="14 12" texuniform="true" reflectance="0.08"/>
+    <material name="warehouse_wall" rgba="0.82 0.84 0.86 1"/>
+    <material name="warehouse_rack" rgba="0.10 0.28 0.48 1"/>
+    <material name="warehouse_pallet" rgba="0.48 0.27 0.12 1"/>
+    <material name="warehouse_box" rgba="0.72 0.43 0.16 1"/>
+    <material name="warehouse_column" rgba="0.92 0.72 0.10 1"/>
+  </asset>
+
+  <statistic center="0 0 0.8" extent="8"/>
+
+  <visual>
+    <headlight ambient="0.35 0.35 0.35" diffuse="0.75 0.75 0.75"
+               specular="0.1 0.1 0.1"/>
+    <global azimuth="135" elevation="-30"/>
+    <rgba haze="0.8 0.85 0.9 1" rangefinder="1 1 0.1 0"/>
+  </visual>
+
+  <worldbody>
+    <light name="warehouse_light" pos="0 0 8" dir="0 0 -1"
+           directional="true" diffuse="0.8 0.8 0.8"/>
+
+    <geom name="ground" type="plane" size="0 0 0.05"
+          material="warehouse_floor" friction="1 0.005 0.0001"/>
+
+    <!-- Outer walls: the usable floor is 14 m by 12 m. -->
+    <geom name="wall_north" type="box" pos="0 6 1.25" size="7 0.10 1.25"
+          material="warehouse_wall"/>
+    <geom name="wall_south" type="box" pos="0 -6 1.25" size="7 0.10 1.25"
+          material="warehouse_wall"/>
+    <geom name="wall_east" type="box" pos="7 0 1.25" size="0.10 6 1.25"
+          material="warehouse_wall"/>
+    <geom name="wall_west" type="box" pos="-7 0 1.25" size="0.10 6 1.25"
+          material="warehouse_wall"/>
+
+    <!-- Six shelf islands leave wide connected aisles for navigation. -->
+    <geom name="rack_north_west" type="box" pos="-4.5 2.6 1.0"
+          size="1.35 0.38 1.0" material="warehouse_rack"/>
+    <geom name="rack_north_center" type="box" pos="0 2.6 1.0"
+          size="1.35 0.38 1.0" material="warehouse_rack"/>
+    <geom name="rack_north_east" type="box" pos="4.5 2.6 1.0"
+          size="1.35 0.38 1.0" material="warehouse_rack"/>
+    <geom name="rack_south_west" type="box" pos="-4.5 -2.6 1.0"
+          size="1.35 0.38 1.0" material="warehouse_rack"/>
+    <geom name="rack_south_center" type="box" pos="0 -2.6 1.0"
+          size="1.35 0.38 1.0" material="warehouse_rack"/>
+    <geom name="rack_south_east" type="box" pos="4.5 -2.6 1.0"
+          size="1.35 0.38 1.0" material="warehouse_rack"/>
+
+    <!-- Pallets and cartons add distinct features for LiDAR mapping. -->
+    <geom name="pallet_west" type="box" pos="-5.8 0 0.10"
+          size="0.60 0.50 0.10" material="warehouse_pallet"/>
+    <geom name="box_west_lower" type="box" pos="-5.8 0 0.45"
+          size="0.48 0.42 0.25" material="warehouse_box"/>
+    <geom name="box_west_upper" type="box" pos="-5.8 0 0.82"
+          size="0.34 0.32 0.12" material="warehouse_box"/>
+
+    <geom name="pallet_east" type="box" pos="5.7 0.8 0.10"
+          size="0.60 0.50 0.10" material="warehouse_pallet"/>
+    <geom name="box_east" type="box" pos="5.7 0.8 0.48"
+          size="0.48 0.42 0.28" material="warehouse_box"/>
+
+    <geom name="pallet_back" type="box" pos="1.8 4.7 0.10"
+          size="0.65 0.50 0.10" material="warehouse_pallet"/>
+    <geom name="box_back" type="box" pos="1.8 4.7 0.55"
+          size="0.52 0.40 0.35" material="warehouse_box"/>
+
+    <!-- Safety columns make the otherwise symmetric layout easier to localize. -->
+    <geom name="column_north_west" type="cylinder" pos="-6.2 4.8 1.0"
+          size="0.18 1.0" material="warehouse_column"/>
+    <geom name="column_south_east" type="cylinder" pos="6.1 -4.7 1.0"
+          size="0.18 1.0" material="warehouse_column"/>
+  </worldbody>
+</mujoco>

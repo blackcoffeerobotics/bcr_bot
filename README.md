@@ -4,7 +4,7 @@ https://github.com/blackcoffeerobotics/bcr_bot/assets/13151010/0fc570a3-c70c-415
 
 ## About
 
-This repository contains a [Gazebo](https://gazebosim.org/home) and [Isaac Sim](https://developer.nvidia.com/isaac/sim) simulation for a differential drive robot, equipped with an IMU, a depth camera, stereo camera and a 2D LiDAR. ROS2 versions also include [Nav2](https://docs.nav2.org/) and [SLAM Tool Box](https://github.com/SteveMacenski/slam_toolbox) support. Currently, the project supports the following combinations - 
+This repository contains [Gazebo](https://gazebosim.org/home), [MuJoCo](https://mujoco.org/), and [Isaac Sim](https://developer.nvidia.com/isaac/sim) simulations for a differential drive robot, equipped with an IMU, a depth camera, stereo camera and a 2D LiDAR. ROS2 versions also include [Nav2](https://docs.nav2.org/) and [SLAM Tool Box](https://github.com/SteveMacenski/slam_toolbox) support. Currently, the project supports the following combinations - 
 
 1. [ROS Noetic + Gazebo Classic 11 (branch ros1)](https://github.com/blackcoffeerobotics/bcr_bot/tree/ros1?tab=readme-ov-file#noetic--classic-ubuntu-2004)
 2. [ROS2 Humble + Gazebo Classic 11 (branch ros2)](https://github.com/blackcoffeerobotics/bcr_bot/tree/ros2?tab=readme-ov-file#humble--classic-ubuntu-2204)
@@ -13,6 +13,7 @@ This repository contains a [Gazebo](https://gazebosim.org/home) and [Isaac Sim](
 5. [ROS2 Humble + Isaac Sim (branch ros2)](https://github.com/blackcoffeerobotics/bcr_bot/tree/ros2?tab=readme-ov-file#humble--isaac-sim-ubuntu-2204)
 6. [ROS2 Jazzy + Gazebo Harmonic (branch ros2-jazzy)](https://github.com/blackcoffeerobotics/bcr_bot/tree/ros2-jazzy?tab=readme-ov-file#jazzy--harmonic-ubuntu-2404)
 7. [ROS2 Jazzy + Isaac Sim (branch ros2-jazzy)](https://github.com/blackcoffeerobotics/bcr_bot/tree/ros2-jazzy?tab=readme-ov-file#jazzy--isaac-sim-ubuntu-2404)
+8. [ROS2 Jazzy + MuJoCo Sim (branch ros2-jazzy)](https://github.com/blackcoffeerobotics/bcr_bot/tree/ros2-jazzy?tab=readme-ov-file#jazzy--mujoco-ubuntu-2404)
 
 Each of the following sections describes depedencies, build and run instructions for the combinations supported by the `ros2-jazzy` branch.
 
@@ -67,6 +68,61 @@ ros2 launch bcr_bot gz.launch.py \
 ```bash
 ros2 launch stereo_image_proc stereo_image_proc.launch.py left_namespace:=bcr_bot/stereo_camera/left right_namespace:=bcr_bot/stereo_camera/right
 ``` -->
+## Jazzy + MuJoCo (Ubuntu 24.04)
+
+### Dependencies
+
+Install the simulation, controller, visualization, and navigation packages:
+
+```bash
+sudo apt update
+sudo apt install \
+  ros-jazzy-mujoco-ros2-control \
+  ros-jazzy-mujoco-ros2-control-plugins \
+  ros-jazzy-ros2controlcli \
+  ros-jazzy-joint-state-broadcaster \
+  ros-jazzy-imu-sensor-broadcaster \
+  ros-jazzy-diff-drive-controller \
+  ros-jazzy-depth-image-proc \
+  ros-jazzy-twist-stamper \
+  ros-jazzy-teleop-twist-keyboard \
+  ros-jazzy-rviz2 \
+  ros-jazzy-slam-toolbox \
+  ros-jazzy-navigation2 \
+  ros-jazzy-nav2-bringup
+```
+
+Install the remaining declared dependencies from the workspace root:
+
+```bash
+rosdep install --from-paths src --ignore-src -r -y
+```
+
+### Build
+
+Run from the workspace root:
+
+```bash
+colcon build --packages-select bcr_bot
+source install/setup.bash
+```
+
+### Run
+
+Launch the robot in the MuJoCo warehouse:
+
+```bash
+ros2 launch bcr_bot mujoco.launch.py
+```
+
+The launch enables wheel control and odometry, IMU, 2D LiDAR, the depth camera, and stereo cameras. A colored point cloud is generated for the depth camera.
+
+To view the robot and sensor data in RViz, open another sourced terminal:
+
+```bash
+ros2 launch bcr_bot rviz.launch.py
+```
+
 
 ### Jazzy + Isaac Sim (Ubuntu 24.04)
 
@@ -107,7 +163,7 @@ NOTE: The command to run mapping and navigation is common between all versions o
 
 SLAM Toolbox is an open-source package designed to map the environment using laser scans and odometry, generating a map for autonomous navigation.
 
-NOTE: The command to run mapping is common between all versions of gazebo.
+NOTE: The command to run mapping is common between all versions of gazebo and MuJoCo.
 
 To start mapping:
 ```bash
@@ -116,7 +172,7 @@ ros2 launch bcr_bot mapping.launch.py
 
 Use the teleop twist keyboard to control the robot and map the area:
 ```bash
-ros2 run teleop_twist_keyboard teleop_twist_keyboard cmd_vel:=/bcr_bot/cmd_vel
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r cmd_vel:=/bcr_bot/cmd_vel
 ```
 
 To save the map:
@@ -129,11 +185,21 @@ ros2 run nav2_map_server map_saver_cli -f bcr_map
 
 Nav2 is an open-source navigation package that enables a robot to navigate through an environment easily. It takes laser scan and odometry data, along with the map of the environment, as inputs.
 
-NOTE: The command to run navigation is common between all versions of gazebo and Isaac sim.
+NOTE: The command to run navigation is common between all versions of gazebo, MuJoCo and Isaac sim.
 
 To run Nav2 on bcr_bot:
 ```bash
 ros2 launch bcr_bot nav2.launch.py
+```
+
+To choose another map, pass its YAML path
+```bash
+ros2 launch bcr_bot nav2.launch.py map:=/full/path/to/map.yaml
+```
+
+For the included MuJoCo warehouse map:
+```bash
+ros2 launch bcr_bot nav2.launch.py map:="$(ros2 pkg prefix --share bcr_bot)/config/bcr_map_mujoco.yaml"
 ```
 
 ### Simulation and Visualization

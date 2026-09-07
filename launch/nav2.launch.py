@@ -1,7 +1,7 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
@@ -12,6 +12,12 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='True')
     autostart = LaunchConfiguration('autostart', default='True')
+    map_file = LaunchConfiguration('map')
+    declare_map = DeclareLaunchArgument(
+        'map',
+        default_value=os.path.join(pkg_bcr, 'config', 'bcr_map.yaml'),
+        description='Path to the map YAML file to load',
+    )
 
     nav2_launch_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -20,7 +26,7 @@ def generate_launch_description():
         launch_arguments={
             'use_sim_time': use_sim_time,
             'autostart': autostart,
-            'map': os.path.join(pkg_bcr, 'config', 'bcr_map.yaml'),
+            'map': map_file,
             'params_file': os.path.join(pkg_bcr, 'config', 'nav2_params.yaml'),
             'package_path': pkg_bcr,
         }.items()
@@ -45,7 +51,7 @@ def generate_launch_description():
         executable='map_server',
         name='map_server',
         output='screen',
-        parameters=[{'yaml_filename': os.path.join(pkg_bcr, 'config', 'bcr_map.yaml')}],
+        parameters=[{'yaml_filename': map_file}],
     )
 
     static_transform_publisher_node = Node(
@@ -65,10 +71,10 @@ def generate_launch_description():
 
     ld = LaunchDescription()
 
+    ld.add_action(declare_map)
     ld.add_action(nav2_launch_cmd)
     ld.add_action(rviz_launch_cmd)
     ld.add_action(static_transform_publisher_node)
 
 
     return ld
-
