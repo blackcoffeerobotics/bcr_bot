@@ -10,38 +10,33 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN mkdir -p /tmp/runtime-root && chmod 0700 /tmp/runtime-root
 ENV XDG_RUNTIME_DIR=/tmp/runtime-root
 
-# General development tools
 RUN apt-get update && apt-get install --no-install-recommends -y \
     apt-utils \
     git \
     vim \
     python3-pip \
-    && rm -rf /var/lib/apt/lists/*
-
-# Common ROS dependencies used by bcr_bot
-RUN apt-get update && apt-get install --no-install-recommends -y \
     ros-${ROS_DISTRO}-rviz2 \
     ros-${ROS_DISTRO}-xacro \
     ros-${ROS_DISTRO}-teleop-twist-keyboard \
     ros-${ROS_DISTRO}-navigation2 \
     ros-${ROS_DISTRO}-nav2-bringup \
-    && rm -rf /var/lib/apt/lists/*
-
-# Gazebo Harmonic and its ROS 2 integration
-RUN apt-get update && apt-get install --no-install-recommends -y \
     ros-${ROS_DISTRO}-ros-gz-sim \
     ros-${ROS_DISTRO}-ros-gz-bridge \
     ros-${ROS_DISTRO}-ros-gz-interfaces \
-    && rm -rf /var/lib/apt/lists/*
-
-# MuJoCo and its ROS 2 integration
-RUN apt-get update && apt-get install --no-install-recommends -y \
     ros-${ROS_DISTRO}-mujoco-ros2-control \
     ros-${ROS_DISTRO}-mujoco-ros2-control-plugins \
     ros-${ROS_DISTRO}-ros2controlcli \
     ros-${ROS_DISTRO}-imu-sensor-broadcaster \
     ros-${ROS_DISTRO}-depth-image-proc \
     ros-${ROS_DISTRO}-twist-stamper \
+    ros-${ROS_DISTRO}-fastcdr \
+    ros-${ROS_DISTRO}-fastrtps \
+    ros-${ROS_DISTRO}-fastrtps-cmake-module \
+    ros-${ROS_DISTRO}-rmw-fastrtps-cpp \
+    ros-${ROS_DISTRO}-rmw-fastrtps-shared-cpp \
+    ros-${ROS_DISTRO}-rosidl-dynamic-typesupport-fastrtps \
+    ros-${ROS_DISTRO}-rosidl-typesupport-fastrtps-c \
+    ros-${ROS_DISTRO}-rosidl-typesupport-fastrtps-cpp \
     && rm -rf /var/lib/apt/lists/*
 
 # Enable Bash commands such as source
