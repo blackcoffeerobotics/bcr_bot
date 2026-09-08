@@ -3,12 +3,12 @@
   <include file="bcr_bot.xml"/>
 
   <asset>
-    <texture name="warehouse_floor_texture" type="2d" builtin="checker"
-             rgb1="0.42 0.42 0.42" rgb2="0.62 0.62 0.62"
-             width="512" height="512"/>
-    <material name="warehouse_floor" texture="warehouse_floor_texture"
-              texrepeat="14 12" texuniform="true" reflectance="0.08"/>
-    <material name="warehouse_wall" rgba="0.82 0.84 0.86 1"/>
+    <texture name="warehouse_concrete" type="2d" file="mujoco_floor_texture.png"/>
+    <material name="warehouse_floor" texture="warehouse_concrete" rgba="0.60 0.60 0.60 1"
+              texrepeat="0.25 0.25" texuniform="true"
+              specular="0" reflectance="0"/>
+    <material name="warehouse_wall" rgba="0.84 0.80 0.71 1"
+              specular="0" reflectance="0"/>
     <material name="warehouse_rack" rgba="0.10 0.28 0.48 1"/>
     <material name="warehouse_pallet" rgba="0.48 0.27 0.12 1"/>
     <material name="warehouse_box" rgba="0.72 0.43 0.16 1"/>

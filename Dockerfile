@@ -27,6 +27,23 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     ros-${ROS_DISTRO}-nav2-bringup \
     && rm -rf /var/lib/apt/lists/*
 
+# Gazebo Harmonic and its ROS 2 integration
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    ros-${ROS_DISTRO}-ros-gz-sim \
+    ros-${ROS_DISTRO}-ros-gz-bridge \
+    ros-${ROS_DISTRO}-ros-gz-interfaces \
+    && rm -rf /var/lib/apt/lists/*
+
+# MuJoCo and its ROS 2 integration
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    ros-${ROS_DISTRO}-mujoco-ros2-control \
+    ros-${ROS_DISTRO}-mujoco-ros2-control-plugins \
+    ros-${ROS_DISTRO}-ros2controlcli \
+    ros-${ROS_DISTRO}-imu-sensor-broadcaster \
+    ros-${ROS_DISTRO}-depth-image-proc \
+    ros-${ROS_DISTRO}-twist-stamper \
+    && rm -rf /var/lib/apt/lists/*
+
 # Enable Bash commands such as source
 SHELL ["/bin/bash", "-c"]
 
@@ -34,4 +51,8 @@ SHELL ["/bin/bash", "-c"]
 ARG WORKSPACE=/root/ros2_ws
 ENV WORKSPACE=${WORKSPACE}
 
+RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /root/.bashrc
+
 WORKDIR ${WORKSPACE}
+
+CMD ["bash"]
