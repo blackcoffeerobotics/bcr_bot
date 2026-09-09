@@ -7,7 +7,9 @@ ARG ROS_DISTRO
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Runtime directory required by graphical applications such as RViz
-RUN mkdir -p /tmp/runtime-root && chmod 0700 /tmp/runtime-root
+RUN if ! getent group 110 >/dev/null; then groupadd --gid 110 render; fi \
+    && mkdir -p /tmp/runtime-root \
+    && chmod 0700 /tmp/runtime-root
 ENV XDG_RUNTIME_DIR=/tmp/runtime-root
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
