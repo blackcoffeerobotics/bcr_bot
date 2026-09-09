@@ -50,4 +50,9 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /root/.bashrc
 
 WORKDIR ${WORKSPACE}
 
+# Install dependencies required for URDF to MJCF conversion 
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \ 
+    ros2 run mujoco_ros2_control robot_description_to_mjcf.sh --install-only && \ 
+    /root/.ros/ros2_control/.venv/bin/python -m pip install pycollada==0.9.2
+
 CMD ["bash"]

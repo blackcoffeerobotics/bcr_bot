@@ -2,6 +2,7 @@
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, Shutdown
+from launch.conditions import IfCondition
 from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterFile, ParameterValue
@@ -9,9 +10,18 @@ from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
+    
     use_sim_time = LaunchConfiguration("use_sim_time")
+    runtime_mjcf = LaunchConfiguration("runtime_mjcf")
     xacro_file = PathJoinSubstitution(
         [FindPackageShare("bcr_bot"), "urdf", "bcr_bot.xacro"]
+    )
+
+    use_sim_time_arg = DeclareLaunchArgument("use_sim_time", default_value="true")
+    runtime_mjcf_arg = DeclareLaunchArgument(
+        "runtime_mjcf",
+        default_value="true",
+        description="Generate the MuJoCo model from robot_description at runtime",
     )
 
     robot_description = {
@@ -22,6 +32,8 @@ def generate_launch_description():
                     " ",
                     xacro_file,
                     " sim_mujoco:=true",
+                    " runtime_mjcf:=",
+                    runtime_mjcf,
                     " camera_enabled:=true",
                     " stereo_camera_enabled:=true",
                     " two_d_lidar_enabled:=true",
@@ -40,6 +52,19 @@ def generate_launch_description():
         executable="robot_state_publisher",
         output="both",
         parameters=[robot_description, {"use_sim_time": use_sim_time}],
+    )
+
+    urdf_to_mjcf_converter = Node(
+        package="mujoco_ros2_control",
+        executable="robot_description_to_mjcf.sh",
+        output="both",
+        emulate_tty=True,
+        arguments=[
+            "--add_free_joint",
+            "--publish_topic",
+            "/mujoco_robot_description",
+        ],
+        condition=IfCondition(runtime_mjcf),
     )
 
     mujoco_control = Node(
@@ -119,8 +144,10 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
-            DeclareLaunchArgument("use_sim_time", default_value="true"),
+            use_sim_time_arg,
+            runtime_mjcf_arg,
             robot_state_publisher,
+            urdf_to_mjcf_converter,
             mujoco_control,
             point_cloud,
             twist_stamper,
