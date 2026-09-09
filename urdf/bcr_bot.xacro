@@ -47,7 +47,15 @@
     <xacro:arg name="sim_ign" default="false" />
     <xacro:arg name="sim_gz" default="false" />
     <xacro:arg name="sim_mujoco" default="false" />
+    <xacro:arg name="runtime_mjcf" default="false" />
     <xacro:arg name="odometry_source" default="world" />
+
+    <!-- D415 DAE coordinates are in centimetres. The MuJoCo converter's
+         DAE-to-OBJ path does not apply the declared unit conversion. -->
+    <xacro:property name="d415_mesh_scale" value="1 1 1"/>
+    <xacro:if value="$(arg runtime_mjcf)">
+        <xacro:property name="d415_mesh_scale" value="0.01 0.01 0.01"/>
+    </xacro:if>
 
     <xacro:property name="odometry_source" value="$(arg odometry_source)"/>
 
@@ -93,11 +101,21 @@
         </collision>
 
         <visual>
-            <origin xyz="0 0 -0.205" rpy="0 0 0" />
+            <origin xyz="0 0 -0.205" rpy="0 0 0"/>
             <geometry>
                 <mesh filename="file://$(find bcr_bot)/meshes/bcr_bot_mesh.dae" scale="1 1 1"/>
             </geometry>
         </visual>
+
+        <!-- The released converter derives collisions from URDF visuals.
+             Transparent primitive proxies preserve the simple collision shapes. -->
+        <xacro:if value="$(arg runtime_mjcf)">
+            <visual>
+                <origin xyz="0 0 -0.05"/>
+                <geometry><box size="${chassis_length} ${chassis_width} ${chassis_height}"/></geometry>
+                <material name="runtime_collision_proxy"><color rgba="0 0 0 0"/></material>
+            </visual>
+        </xacro:if>
 
         <inertial>
             <mass value="${chassis_mass}" />
@@ -136,7 +154,7 @@
             </collision>
 
             <visual>
-                <origin xyz="0 0 0" rpy="0 0 0" />
+                <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
                     <cylinder length="0.06" radius="0.075"/>
                 </geometry>
@@ -188,12 +206,19 @@
             </collision>
 
             <visual>
-                <origin xyz="0 0 0" rpy="0 0 0" />
+                <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="file://$(find bcr_bot)/meshes/kinect/d415.dae"/>
+                    <mesh filename="file://$(find bcr_bot)/meshes/kinect/d415.dae" scale="${d415_mesh_scale}"/>
                 </geometry>
                 <material name="black"/>
             </visual>
+
+            <xacro:if value="$(arg runtime_mjcf)">
+                <visual>
+                    <geometry><box size="0.07 0.3 0.09"/></geometry>
+                    <material name="runtime_collision_proxy"><color rgba="0 0 0 0"/></material>
+                </visual>
+            </xacro:if>
 
             <inertial>
                 <mass value="0.01"/>
@@ -234,12 +259,19 @@
             </collision>
 
             <visual>
-                <origin xyz="0 0 0" rpy="0 0 0" />
+                <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="file://$(find bcr_bot)/meshes/kinect/d415.dae"/>
+                    <mesh filename="file://$(find bcr_bot)/meshes/kinect/d415.dae" scale="${d415_mesh_scale}"/>
                 </geometry>
                 <material name="black"/>
             </visual>
+
+            <xacro:if value="$(arg runtime_mjcf)">
+                <visual>
+                    <geometry><box size="0.07 0.3 0.09"/></geometry>
+                    <material name="runtime_collision_proxy"><color rgba="0 0 0 0"/></material>
+                </visual>
+            </xacro:if>
 
             <inertial>
                 <mass value="0.01"/>
@@ -262,11 +294,28 @@
             <child link="stereo_camera_optical"/>
         </joint>
 
+        <xacro:if value="$(arg runtime_mjcf)">
+            <link name="stereo_camera_right_optical"/>
+
+            <joint name="stereo_camera_right_optical_joint" type="fixed">
+                <origin xyz="0 -0.12 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+                <parent link="stereo_camera"/>
+                <child link="stereo_camera_right_optical"/>
+            </joint>
+        </xacro:if>
+
     </xacro:if>
 
     <!-- ............................. ROOF ........................................ -->
 
     <link name="roof_link">
+
+        <xacro:if value="$(arg runtime_mjcf)">
+            <visual>
+                <geometry><box size="${chassis_length} ${chassis_width} 0.015"/></geometry>
+                <material name="runtime_collision_proxy"><color rgba="0 0 0 0"/></material>
+            </visual>
+        </xacro:if>
 
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />

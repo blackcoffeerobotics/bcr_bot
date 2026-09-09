@@ -4,7 +4,12 @@
     <ros2_control name="MujocoSystem" type="system">
         <hardware>
             <plugin>mujoco_ros2_control/MujocoSystemInterface</plugin>
-            <param name="mujoco_model">$(find bcr_bot)/mjcf/small_warehouse.xml</param>
+            <xacro:if value="$(arg runtime_mjcf)">
+                <param name="mujoco_model_topic">/mujoco_robot_description</param>
+            </xacro:if>
+            <xacro:unless value="$(arg runtime_mjcf)">
+                <param name="mujoco_model">$(find bcr_bot)/mjcf/small_warehouse_bcr_bot.xml</param>
+            </xacro:unless>
             <param name="headless">false</param>
             <param name="camera_publish_rate">15.0</param>
             <param name="lidar_publish_rate">30.0</param>
@@ -70,5 +75,54 @@
             <param name="depth_topic">/bcr_bot/stereo_camera/right/depth</param>
         </sensor>
     </ros2_control>
+
+    <xacro:if value="$(arg runtime_mjcf)">
+        <mujoco_inputs>
+            <raw_inputs>
+            
+                <compiler fusestatic="true"/>
+                <option timestep="0.002" gravity="0 0 -9.81"/>
+
+                <default>
+                    <default class="collision">
+                        <geom type="mesh" group="3" rgba="0 0 0 0"/>
+                    </default>
+                    <default class="visual">
+                        <geom type="mesh" contype="0" conaffinity="0" density="0" group="2"/>
+                    </default>
+                </default>
+
+                <include file="$(find bcr_bot)/mjcf/small_warehouse.xml"/>
+
+                <actuator>
+                    <velocity name="middle_left_wheel_joint"
+                              joint="middle_left_wheel_joint" kv="100"
+                              forcelimited="true" forcerange="-20000 20000"/>
+                    <velocity name="middle_right_wheel_joint"
+                              joint="middle_right_wheel_joint" kv="100"
+                              forcelimited="true" forcerange="-20000 20000"/>
+                </actuator>
+
+                <sensor>
+                    <framequat name="imu_quat" objtype="site" objname="imu_frame"/>
+                    <gyro name="imu_gyro" site="imu_frame"/>
+                    <accelerometer name="imu_accel" site="imu_frame"/>
+                    <rangefinder name="two_d_lidar" site="two_d_lidar_ray"/>
+                </sensor>
+            </raw_inputs>
+
+            <processed_inputs>
+                <camera site="kinect_camera_optical" name="kinect_camera_sensor"
+                        fovy="46.8264488927" mode="fixed" resolution="640 480"/>
+                <camera site="stereo_camera_optical" name="stereo_camera_left"
+                        fovy="64.365484" mode="fixed" resolution="640 480"/>
+                <camera site="stereo_camera_right_optical" name="stereo_camera_right"
+                        fovy="64.365484" mode="fixed" resolution="640 480"/>
+                <lidar ref_site="two_d_lidar" sensor_name="two_d_lidar_ray"
+                       min_angle="0.0" max_angle="6.2831853072"
+                       angle_increment="0.0174532925"/>
+            </processed_inputs>
+        </mujoco_inputs>
+    </xacro:if>
 
 </robot>
