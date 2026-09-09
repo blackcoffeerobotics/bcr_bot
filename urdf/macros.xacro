@@ -19,6 +19,12 @@
 
     <xacro:macro name="trolley_wheel" params="cardinality dexterity origin_x origin_y origin_z">
         <link name="${cardinality}_${dexterity}_wheel">
+            <xacro:if value="$(arg runtime_mjcf)">
+                <visual>
+                    <geometry><sphere radius="${trolley_wheel_radius}"/></geometry>
+                    <material name="runtime_collision_proxy"><color rgba="0 0 0 0"/></material>
+                </visual>
+            </xacro:if>
             <collision>
                 <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
                 <geometry>
@@ -49,6 +55,13 @@
 
     <xacro:macro name="traction_wheel" params="cardinality dexterity origin_x origin_y origin_z">
         <link name="${cardinality}_${dexterity}_wheel">
+            <xacro:if value="$(arg runtime_mjcf)">
+                <visual>
+                    <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}"/>
+                    <geometry><cylinder length="${traction_wheel_width}" radius="${traction_wheel_radius}"/></geometry>
+                    <material name="runtime_collision_proxy"><color rgba="0 0 0 0"/></material>
+                </visual>
+            </xacro:if>
             <collision>
                 <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
                 <geometry>

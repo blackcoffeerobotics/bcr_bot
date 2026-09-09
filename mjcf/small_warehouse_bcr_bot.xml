@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mujoco model="bcr_bot_small_warehouse_runtime">
+<mujoco model="bcr_bot_small_warehouse">
+  <include file="bcr_bot.xml"/>
+
   <asset>
-    <material name="warehouse_floor" rgba="0.60 0.60 0.60 1"
+    <texture name="warehouse_concrete" type="2d" file="mujoco_floor_texture.png"/>
+    <material name="warehouse_floor" texture="warehouse_concrete" rgba="0.60 0.60 0.60 1"
+              texrepeat="0.25 0.25" texuniform="true"
               specular="0" reflectance="0"/>
     <material name="warehouse_wall" rgba="0.84 0.80 0.71 1"
               specular="0" reflectance="0"/>
@@ -27,6 +31,7 @@
     <geom name="ground" type="plane" size="0 0 0.05"
           material="warehouse_floor" friction="1 0.005 0.0001"/>
 
+    <!-- Outer walls: the usable floor is 14 m by 12 m. -->
     <geom name="wall_north" type="box" pos="0 6 1.25" size="7 0.10 1.25"
           material="warehouse_wall"/>
     <geom name="wall_south" type="box" pos="0 -6 1.25" size="7 0.10 1.25"
@@ -36,6 +41,7 @@
     <geom name="wall_west" type="box" pos="-7 0 1.25" size="0.10 6 1.25"
           material="warehouse_wall"/>
 
+    <!-- Six shelf islands leave wide connected aisles for navigation. -->
     <geom name="rack_north_west" type="box" pos="-4.5 2.6 1.0"
           size="1.35 0.38 1.0" material="warehouse_rack"/>
     <geom name="rack_north_center" type="box" pos="0 2.6 1.0"
@@ -49,6 +55,7 @@
     <geom name="rack_south_east" type="box" pos="4.5 -2.6 1.0"
           size="1.35 0.38 1.0" material="warehouse_rack"/>
 
+    <!-- Pallets and cartons add distinct features for LiDAR mapping. -->
     <geom name="pallet_west" type="box" pos="-5.8 0 0.10"
           size="0.60 0.50 0.10" material="warehouse_pallet"/>
     <geom name="box_west_lower" type="box" pos="-5.8 0 0.45"
@@ -66,6 +73,7 @@
     <geom name="box_back" type="box" pos="1.8 4.7 0.55"
           size="0.52 0.40 0.35" material="warehouse_box"/>
 
+    <!-- Safety columns make the otherwise symmetric layout easier to localize. -->
     <geom name="column_north_west" type="cylinder" pos="-6.2 4.8 1.0"
           size="0.18 1.0" material="warehouse_column"/>
     <geom name="column_south_east" type="cylinder" pos="6.1 -4.7 1.0"
