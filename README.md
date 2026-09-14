@@ -70,15 +70,19 @@ ros2 launch stereo_image_proc stereo_image_proc.launch.py left_namespace:=bcr_bo
 ```
 ## Jazzy + MuJoCo (Ubuntu 24.04)
 
-### Dependencies
+### Install ROS dependencies
 
 Install the simulation, controller, visualization, and navigation packages:
 
 ```bash
 sudo apt update
 sudo apt install \
-  ros-jazzy-mujoco-ros2-control \
-  ros-jazzy-mujoco-ros2-control-plugins \
+  build-essential \
+  cmake \
+  git \
+  python3-colcon-common-extensions \
+  python3-pip \
+  python3-rosdep \
   ros-jazzy-ros2controlcli \
   ros-jazzy-joint-state-broadcaster \
   ros-jazzy-imu-sensor-broadcaster \
@@ -92,13 +96,50 @@ sudo apt install \
   ros-jazzy-nav2-bringup
 ```
 
-Install the remaining declared dependencies from the workspace root:
+### Create the workspace
+
+Create a ROS 2 workspace and clone the `devel-runtime-conversion` branch:
 
 ```bash
-rosdep install --from-paths src --ignore-src -r -y
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws/src
+git clone --depth 1 --branch devel-runtime-conversion https://github.com/blackcoffeerobotics/bcr_bot.git
 ```
 
-### Build
+### Build mujoco_ros2_control from source
+
+Clone the latest source into the same workspace. This provides the runtime
+URDF-to-MJCF conversion features used by this package:
+
+```bash
+cd ~/ros2_ws/src
+git clone --depth 1 --branch main https://github.com/ros-controls/mujoco_ros2_control.git
+```
+
+Install the remaining dependencies from the workspace root:
+
+```bash
+cd ~/ros2_ws
+rosdep update --rosdistro=jazzy
+rosdep install --from-paths \
+  src/bcr_bot \
+  src/mujoco_ros2_control/mujoco_ros2_control \
+  src/mujoco_ros2_control/mujoco_ros2_control_msgs \
+  src/mujoco_ros2_control/mujoco_ros2_control_plugins \
+  src/mujoco_ros2_control/mujoco_extensions/mujoco_3d_lidar \
+  --ignore-src --rosdistro=jazzy -r -y
+```
+
+Build the source packages and install the converter's Python dependencies:
+
+```bash
+colcon build --packages-up-to mujoco_ros2_control mujoco_ros2_control_plugins
+source install/setup.bash
+ros2 run mujoco_ros2_control robot_description_to_mjcf.sh --install-only
+~/.ros/ros2_control/.venv/bin/python -m pip install pycollada==0.9.2
+```
+
+### Build BCR Bot
 
 Run from the workspace root:
 
