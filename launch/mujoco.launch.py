@@ -61,6 +61,7 @@ def generate_launch_description():
         emulate_tty=True,
         arguments=[
             "--add_free_joint",
+            "--use_collision_tags",
             "--publish_topic",
             "/mujoco_robot_description",
         ],

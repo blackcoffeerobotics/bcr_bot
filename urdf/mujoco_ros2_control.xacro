@@ -112,6 +112,18 @@
             </raw_inputs>
 
             <processed_inputs>
+                <!-- Match the contact behavior used by the hand-authored MJCF. -->
+                <modify_element type="body" name="base_footprint"
+                                pos="0 0 0.022"/>
+                <modify_element type="geom" mesh="trolley_wheel" class="collision"
+                                friction="0 0 0" priority="1" condim="1"/>
+                <modify_element type="geom" mesh="traction_wheel" class="collision"
+                                friction="5 0 0"/>
+
+                <!-- Trolley wheel meshes are collision-only proxies. -->
+                <modify_element type="geom" mesh="trolley_wheel" class="visual"
+                                rgba="0 0 0 0"/>
+
                 <camera site="kinect_camera_optical" name="kinect_camera_sensor"
                         fovy="46.8264488927" mode="fixed" resolution="640 480"/>
                 <camera site="stereo_camera_optical" name="stereo_camera_left"
