@@ -21,14 +21,23 @@
         <link name="${cardinality}_${dexterity}_wheel">
             <xacro:if value="$(arg runtime_mjcf)">
                 <visual>
-                    <geometry><sphere radius="${trolley_wheel_radius}"/></geometry>
+                    <geometry>
+                        <mesh filename="file://$(find bcr_bot)/meshes/mujoco_runtime/trolley_wheel.obj"
+                              scale="${trolley_wheel_radius} ${trolley_wheel_radius} ${trolley_wheel_radius}"/>
+                    </geometry>
                     <material name="runtime_collision_proxy"><color rgba="0 0 0 0"/></material>
                 </visual>
             </xacro:if>
             <collision>
                 <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
                 <geometry>
-                    <sphere radius="${trolley_wheel_radius}"/>
+                    <xacro:if value="$(arg runtime_mjcf)">
+                        <mesh filename="file://$(find bcr_bot)/meshes/mujoco_runtime/trolley_wheel.obj"
+                              scale="${trolley_wheel_radius} ${trolley_wheel_radius} ${trolley_wheel_radius}"/>
+                    </xacro:if>
+                    <xacro:unless value="$(arg runtime_mjcf)">
+                        <sphere radius="${trolley_wheel_radius}"/>
+                    </xacro:unless>
                 </geometry>
             </collision>
 
@@ -58,14 +67,23 @@
             <xacro:if value="$(arg runtime_mjcf)">
                 <visual>
                     <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}"/>
-                    <geometry><cylinder length="${traction_wheel_width}" radius="${traction_wheel_radius}"/></geometry>
+                    <geometry>
+                        <mesh filename="file://$(find bcr_bot)/meshes/mujoco_runtime/traction_wheel.obj"
+                              scale="${traction_wheel_radius} ${traction_wheel_radius} ${traction_wheel_width}"/>
+                    </geometry>
                     <material name="runtime_collision_proxy"><color rgba="0 0 0 0"/></material>
                 </visual>
             </xacro:if>
             <collision>
                 <origin xyz="0 0 0" rpy="0 ${pi/2} ${pi/2}" />
                 <geometry>
-                    <cylinder length="${traction_wheel_width}" radius="${traction_wheel_radius}"/>
+                    <xacro:if value="$(arg runtime_mjcf)">
+                        <mesh filename="file://$(find bcr_bot)/meshes/mujoco_runtime/traction_wheel.obj"
+                              scale="${traction_wheel_radius} ${traction_wheel_radius} ${traction_wheel_width}"/>
+                    </xacro:if>
+                    <xacro:unless value="$(arg runtime_mjcf)">
+                        <cylinder length="${traction_wheel_width}" radius="${traction_wheel_radius}"/>
+                    </xacro:unless>
                 </geometry>
                 <self_collide>false</self_collide>
             </collision>

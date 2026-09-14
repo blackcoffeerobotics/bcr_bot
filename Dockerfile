@@ -12,10 +12,15 @@ RUN if ! getent group 110 >/dev/null; then groupadd --gid 110 render; fi \
     && chmod 0700 /tmp/runtime-root
 ENV XDG_RUNTIME_DIR=/tmp/runtime-root
 
-RUN apt-get update && apt-get install --no-install-recommends -y \
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
     apt-utils \
     git \
     vim \
+    build-essential \
+    cmake \
+    python3-colcon-common-extensions \
+    python3-rosdep \
     python3-pip \
     ros-${ROS_DISTRO}-rviz2 \
     ros-${ROS_DISTRO}-xacro \
@@ -52,9 +57,32 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /root/.bashrc
 
 WORKDIR ${WORKSPACE}
 
-# Install dependencies required for URDF to MJCF conversion 
-RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \ 
-    ros2 run mujoco_ros2_control robot_description_to_mjcf.sh --install-only && \ 
-    /root/.ros/ros2_control/.venv/bin/python -m pip install pycollada==0.9.2
+# Build the latest mujoco_ros2_control source as an overlay over the released packages.
+# Override this build argument to pin a branch or tag when reproducibility is required.
+ARG MUJOCO_ROS2_CONTROL_REF=main
+RUN mkdir -p ${WORKSPACE}/src \
+    && git clone --depth 1 --branch ${MUJOCO_ROS2_CONTROL_REF} \
+        https://github.com/ros-controls/mujoco_ros2_control.git \
+        ${WORKSPACE}/src/mujoco_ros2_control \
+    && source /opt/ros/${ROS_DISTRO}/setup.bash \
+    && rosdep update --rosdistro=${ROS_DISTRO} \
+    && rosdep install --from-paths \
+        ${WORKSPACE}/src/mujoco_ros2_control/mujoco_ros2_control \
+        ${WORKSPACE}/src/mujoco_ros2_control/mujoco_ros2_control_msgs \
+        ${WORKSPACE}/src/mujoco_ros2_control/mujoco_ros2_control_plugins \
+        ${WORKSPACE}/src/mujoco_ros2_control/mujoco_extensions/mujoco_3d_lidar \
+        --ignore-src --rosdistro=${ROS_DISTRO} -r -y \
+    && colcon build \
+        --packages-up-to mujoco_ros2_control mujoco_ros2_control_plugins \
+        --cmake-args -DCMAKE_BUILD_TYPE=Release
+
+# Make the source build take precedence over the packages installed in /opt/ros.
+RUN echo "source ${WORKSPACE}/install/setup.bash" >> /root/.bashrc
+
+# Install dependencies required by the source-built URDF to MJCF converter.
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash \
+    && source ${WORKSPACE}/install/setup.bash \
+    && ros2 run mujoco_ros2_control robot_description_to_mjcf.sh --install-only \
+    && /root/.ros/ros2_control/.venv/bin/python -m pip install pycollada==0.9.2
 
 CMD ["bash"]
