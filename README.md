@@ -1,3 +1,5 @@
+> **Note:** This branch adds runtime URDF-to-MJCF conversion. Please wait for the `mujoco-ros2-control` binary release with this feature before merging into `ros2-jazzy`.
+
 # BCR Bot
 
 https://github.com/blackcoffeerobotics/bcr_bot/assets/13151010/0fc570a3-c70c-415b-8222-b9573d5911c8
